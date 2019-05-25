@@ -23,3 +23,10 @@ URxvt.color12:		#55b5db
 URxvt.color13:		#a074c4
 URxvt.color14:		#55dbbe
 URxvt.color15:		#ffffff
+
+URxvt.perl-ext-common:	fullscreen,matcher
+URxvt.keysym.F11:	perl:fullscreen:switch
+URxvt.url-launcher:	/usr/bin/xdg-open
+URxvt.matcher.button:	1
+URxvt.colorUL:		#55b5db
+
