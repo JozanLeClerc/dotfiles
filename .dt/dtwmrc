@@ -1,0 +1,35 @@
+Menu Internet
+{
+	Firefox f.exec "firefox"
+}
+
+Menu DtRootMenu
+{
+    "Workspace Menu"                    f.title
+    "Internet"                f.menu    "Internet"
+    "Office"                f.menu    "Office"
+     no-label                           f.separator
+     no-label                           f.separator
+    "Shuffle Up"                        f.circle_up
+    "Shuffle Down"                      f.circle_down
+    "Refresh"                           f.refresh
+    "Minimize/Restore Front Panel"      f.toggle_frontpanel
+     no-label                           f.separator
+    "Restart Workspace Manager..."      f.restart
+     no-label                           f.separator
+    "Log out..."                        f.action ExitSession
+}
+
+Keys DtKeyBindings
+{
+	Mod4<Key>Return		root|window|icon	f.exec "urxvt"
+	Mod4<Key>1		root|window|icon	f.exec "dtfile"
+	Mod4<Key>3 		root|window|icon	f.exec "firefox"
+
+	Alt<Key>Tab		root|window|icon	f.next_key window
+
+	Mod4<Key>F1		root|window|icon	f.goto_workspace "ws0"
+	Mod4<Key>F2		root|window|icon	f.goto_workspace "ws1"
+	Mod4<Key>F3		root|window|icon	f.goto_workspace "ws2"
+	Mod4<Key>F4		root|window|icon	f.goto_workspace "ws3"
+}
