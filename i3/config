@@ -142,8 +142,12 @@ assign [class="Wine"] $ws4
 for_window [class="Wine"] focus
 assign [class="Thunar"] $ws5
 for_window [class="Thunar"] focus
+assign [class="banshee"] $ws8
+for_window [class="banshee"] focus
 assign [class="Geary"] $ws9
+for_window [class="Geary"] focus
 assign [class="discord"] $ws10
+for_window [class="discord"] focus
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -191,8 +195,9 @@ exec_always compton -f
 # startup apps
 exec --no-startup-id i3-msg 'workspace $ws1; exec ~/Documents/scripts/start-three-little-shells.sh'
 exec --no-startup-id i3-msg 'workspace $ws5; exec ~/Documents/scripts/start-ranger.sh; workspace $ws1'
-#exec --no-startup-id i3-msg 'exec geary'
-#exec --no-startup-id i3-msg 'exec discord'
+exec --no-startup-id i3-msg 'workspace $ws9; exec geary; workspace $ws1'
+exec --no-startup-id i3-msg 'workspace $ws10; exec discord; workspace $ws1'
+exec --no-startup-id i3-msg 'workspace $ws8; exec banshee; workspace $ws1'
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
