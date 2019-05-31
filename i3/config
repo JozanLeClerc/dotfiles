@@ -184,7 +184,7 @@ bindsym $mod+r mode "resize"
 floating_modifier $mod
 
 # wallpaper
-exec_always feh --bg-scale /home/jozan/Images/wallpaper.jpg
+exec_always feh --bg-fill /home/jozan/Images/wallpaper.jpg
 
 # smooth
 exec_always compton -f
