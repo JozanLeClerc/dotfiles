@@ -94,7 +94,7 @@ bindsym $mod+a focus parent
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1. "
 set $ws2 "2. "
-set $ws3 "3. "
+set $ws3 "3. "
 set $ws4 "4. "
 set $ws5 "5. "
 set $ws6 "6"
@@ -134,6 +134,8 @@ assign [class="code-oss"] $ws2
 for_window [class="code-oss"] focus
 assign [class="Firefox"] $ws3
 for_window [class="Firefox"] focus
+assign [class="Chromium"] $ws3
+for_window [class="Chromium"] focus
 assign [class="Steam"] $ws4
 for_window [class="Steam"] focus
 assign [class="Lutris"] $ws4
