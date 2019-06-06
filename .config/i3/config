@@ -192,8 +192,9 @@ exec_always feh --bg-fill /home/jozan/Images/wallpaper.jpg
 exec_always compton -f
 
 # startup apps
-exec --no-startup-id i3-msg 'workspace $ws1; exec ~/Documents/scripts/start-three-little-shells.sh'
-exec --no-startup-id i3-msg 'workspace $ws5; exec ~/Documents/scripts/start-ranger.sh; workspace $ws1'
+exec --no-startup-id i3-msg 'exec ~/.scripts/setntptrue.sh'
+exec --no-startup-id i3-msg 'workspace $ws1; exec ~/.scripts/start-three-little-shells.sh'
+exec --no-startup-id i3-msg 'workspace $ws5; exec ~/.scripts/start-ranger.sh; workspace $ws1'
 exec --no-startup-id i3-msg 'exec banshee;'
 for_window [class="banshee"] move workspace $ws8
 exec --no-startup-id i3-msg 'exec geary;'
