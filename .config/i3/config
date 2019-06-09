@@ -238,7 +238,7 @@ client.urgent		 $bg-color		$bg-color		$text-color 		#00ff00
 bindsym $mod+p exec rofi -show run -lines 3 -eh 2 -width 100 -padding 500 -font "DejaVu Sans Mono 14"
 
 # lock screen
-bindsym $mod+l exec i3lock --color "$bg-color"
+bindsym $mod+l exec ~/.scripts/i3lock-fancy/lock.sh
 
 # gaps
 for_window [class="^.*"] border pixel 0
