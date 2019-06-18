@@ -79,10 +79,10 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -234,10 +234,10 @@ set $urgent-bg-color-old #E53935
 
 # window colors
 #			 border			background		text			indicator
-client.focused         	 $bg-color           	$bg-color          	$text-color          	#00ff00
-client.unfocused       	 $inactive-bg-color   	$inactive-bg-color 	$inactive-text-color 	#00ff00
-client.focused_inactive	 $inactive-bg-color   	$inactive-bg-color 	$inactive-text-color 	#00ff00
-client.urgent		 $bg-color		$bg-color		$inactive-text-color	#00ff00
+client.focused         	 $bg-color           	$bg-color          	$text-color          	#2f343f
+client.unfocused       	 $inactive-bg-color   	$inactive-bg-color 	$inactive-text-color 	#2f343f
+client.focused_inactive	 $inactive-bg-color   	$inactive-bg-color 	$inactive-text-color 	#2f343f
+client.urgent		 $bg-color		$bg-color		$inactive-text-color	#2f343f
 
 # start rofi
 bindsym $mod+p exec rofi -show run -lines 3 -eh 2 -width 100 -padding 500 -font "DejaVu Sans Mono 14"
@@ -246,25 +246,15 @@ bindsym $mod+p exec rofi -show run -lines 3 -eh 2 -width 100 -padding 500 -font 
 bindsym $mod+l exec i3lock-fancy
 
 # gaps
-for_window [class="^.*"] border pixel 0
-gaps inner 10
+for_window [class="^.*"] border pixel 2
+gaps inner 25
 gaps outer 0
 
 # thin borders
-hide_edge_borders both
+#hide_edge_borders both
 
 # keyboard layouts
 exec --no-startup-id "setxkbmap -model pc105 -layout us,fr -option grp:alt_shift_toggle"
-#set $keyboard_layout Keyboard Layout: (e) US English, (f) French
-#mode "$keyboard_layout" {
-#     bindsym f exec --no-startup-id setxkbmap fr,mode "default"
-#    bindsym e exec --no-startup-id setxkbmap us,mode "default"
-
-#     # back to normal: Enter or Escape
-#     bindsym Return mode "default"
-#     bindsym Escape mode "default"
-#}
-#bindsym Mod1+Shift mode "$keyboard_layout"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
