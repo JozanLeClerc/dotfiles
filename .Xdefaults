@@ -3,7 +3,7 @@ URxvt.foreground:	#F3F4F5
 
 URxvt.scrollBar:	false
 
-URxvt.font:		xft:DejaVu Sans Mono:size=10
+URxvt.font:		xft:DejaVu Sans Mono:size=11
 URxvt.letterSpace:	-1
 
 
