@@ -152,6 +152,8 @@ assign [class="Org.gnome.Music"] $ws8
 for_window [class="Org.gnome.Music"] focus
 assign [class="Spotify"] $ws8
 for_window [class="Spotify"] focus
+#assign [class="Mailspring"] $ws9
+#for_window [class="Mailspring"] focus
 #assign [class="discord"] $ws10
 
 # reload the configuration file
@@ -227,14 +229,15 @@ set $bg-color 	         #2f343f
 set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
-set $urgent-bg-color     #E53935
+set $urgent-bg-color     #2f343f
+set $urgent-bg-color-old #E53935
 
 # window colors
 #			 border			background		text			indicator
 client.focused         	 $bg-color           	$bg-color          	$text-color          	#00ff00
 client.unfocused       	 $inactive-bg-color   	$inactive-bg-color 	$inactive-text-color 	#00ff00
 client.focused_inactive	 $inactive-bg-color   	$inactive-bg-color 	$inactive-text-color 	#00ff00
-client.urgent		 $bg-color		$bg-color		$text-color 		#00ff00
+client.urgent		 $bg-color		$bg-color		$inactive-text-color	#00ff00
 
 # start rofi
 bindsym $mod+p exec rofi -show run -lines 3 -eh 2 -width 100 -padding 500 -font "DejaVu Sans Mono 14"
