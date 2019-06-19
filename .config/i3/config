@@ -201,6 +201,7 @@ exec compton -f
 
 # startup apps
 exec --no-startup-id i3-msg 'exec ~/.scripts/setntptrue.sh'
+exec --no-startup-id i3-msg 'exec ~/.scripts/disable-standby-fs.py'
 exec --no-startup-id i3-msg 'workspace $ws1; exec ~/.scripts/start-three-little-shells.sh'
 exec --no-startup-id i3-msg 'workspace $ws5; exec ~/.scripts/start-ranger.sh; workspace $ws1'
 exec --no-startup-id i3-msg 'exec mailspring;'
