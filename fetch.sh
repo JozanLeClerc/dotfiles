@@ -1,9 +1,10 @@
 #!/bin/bash
 
 echo "Fetching dotfiles"
-cp -rv ~/.config .
-cp -rv ~/.scripts .
-cp -v ~/.Xdefaults .
-cp -v ~/.Xresources .
-cp -v ~/.bashrc .
+cp -rvf ~/.config/i3 .config/
+cp -rvf ~/.config/compton .config/
+cp -rvf ~/.scripts/ .
+cp -vf ~/.Xdefaults .
+cp -vf ~/.Xresources .
+cp -vf ~/.bashrc .
 echo "dotfiles fetched"

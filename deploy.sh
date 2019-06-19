@@ -1,9 +1,9 @@
 #!/bin/bash
 
 echo "Deploying dotfiles"
-cp -rv .config ~
-cp -rv .scripts ~
-cp -v .Xdefaults ~
-cp -v .Xresources ~
-cp -v .bashrc ~
+cp -rvf .config ~
+cp -rvf .scripts ~
+cp -vf .Xdefaults ~
+cp -vf .Xresources ~
+cp -vf .bashrc ~
 echo "dotfiles deployed"

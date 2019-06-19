@@ -150,6 +150,8 @@ assign [class="Totem"] $ws8
 for_window [class="Totem"] focus
 assign [class="Org.gnome.Music"] $ws8
 for_window [class="Org.gnome.Music"] focus
+assign [class="Musique"] $ws8
+for_window [class="Musique"] focus
 assign [class="Spotify"] $ws8
 for_window [class="Spotify"] focus
 #assign [class="Mailspring"] $ws9
@@ -262,7 +264,7 @@ exec --no-startup-id "setxkbmap -model pc105 -layout us,fr -option grp:alt_shift
 bar {
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	position top
-	font pango:DejaVu 8
+	font pango:DejaVu 10
 	colors {
 			background $bg-color
 	    		separator #757575
