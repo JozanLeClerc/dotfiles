@@ -24,7 +24,7 @@ load {
 
 cpu_temperature 0 {
         format = "<span background='#bf616a'>    %degrees °C </span>"
-        path = "/sys/class/thermal/thermal_zone0/temp"
+        path = "/sys/class/thermal/thermal_zone2/temp"
 }
 
 disk "/" {
