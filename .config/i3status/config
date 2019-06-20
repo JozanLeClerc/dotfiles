@@ -13,6 +13,7 @@ order += "cpu_temperature 0"
 order += "disk /"
 order += "disk /home"
 order += "ethernet enp3s0"
+order += "ethernet enp4s0f2"
 order += "wireless wlp3s0"
 order += "wireless wlp0s20u2"
 order += "volume master"
@@ -37,6 +38,12 @@ disk "/home" {
 }
 
 ethernet enp3s0 {
+        format_up = "<span>    %ip </span>"
+        #format_down = "<span> Disconnected </span>"
+	format_down = ""
+}
+
+ethernet enp4s0f2 {
         format_up = "<span>    %ip </span>"
         #format_down = "<span> Disconnected </span>"
 	format_down = ""
