@@ -151,9 +151,8 @@ assign [class="Totem"] $ws8
 for_window [class="Totem"] focus
 assign [class="Gnome-music"] $ws8
 for_window [class="Gnome-music"] focus
-assign [class="Musique"] $ws8
-for_window [class="Musique"] focus
 assign [class="Spotify"] $ws8
+for_window [class="Spotify"] move to workspace $ws8
 for_window [class="Spotify"] focus
 #assign [class="Mailspring"] $ws9
 #for_window [class="Mailspring"] focus
@@ -204,7 +203,7 @@ bindsym $mod+r mode "resize"
 floating_modifier $mod
 
 # wallpaper
-exec_always feh --bg-fill /home/jozan/Images/wallpaper.jpg
+exec feh --bg-fill /home/jozan/Images/wallpaper.jpg
 
 # smooth
 exec compton -f
@@ -266,7 +265,7 @@ gaps outer 0
 
 # keyboard layouts
 #exec --no-startup-id "setxkbmap -model pc105 -layout us,fr -option grp:alt_shift_toggle"
-exec_always "setxkbmap -layout us,fr"
+exec_always "setxkbmap -layout us,fr -option grp:alt_shift_toggle"
 bindsym Shift+$alt exec "xkb-switch -n; pkill -x --signal=SIGUSR1 i3status"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
