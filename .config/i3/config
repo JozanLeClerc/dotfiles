@@ -10,6 +10,7 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $alt Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -264,13 +265,16 @@ gaps outer 0
 #hide_edge_borders both
 
 # keyboard layouts
-exec --no-startup-id "setxkbmap -model pc105 -layout us,fr -option grp:alt_shift_toggle"
+#exec --no-startup-id "setxkbmap -model pc105 -layout us,fr -option grp:alt_shift_toggle"
+exec_always "setxkbmap -layout us,fr"
+bindsym Shift+$alt exec "xkb-switch -n; pkill -x --signal=SIGUSR1 i3status"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-       # status_command i3blocks -c ~/.config/i3/i3blocks.conf
-        status_command i3status
+        #status_command i3blocks -c ~/.config/i3/i3blocks.conf
+        #status_command i3status
+        status_command ~/.scripts/display-kb-layout.sh
 	position top
 	font pango:DejaVu 10
 	colors {

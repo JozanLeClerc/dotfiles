@@ -1,5 +1,5 @@
 general {
-        output_format = "i3bar"
+        output_format = i3bar
         colors = false
         markup = pango
         interval = 5
@@ -25,7 +25,7 @@ load {
 
 cpu_temperature 0 {
         format = "<span>    %degrees °C </span>"
-        path = "/sys/class/thermal/thermal_zone1/temp"
+        path = "/sys/class/thermal/thermal_zone2/temp"
 }
 
 disk "/" {
