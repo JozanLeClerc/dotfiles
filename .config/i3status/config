@@ -15,7 +15,7 @@ order += "disk /home"
 order += "ethernet enp3s0"
 order += "wireless wlp3s0"
 order += "volume master"
-order += "battery 1"
+order += "battery 0"
 order += "tztime local"
 
 load {
@@ -24,7 +24,7 @@ load {
 
 cpu_temperature 0 {
         format = "<span>    %degrees °C </span>"
-        path = "/sys/class/thermal/thermal_zone2/temp"
+        path = "/sys/class/thermal/thermal_zone1/temp"
 }
 
 disk "/" {
@@ -42,7 +42,7 @@ ethernet enp3s0 {
 }
 
 wireless wlp3s0 {
-        format_up = "<span>    %essid </span>"
+        format_up = "<span>    %essid %quality </span>"
         #format_down = "<span> Disconnected </span>"
 	format_down = ""
 }
@@ -55,7 +55,7 @@ volume master {
         mixer_idx = 0
 }
 
-battery 1 {
+battery 0 {
 	last_full_capacity = true
         format = "<span> %status %percentage </span>"
         format_down = "<span>    No Battery </span>"
