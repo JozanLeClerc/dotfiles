@@ -14,6 +14,7 @@ order += "disk /"
 order += "disk /home"
 order += "ethernet enp3s0"
 order += "wireless wlp3s0"
+order += "wireless wlp0s20u2"
 order += "volume master"
 order += "battery 0"
 order += "tztime local"
@@ -42,6 +43,12 @@ ethernet enp3s0 {
 }
 
 wireless wlp3s0 {
+        format_up = "<span>    %essid %quality </span>"
+        #format_down = "<span> Disconnected </span>"
+	format_down = ""
+}
+
+wireless wlp0s20u2 {
         format_up = "<span>    %essid %quality </span>"
         #format_down = "<span> Disconnected </span>"
 	format_down = ""
