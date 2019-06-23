@@ -3,7 +3,7 @@ URxvt.foreground:	#F3F4F5
 
 URxvt.scrollBar:	false
 
-URxvt.font:		xft:DejaVu Sans Mono:size=11, xft:Iosevka Term:style=Light:pixelsize=16antialias=true:hinting=true
+URxvt.font:		xft:DejaVu Sans Mono:size=11, xft:Iosevka Term:style=Light:pixelsize=16:antialias=true:hinting=true
 URxvt.letterSpace:	-1
 
 
