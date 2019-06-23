@@ -281,7 +281,7 @@ bar {
         #status_command i3status
         status_command ~/.scripts/display-kb-layout.sh
 	position top
-	font pango:DejaVu 10
+	font pango:DroidSansMono Nerd Font 11 
 	colors {
 			background $bg-color
 	    		separator #757575

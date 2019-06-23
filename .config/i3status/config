@@ -21,49 +21,49 @@ order += "battery 0"
 order += "tztime local"
 
 load {
-        format = "<span>    %5min Load </span>"
+        format = "<span>  %5min Load </span>"
 }
 
 cpu_temperature 0 {
-        format = "<span>    %degrees °C </span>"
+        format = "<span>  %degrees °C </span>"
         path = "/sys/class/thermal/thermal_zone2/temp"
 }
 
 disk "/" {
-        format = "<span>    %free Free </span>"
+        format = "<span>  %free Free </span>"
 }
 
 disk "/home" {
-        format = "<span>    %free Free </span>"
+        format = "<span>  %free Free </span>"
 }
 
 ethernet enp3s0 {
-        format_up = "<span>    %ip </span>"
+        format_up = "<span>  %ip </span>"
         #format_down = "<span> Disconnected </span>"
 	format_down = ""
 }
 
 ethernet enp4s0f2 {
-        format_up = "<span>    %ip </span>"
+        format_up = "<span>  %ip </span>"
         #format_down = "<span> Disconnected </span>"
 	format_down = ""
 }
 
 wireless wlp3s0 {
-        format_up = "<span>    %essid %quality </span>"
+        format_up = "<span>  %essid %quality </span>"
         #format_down = "<span> Disconnected </span>"
 	format_down = ""
 }
 
 wireless wlp0s20u2 {
-        format_up = "<span>    %essid %quality </span>"
+        format_up = "<span>  %essid %quality </span>"
         #format_down = "<span> Disconnected </span>"
 	format_down = ""
 }
 
 volume master {
-        format = "<span>    %volume </span>"
-        format_muted = "<span>    Muted </span>"
+        format = "<span>  %volume </span>"
+        format_muted = "<span>  Muted </span>"
         device = "default"
         mixer = "Master"
         mixer_idx = 0
@@ -72,11 +72,11 @@ volume master {
 battery 0 {
 	last_full_capacity = true
         format = "<span> %status %percentage </span>"
-        format_down = "<span>    No Battery </span>"
-        status_chr = "   Charging"
-        status_bat = "   Battery"
-        status_unk = "   Unknown"
-        status_full = "   Charged"
+        format_down = "<span>  No Battery </span>"
+        status_chr = " Charging"
+        status_bat = " Battery"
+        status_unk = " Unknown"
+        status_full = " Charged"
         path = "/sys/class/power_supply/BAT%d/uevent"
         low_threshold = 10
 }

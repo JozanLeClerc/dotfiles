@@ -3,8 +3,9 @@ URxvt.foreground:	#F3F4F5
 
 URxvt.scrollBar:	false
 
-URxvt.font:		xft:DejaVu Sans Mono:size=11, xft:Iosevka Term:style=Light:pixelsize=16:antialias=true:hinting=true
-URxvt.letterSpace:	-1
+;URxvt.font:		xft:DejaVu Sans Mono:size=11, xft:Iosevka Term:style=Light:pixelsize=14:antialias=true:hinting=true
+URxvt.font:		xft:UbuntuMono Nerd Font Mono:size=14:antialias=true:hinting=true
+URxvt.letterSpace:	0
 
 
 URxvt.color0:           #151718
@@ -29,4 +30,3 @@ URxvt.keysym.F11:	perl:fullscreen:switch
 URxvt.url-launcher:	/usr/bin/xdg-open
 URxvt.matcher.button:	1
 URxvt.colorUL:		#55b5db
-
