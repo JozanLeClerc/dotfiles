@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Script to show current keyboard layout in i3status bar
 # Requires https://github.com/nonpop/xkblayout-state

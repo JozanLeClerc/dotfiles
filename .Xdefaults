@@ -5,6 +5,7 @@ URxvt.scrollBar:	false
 
 ;URxvt.font:		xft:DejaVu Sans Mono:size=11, xft:Iosevka Term:style=Light:pixelsize=14:antialias=true:hinting=true
 URxvt.font:		xft:UbuntuMono Nerd Font Mono:size=14:antialias=true:hinting=true
+;URxvt.font:		xft:BitstreamVeraSansMono Nerd Font Mono:size=12:antialias=true:hinting=true
 URxvt.letterSpace:	0
 
 

@@ -1,2 +1,2 @@
-#!/bin/bash
+#!/bin/zsh
 urxvt -e ranger

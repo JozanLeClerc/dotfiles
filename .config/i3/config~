@@ -10,6 +10,7 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $alt Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -92,16 +93,16 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1. "
-set $ws2 "2. "
-set $ws3 "3. "
-set $ws4 "4. "
-set $ws5 "5. "
+set $ws1 "1.  "
+set $ws2 "2.  "
+set $ws3 "3.  "
+set $ws4 "4.  "
+set $ws5 "5.  "
 set $ws6 "6"
 set $ws7 "7"
-set $ws8 "8. "
-set $ws9 "9. "
-set $ws10 "10. "
+set $ws8 "8.  "
+set $ws9 "9.  "
+set $ws10 "10.  "
 
 # switch to workspace
 bindsym $mod+F1 workspace $ws1
@@ -136,6 +137,8 @@ assign [class="Firefox"] $ws3
 for_window [class="Firefox"] focus
 assign [class="Chromium"] $ws3
 for_window [class="Chromium"] focus
+assign [class="Surf"] $ws3
+for_window [class="Surf"] focus 
 assign [class="Steam"] $ws4
 for_window [class="Steam"] focus
 assign [class="Lutris"] $ws4
@@ -148,12 +151,13 @@ assign [class="Org.gnome.Nautilus"] $ws5
 for_window [class="Org.gnome.Nautilus"] focus
 assign [class="Totem"] $ws8
 for_window [class="Totem"] focus
-assign [class="Org.gnome.Music"] $ws8
-for_window [class="Org.gnome.Music"] focus
-assign [class="Musique"] $ws8
-for_window [class="Musique"] focus
+assign [class="Gnome-music"] $ws8
+for_window [class="Gnome-music"] focus
 assign [class="Spotify"] $ws8
+for_window [class="Spotify"] move to workspace $ws8
 for_window [class="Spotify"] focus
+assign [class="GuitarPro"] $ws8
+for_window [class="GuitarPro"] focus
 #assign [class="Mailspring"] $ws9
 #for_window [class="Mailspring"] focus
 #assign [class="discord"] $ws10
@@ -162,6 +166,8 @@ for_window [class="Spotify"] focus
 # floating windows
 for_window [instance="battle.net.exe"] floating enable
 for_window [instance="origin.exe"] floating enable
+for_window [class="Lutris"] floating enable
+for_window [class="Steam"] floating enable
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -201,7 +207,7 @@ bindsym $mod+r mode "resize"
 floating_modifier $mod
 
 # wallpaper
-exec_always feh --bg-fill /home/jozan/Images/wallpaper.jpg
+exec feh --bg-fill /home/jozan/Images/wallpaper.jpg
 
 # smooth
 exec compton -f
@@ -213,17 +219,19 @@ exec --no-startup-id i3-msg 'workspace $ws1; exec ~/.scripts/start-three-little-
 exec --no-startup-id i3-msg 'workspace $ws5; exec ~/.scripts/start-ranger.sh; workspace $ws1'
 exec --no-startup-id i3-msg 'exec mailspring;'
 for_window [class="Mailspring"] move workspace $ws9
+exec --no-startup-id i3-msg 'exec sylpheed;'
+for_window [class="Sylpheed"] move workspace $ws9
 exec --no-startup-id i3-msg 'exec discord;'
 for_window [class="discord"] move workspace $ws10
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 2 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 2 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 2 toggle # mute sound
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbackligsasdht -dec 20 # decrease screen
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
@@ -254,7 +262,7 @@ bindsym $mod+p exec rofi -show run -lines 3 -eh 2 -width 100 -padding 500 -font 
 bindsym $mod+l exec i3lock-fancy
 
 # gaps
-for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 1
 gaps inner 25
 gaps outer 0
 
@@ -262,15 +270,18 @@ gaps outer 0
 #hide_edge_borders both
 
 # keyboard layouts
-exec --no-startup-id "setxkbmap -model pc105 -layout us,fr -option grp:alt_shift_toggle"
+#exec --no-startup-id "setxkbmap -model pc105 -layout us,fr -option grp:alt_shift_toggle"
+exec_always "setxkbmap -layout us,fr -option grp:alt_shift_toggle"
+bindsym Shift+$alt exec "xkb-switch -n; pkill -x --signal=SIGUSR1 i3status"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
         #status_command i3blocks -c ~/.config/i3/i3blocks.conf
-        status_command i3status
+        #status_command i3status
+        status_command ~/.scripts/display-kb-layout.sh
 	position top
-	font pango:DejaVu 10
+	font pango:DroidSansMono Nerd Font 12
 	colors {
 			background $bg-color
 	    		separator #757575

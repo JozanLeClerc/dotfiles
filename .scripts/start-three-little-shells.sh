@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 urxvt &
 urxvt &
 urxvt -e htop &
