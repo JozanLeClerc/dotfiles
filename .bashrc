@@ -10,3 +10,12 @@ alias ls='ls --color=auto'
 export VISUAL="vim"
 
 export PS1="\[\e[01;34m\][\[\e[0m\]\[\e[01;34m\]\u\[\e[0m\]\[\e[01;34m\]@\[\e[0m\]\[\e[01;34m\]\h\[\e[0m\]\[\e[00;37m\]\[\e[0m\]\[\e[01;35m\] \W\[\e[01;34m\]]\[\e[00;37m\]\\$ \[\e[0m\]"
+
+function _update_ps1() {
+    PS1=$(powerline-shell $?)
+}
+
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
+
