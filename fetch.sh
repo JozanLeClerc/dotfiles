@@ -8,4 +8,5 @@ cp -rvf ~/.scripts/ .
 cp -vf ~/.Xdefaults .
 cp -vf ~/.Xresources .
 cp -vf ~/.bashrc .
+cp -vf ~/.zshrc .
 echo "dotfiles fetched"
