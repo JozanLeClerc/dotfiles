@@ -114,3 +114,9 @@ function install_powerline_precmd() {
 if [ "$TERM" != "linux" ]; then
     install_powerline_precmd
 fi
+POWERLEVEL9K_MODE="nerdfont-complete"
+source  ~/.oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme
+
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user ssh dir dir_writable newline os_icon vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time root_indicator background_jobs history)
+# POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
