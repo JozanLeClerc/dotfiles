@@ -212,10 +212,16 @@ exec feh --bg-fill /home/jozan/Images/wallpaper.jpg
 # smooth
 exec compton -f
 
+# layouts
+exec --no-startup-id i3-msg 'workspace $ws1; append_layout ~/.config/i3/workspace-1.json'
+
 # startup apps
+exec --no-startup-id i3-msg 'exec urxvt'
+exec --no-startup-id i3-msg 'exec urxvt'
+exec --no-startup-id i3-msg 'exec urxvt -e htop'
 exec --no-startup-id i3-msg 'exec ~/.scripts/setntptrue.sh'
 exec --no-startup-id i3-msg 'exec ~/.scripts/disable-standby-fs.py'
-exec --no-startup-id i3-msg 'workspace $ws1; exec ~/.scripts/start-three-little-shells.sh'
+# exec --no-startup-id i3-msg 'workspace $ws1; exec ~/.scripts/start-three-little-shells.sh'
 exec --no-startup-id i3-msg 'workspace $ws5; exec ~/.scripts/start-ranger.sh; workspace $ws1'
 exec --no-startup-id i3-msg 'exec mailspring;'
 for_window [class="Mailspring"] move workspace $ws9
@@ -225,9 +231,9 @@ exec --no-startup-id i3-msg 'exec discord;'
 for_window [class="discord"] move workspace $ws10
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 3 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 3 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 3 toggle # mute sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 2 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 2 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 2 toggle # mute sound
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
