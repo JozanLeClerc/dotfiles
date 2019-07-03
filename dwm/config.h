@@ -38,6 +38,7 @@ static const Rule rules[] = {
 	{ "tabbed",   NULL,       NULL,       1 << 2,       0,           -1 },
 	{ NULL,	      NULL,       "neomutt",  1 << 8,       0,           -1 },
 	{ NULL,	      NULL,       "calcurse", 1 << 7,       0,           -1 },
+	{ NULL,	      NULL,       "newsboat", 1 << 6,       0,           -1 },
 };
 
 /* layout(s) */
@@ -52,7 +53,7 @@ static const Layout layouts[] = {
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
  	{ "[@]",      spiral },
- 	{ "[\\]",      dwindle },
+ 	{ "[\\]",     dwindle },
 };
 
 /* key definitions */

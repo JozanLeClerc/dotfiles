@@ -8,6 +8,7 @@ sleep 0.5s
 st &
 st -e neomutt &
 st -e calcurse &
+st -e newsboat &
 
 dte(){
 	dte="$(date +"%H:%M")"
@@ -17,7 +18,7 @@ dte(){
 bat(){
 	status="$(acpi -s | awk '{print $3}' | rev | cut -c 2- | rev)"
 	percentage="$(acpi -s | awk '{print $4}' | rev | cut -c 2- | rev)"
-	if [ $status == "" ]
+	if [ $status == " " ]
 	then
 		echo -e "Sector"
 	else
