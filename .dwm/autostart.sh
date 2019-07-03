@@ -7,6 +7,7 @@ st -e ranger &
 sleep 0.5s
 st &
 st -e neomutt &
+st -e calcurse &
 
 dte(){
 	dte="$(date +"%H:%M")"
@@ -16,12 +17,17 @@ dte(){
 bat(){
 	status="$(acpi -s | awk '{print $3}' | rev | cut -c 2- | rev)"
 	percentage="$(acpi -s | awk '{print $4}' | rev | cut -c 2- | rev)"
-	echo -e "BAT: $status: $percentage"
+	if [ $status == "" ]
+	then
+		echo -e "Sector"
+	else
+		echo -e "bat: $status: $percentage"
+	fi
 }
 
 tem(){
 	tem="$(sensors | grep 'id' | awk '{print $4}' | cut -c 2-)"
-	echo -e "TEMP: $tem"
+	echo -e "temp: $tem"
 }
 
 ips(){
@@ -32,10 +38,10 @@ ips(){
 dsk(){
 	dsk_root="$(df -h | grep '/dev/sda7' | awk '{print $4}')"
 	dsk_home="$(df -h | grep '/dev/sda8' | awk '{print $4}')"
-	echo -e "ROOT: $dsk_root - HOME: $dsk_home"
+	echo -e "root: $dsk_root - home: $dsk_home"
 }
 
 while true; do
 	xsetroot -name " $(tem) | $(dsk) | $(ips) | $(bat) | $(dte)"
-	sleep 20s # Update time every minute
+	sleep 20s # Update time 20s
 done &
