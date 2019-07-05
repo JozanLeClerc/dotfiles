@@ -43,7 +43,11 @@ dsk(){
 	echo -e "root: $dsk_root - home: $dsk_home"
 }
 
+kbl(){
+	layout="$(xkblayout-state print %s | rev | cut -c 1- | rev)"
+	echo -e "layout: $layout"
+}
 while true; do
-	xsetroot -name " $(tem) | $(dsk) | $(ips) | $(bat) | $(dte)"
-	sleep 20s # Update time 20s
+	xsetroot -name " $(kbl) | $(tem) | $(dsk) | $(ips) | $(bat) | $(dte)"
+	sleep 1m # Update time 1 minute
 done &
