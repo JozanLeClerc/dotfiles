@@ -118,5 +118,5 @@ POWERLEVEL9K_MODE="nerdfont-complete"
 source  ~/.oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh dir dir_writable os_icon)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time root_indicator background_jobs history vcs symfony2_tests)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time root_indicator background_jobs vcs symfony2_tests)
 # POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
