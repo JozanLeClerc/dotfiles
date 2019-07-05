@@ -36,6 +36,7 @@ static const Rule rules[] = {
 	{ "trayer",   NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Surf",     NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "tabbed",   NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "jetbrains-studio",   NULL,       NULL,       1 << 1,       1,           -1 },
 	{ NULL,	      NULL,       "neomutt",  1 << 8,       0,           -1 },
 	{ NULL,	      NULL,       "calcurse", 1 << 7,       0,           -1 },
 	{ NULL,	      NULL,       "newsboat", 1 << 6,       0,           -1 },
@@ -78,6 +79,7 @@ static const char *backldeccmd[] = { "xbacklight", "-dec", "10", NULL };
 static const char *volupcmd[] 	 = { "amixer", "set", "Master", "5%+", NULL };
 static const char *voldowncmd[]	 = { "amixer", "set", "Master", "5%-", NULL };
 static const char *volmutecmd[]	 = { "amixer", "set", "Master", "toggle", NULL };
+static const char *refbarcmd[]	 = { "refbar", NULL };
 
 #include "movestack.c"
 #include "focusurgent.c"
@@ -119,6 +121,7 @@ static Key keys[] = {
 	{ 0,	 		XF86XK_AudioRaiseVolume,   spawn, 	    {.v = volupcmd } },
 	{ 0, 			XF86XK_AudioLowerVolume,   spawn, 	    {.v = voldowncmd } },
 	{ 0, 			XF86XK_AudioMute, 	   spawn, 	    {.v = volmutecmd } },
+	{ Mod1Mask,		XK_Shift_L, 	   	   spawn, 	    {.v = refbarcmd } },
 	TAGKEYS(                XK_F1,                     0)
 	TAGKEYS(                XK_F2,                     1)
 	TAGKEYS(                XK_F3,                     2)
