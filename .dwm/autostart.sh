@@ -7,10 +7,15 @@ sleep 0.5s
 st -e ranger &
 sleep 0.5s
 st &
+sleep 0.5s
 st -e neomutt &
+sleep 0.5s
 st -e mocp &
+sleep 0.5s
 st -e calcurse &
+sleep 0.5s
 st -e newsboat &
+sleep 0.5s
 trayer &
 
 dte(){
