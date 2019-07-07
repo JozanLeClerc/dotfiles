@@ -8,8 +8,10 @@ st -e ranger &
 sleep 0.5s
 st &
 st -e neomutt &
+st -e mocp &
 st -e calcurse &
 st -e newsboat &
+trayer &
 
 dte(){
 	dte="$(date +"%H:%M")"
@@ -19,8 +21,7 @@ dte(){
 bat(){
 	status="$(acpi -s | awk '{print $3}' | rev | cut -c 2- | rev)"
 	percentage="$(acpi -s | awk '{print $4}' | rev | cut -c 2- | rev)"
-	if [ $status == " " ]
-	then
+	if [ echo $status == "" ]; then
 		echo -e "Sector"
 	else
 		echo -e "bat: $status: $percentage"
