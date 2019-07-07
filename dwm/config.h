@@ -37,7 +37,7 @@ static const Rule rules[] = {
 	{ "Surf",    		NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "tabbed",   		NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "jetbrains-studio",   NULL,       NULL,       1 << 1,       1,           -1 },
-	{ "trayer",		NULL,       NULL,       1 << 9,       1,           -1 },
+	{ "trayer",		NULL,       NULL,       1 << 9,       0,           -1 },
 	{ NULL,	      		NULL,       "neomutt",  1 << 8,       0,           -1 },
 	{ NULL,	      		NULL,       "mocp", 	1 << 7,       0,           -1 },
 	{ NULL,	      		NULL,       "calcurse", 1 << 6,       0,           -1 },
