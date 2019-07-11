@@ -127,6 +127,7 @@ static Key keys[] = {
 	TAGKEYS(                XK_F1,                     0)
 	TAGKEYS(                XK_F2,                     1)
 	TAGKEYS(                XK_F3,                     2)
+	TAGKEYS(                XK_3,                      2)
 	TAGKEYS(                XK_F4,                     3)
 	TAGKEYS(                XK_F5,                     4)
 	TAGKEYS(                XK_F6,                     5)
