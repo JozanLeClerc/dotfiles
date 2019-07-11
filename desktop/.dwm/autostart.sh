@@ -8,6 +8,7 @@ st -e ranger &
 sleep 0.5s
 st &
 mpd &
+#mopidy &
 st -e neomutt &
 st -e ncmpcpp &
 st -e calcurse &
