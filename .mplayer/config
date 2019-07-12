@@ -1,0 +1,8 @@
+# Write your default config options here!
+
+# default cdrom
+cdrom="/dev/sr0"
+# cache setting
+cache=2000
+# set audio driver
+ao=alsa
