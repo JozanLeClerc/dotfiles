@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "DejaVuSansMono:pixelsize=14:antialias=true:autohint=true";
-static int borderpx = 2;
+static char *font = "DejaVuSansMono Nerd Font:pixelsize=14:antialias=true:autohint=true";
+static int borderpx = 35;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -85,31 +85,31 @@ unsigned int tabspaces = 8;
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
-	"#151718",
-	"#cd3f45",
-	"#9fca56",
-	"#e6cd69",
-	"#55b5db",
-	"#a074c4",
-	"#55dbbe",
-	"#d6d6d6",
+	"#1D2021",
+	"#CC241D",
+	"#98971A",
+	"#D79921",
+	"#458588",
+	"#B16286",
+	"#689D6A",
+	"#A89984",
 
 	/* 8 bright colors */
-	"#41535B",
-	"#Cd3f45",
-	"#9fca56",
-	"#e6cd69",
-	"#55b5db",
-	"#a074c4",
-	"#55dbbe",
-	"#ffffff",
+	"#928374",
+	"#FB4934",
+	"#B8BB26",
+	"#FADB2F",
+	"#83A598",
+	"#D3869B",
+	"#8EC07C",
+	"#FBF1C7",
 
 	[255] = 0,
 
 	/* more colors can be added after 255 to use with DefaultXX */
 	/*"#0A0C0D",*/
-	"#0D0E0F",
-	"#F3F4F5",
+	"#282828",
+	"#EBDBB2",
 };
 
 
@@ -218,6 +218,8 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
+	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ MODKEY,               XK_o,           opencopied,     {.v = "surf"} },

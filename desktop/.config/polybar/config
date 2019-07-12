@@ -30,9 +30,10 @@ format-offset =
 
 [colors]
 ;------;
-foreground = #F3F4F5
-background = #2C3447
+foreground = #D0D0D0
+background = #212121
 inactive-foreground = #676E7D
+inactive-underline = #5B5B5B
 alert = #E53935
 volume-min = #A3BE8C
 volume-med = #EBCB8B
@@ -69,9 +70,9 @@ module-margin-right = 1
 
 font-0 = NotoSans Nerd Font:size=12
 
-modules-left = ewmh mpd
+modules-left = ewmh mpd spotify1
 modules-center =
-modules-right = spotify1 xkeyboard cpu2 temperature1 filesystem alsa date wireless-network wired-network 
+modules-right = xkeyboard cpu2 temperature1 filesystem alsa wireless-network wired-network date 
 
 separator = |
 
@@ -116,7 +117,7 @@ label-active-padding = 3
 label-occupied = %name%
 label-occupied-foreground = ${colors.inactive-foreground}
 label-occupied-background = ${colors.background}
-label-occupied-underline = ${colors.inactive-foreground}
+label-occupied-underline = ${colors.inactive-underline}
 label-occupied-padding = 3
 
 label-urgent = %name%
@@ -127,7 +128,7 @@ label-urgent-padding = 3
 
 label-empty = %name%
 label-empty-foreground = #55
-label-empty-underline = ${colors.inactive-foreground}
+label-empty-underline = ${colors.inactive-underline}
 label-empty-padding = 3
 
 format-foreground = ${colors.foreground}
@@ -377,22 +378,6 @@ format-muted-prefix-foreground = #40AD4B
 
 
 
-[module/date]
-;-----------;
-type = internal/date
-
-interval = 60
-time = %H:%M
-time-alt = %H:%M
-format-prefix =
-format-prefix-foreground = #C1941A
-format-underline = #C1941A
-format-foreground = ${colors.foreground}
-format-background = ${colors.background}
-label = %time%
-
-
-
 [module/wired-network]
 ;--------------------;
 type = internal/network
@@ -402,6 +387,7 @@ interval = 3.0
 label-connected = 
 format-connected-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
+format-connected-underline = #71C6A2
 
 
 
@@ -423,3 +409,17 @@ ramp-signal-6 = 
 ramp-signal-7 = 
 ramp-signal-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
+
+[module/date]
+;-----------;
+type = internal/date
+
+interval = 60
+time = %H:%M
+time-alt = %H:%M
+format-prefix =
+format-prefix-foreground = #C1941A
+format-underline = #C1941A
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+label = %time%

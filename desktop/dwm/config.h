@@ -16,7 +16,7 @@ static const char col_gray1[]       	 = "#222222";
 static const char col_gray2[]       	 = "#444444";
 static const char col_gray3[]         	 = "#bbbbbb";
 static const char col_gray4[]       	 = "#eeeeee";
-static const char col_cyan[]          	 = "#F3F4F5";
+static const char col_cyan[]          	 = "#D0D0D0";
 static const char *colors[][3]      	 = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -78,7 +78,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *roficmd[]   	 = { "rofi", "-show","run", "-lines", "15","-width", "60", "-padding", "50", "-columns", "3", "-font", "'NotoSans 14'", "-scroll-method", "1", NULL };
+static const char *roficmd[]   	 = { "rofi", "-show","run", "-lines", "15","-width", "60", "-padding", "50", "-columns", "3", "-font", "NotoSans 14", "-scroll-method", "1", NULL };
 static const char *termcmd[]   	 = { "st", NULL };
 static const char *surfcmd[]  	 = { "tabbed", "surf", "-pe", NULL };
 static const char *lockcmd[]	 = { "i3lock-fancy", NULL };

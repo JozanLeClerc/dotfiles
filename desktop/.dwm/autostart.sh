@@ -1,5 +1,6 @@
 #!/bin/bash
 cd ~/
+sleep 1
 compton &
 feh --bg-fill /home/jozan/Images/wallpaper.jpg &
 setxkbmap -layout us,fr -option grp:alt_shift_toggle &
