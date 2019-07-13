@@ -31,22 +31,24 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      		instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     		NULL,       NULL,       0,            1,           -1 },
-	{ "jetbrains-studio",   NULL,       NULL,       1 << 1,       1,           -1 },
-	{ "Firefox",  		NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "Surf",    		NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "tabbed",   		NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "Lutris",   		NULL,       NULL,       1 << 3,       0,           -1 },
-	{ "Wine",   		NULL,       NULL,       1 << 3,       1,           -1 },
-	{ "Steam",   		NULL,       NULL,       1 << 3,       1,           -1 },
-	{ "Pavucontrol",	NULL,       NULL,       1 << 4,       0,           -1 },
-	{ "mpv",		NULL,       NULL,       1 << 7,       0,           -1 },
-	{ "discord",		NULL,       NULL,       1 << 9,       0,           -1 },
-	{ NULL,	      		NULL,       "neomutt",  1 << 8,       0,           -1 },
-	{ NULL,   		NULL,       "ncmpcpp",  1 << 7,       0,           -1 },
-	{ NULL,	      		NULL,       "calcurse", 1 << 6,       0,           -1 },
-	{ NULL,	     	 	NULL,       "newsboat", 1 << 5,       0,           -1 },
+	/* class      		instance    title        tags mask     isfloating   monitor */
+	{ "Gimp",     		NULL,       NULL,        0,            1,           -1 },
+	{ "jetbrains-studio",   NULL,       NULL,        1 << 1,       1,           -1 },
+	{ "Firefox",  		NULL,       NULL,        1 << 2,       0,           -1 },
+	{ "Surf",    		NULL,       NULL,        1 << 2,       0,           -1 },
+	{ "qutebrowser",	NULL,       NULL,        1 << 2,       0,           -1 },
+	{ "tabbed",   		NULL,       NULL,        1 << 2,       0,           -1 },
+	{ "Lutris",   		NULL,       NULL,        1 << 3,       0,           -1 },
+	{ "Wine",   		NULL,       NULL,        1 << 3,       1,           -1 },
+	{ "Steam",   		NULL,       NULL,        1 << 3,       1,           -1 },
+	{ "Pavucontrol",	NULL,       NULL,        1 << 4,       0,           -1 },
+	{ "mpv",		NULL,       NULL,        1 << 7,       0,           -1 },
+	{ "discord",		NULL,       NULL,        1 << 9,       0,           -1 },
+	{ NULL,	      		NULL,       "neomutt",   1 << 8,       0,           -1 },
+	{ NULL,   		NULL,       "ncmpcpp",   1 << 7,       0,           -1 },
+	{ NULL,	      		NULL,       "calcurse",  1 << 6,       0,           -1 },
+	{ NULL,	     	 	NULL,       "newsboat",  1 << 5,       0,           -1 },
+	{ NULL,	     	 	NULL,       "pulsemixer",1 << 4,      0,           -1 },
 };
 
 /* layout(s) */
@@ -80,13 +82,16 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *roficmd[]   	 = { "rofi", "-show","run", "-lines", "15","-width", "60", "-padding", "50", "-columns", "3", "-font", "NotoSans 14", "-scroll-method", "1", NULL };
 static const char *termcmd[]   	 = { "st", NULL };
-static const char *surfcmd[]  	 = { "tabbed", "surf", "-pe", NULL };
+static const char *qbcmd[]  	 = { "qutebrowser", NULL };
 static const char *lockcmd[]	 = { "i3lock-fancy", NULL };
 static const char *backlinccmd[] = { "xbacklight", "-inc", "10", NULL };
 static const char *backldeccmd[] = { "xbacklight", "-dec", "10", NULL };
-static const char *volupcmd[] 	 = { "amixer", "set", "Master", "5%+", NULL };
-static const char *voldowncmd[]	 = { "amixer", "set", "Master", "5%-", NULL };
-static const char *volmutecmd[]	 = { "amixer", "set", "Master", "toggle", NULL };
+// static const char *volupcmd[] 	 = { "amixer", "set", "Master", "5%+", NULL };
+// static const char *voldowncmd[]	 = { "amixer", "set", "Master", "5%-", NULL };
+// static const char *volmutecmd[]	 = { "amixer", "set", "Master", "toggle", NULL };
+static const char *volupcmd[] 	 = { "pactl", "set-sink-volume", "2", "+5%", NULL };
+static const char *voldowncmd[]	 = { "pactl", "set-sink-volume", "2", "-5%", NULL };
+static const char *volmutecmd[]	 = { "pactl", "set-sink-mute", "2", "toggle", NULL };
 static const char *refbarcmd[]	 = { "refbar", NULL };
 static const char *rangercmd[]	 = { "st", "-e", "ranger", NULL };
 
@@ -100,7 +105,7 @@ static Key keys[] = {
 	{ MODKEY,		XK_Return, 		   spawn,           {.v = termcmd } },
 	{ MODKEY|ShiftMask,	XK_l,	   		   spawn,	    {.v = lockcmd } },
 	{ MODKEY,		XK_1,	   		   spawn,           {.v = rangercmd } },
-	{ MODKEY,		XK_3,	   		   spawn,           {.v = surfcmd } },
+	{ MODKEY,		XK_3,	   		   spawn,           {.v = qbcmd } },
 	{ MODKEY,               XK_Escape, 		   togglebar,       {0} },
 	{ MODKEY,               XK_j,      		   focusstack,      {.i = +1 } },
 	{ MODKEY,               XK_k,      		   focusstack,      {.i = -1 } },

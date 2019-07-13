@@ -7,23 +7,38 @@ rofi.color-active:	#212121,	#D0D0D0,	#212121,	#212121,	#9575cd,	0
 rofi.color-window:	#212121,	#D0D0D0,	#212121
 
 
-st.foreground:  #d0d0d0
+st.foreground:  #D0D0D0
 st.background:  #212121
 !st.cursorColor: #c5c8c6
 
+! Black
 st.color0:      #151515
-st.color1:     	#ac4142
-st.color2:      #7e8e50
-st.color3:      #e5b567
-st.color4:      #6c99bb
-st.color5:      #9f4e85
-st.color6:      #7dd6cf
-st.color7:      #d0d0d0
 st.color8:  	#505050
-st.color9:	#ac4142
-st.color10:	#7e8e50
-st.color11:  	#e5b567
-st.color12:	#6c99bb
-st.color13:	#9f4e85
-st.color14:	#7dd6cf
-st.color15:	#f5f5f5
+
+! Red
+st.color1:     	#AC4142
+st.color9:	#AC4142
+
+! Green
+st.color2:      #7E8E50
+st.color10:	#7E8E50
+
+! Yellow
+st.color3:      #E5B567
+st.color11:  	#E5B567
+
+! Blue
+st.color4:      #6C99bb
+st.color12:	#6C99bb
+
+! Magenta
+st.color5:      #9F4E85
+st.color13:	#9F4E85
+
+! Cyan
+st.color6:      #7DD6CF
+st.color14:	#7DD6CF
+
+! White
+st.color7:      #D0D0D0
+st.color15:	#F5F5F5
