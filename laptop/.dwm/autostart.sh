@@ -10,13 +10,12 @@ st &
 sleep 0.5s
 st -e neomutt &
 sleep 0.5s
-st -e mocp &
+st -e ncmpcpp &
 sleep 0.5s
 st -e calcurse &
 sleep 0.5s
 st -e newsboat &
 sleep 0.5s
-trayer &
 
 dte(){
 	dte="$(date +"%H:%M")"

@@ -30,18 +30,19 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      		instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     		NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  		NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "trayer",   		NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "Surf",    		NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "tabbed",   		NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "jetbrains-studio",   NULL,       NULL,       1 << 1,       1,           -1 },
-	{ "trayer",		NULL,       NULL,       1 << 9,       0,           -1 },
-	{ NULL,	      		NULL,       "neomutt",  1 << 8,       0,           -1 },
-	{ NULL,	      		NULL,       "mocp", 	1 << 7,       0,           -1 },
-	{ NULL,	      		NULL,       "calcurse", 1 << 6,       0,           -1 },
-	{ NULL,	     	 	NULL,       "newsboat", 1 << 5,       0,           -1 },
+	/* class      		instance    title       	tags mask     isfloating   monitor */
+	{ "Gimp",     		NULL,       NULL,       	0,            1,           -1 },
+	{ "Firefox",  		NULL,       NULL,       	1 << 2,       0,           -1 },
+	{ "trayer",   		NULL,       NULL,       	1 << 8,       0,           -1 },
+	{ "Surf",    		NULL,       NULL,       	1 << 2,       0,           -1 },
+	{ "tabbed",   		NULL,       NULL,       	1 << 2,       0,           -1 },
+	{ "jetbrains-studio",   NULL,       NULL,       	1 << 1,       1,           -1 },
+	{ "trayer",		NULL,       NULL,       	1 << 9,       0,           -1 },
+	{ NULL,	      		NULL,       "neomutt",  	1 << 8,       0,           -1 },
+	{ NULL,	      		NULL,       "ncmpcpp", 		1 << 7,       0,           -1 },
+	{ NULL,	      		NULL,       "calcurse", 	1 << 6,       0,           -1 },
+	{ NULL,	     	 	NULL,       "newsboat", 	1 << 5,       0,           -1 },
+	{ NULL,	     	 	NULL,       "pulsemixer", 	1 << 4,       0,           -1 },
 };
 
 /* layout(s) */
@@ -74,7 +75,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]   	 = { "st", NULL };
-static const char *surfcmd[]  	 = { "tabbed", "surf", "-pe", NULL };
+static const char *surfcmd[]  	 = { "qutebrowser", NULL };
 static const char *lockcmd[]	 = { "slock", NULL };
 static const char *backlinccmd[] = { "xbacklight", "-inc", "10", NULL };
 static const char *backldeccmd[] = { "xbacklight", "-dec", "10", NULL };
