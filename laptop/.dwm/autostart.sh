@@ -16,6 +16,8 @@ st -e calcurse &
 sleep 0.5s
 st -e newsboat &
 sleep 0.5s
+st -e pulsemixer &
+sleep 0.5s
 
 dte(){
 	dte="$(date +"%H:%M")"
