@@ -1,9 +1,9 @@
 /* See LICENSE file for copyright and license details. */
 /* appearance */
 
-static const unsigned int borderpx  	 = 4;        /* border pixel of windows */
+static const unsigned int borderpx  	 = 3;        /* border pixel of windows */
 static const unsigned int gappx     	 = 30;	     /* gaps between windows */
-static const unsigned int snap      	 = 32;       /* snap pixel */
+static const unsigned int snap      	 = 12;       /* snap pixel */
 static const unsigned int systraypinning = 0;        /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;        /* systray spacing */
 static const int systraypinningfailfirst = 1;        /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
@@ -31,24 +31,24 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      		instance    title        tags mask     isfloating   monitor */
-	{ "Gimp",     		NULL,       NULL,        0,            1,           -1 },
-	{ "jetbrains-studio",   NULL,       NULL,        1 << 1,       1,           -1 },
-	{ "Firefox",  		NULL,       NULL,        1 << 2,       0,           -1 },
-	{ "Surf",    		NULL,       NULL,        1 << 2,       0,           -1 },
-	{ "qutebrowser",	NULL,       NULL,        1 << 2,       0,           -1 },
-	{ "tabbed",   		NULL,       NULL,        1 << 2,       0,           -1 },
-	{ "Lutris",   		NULL,       NULL,        1 << 3,       0,           -1 },
-	{ "Wine",   		NULL,       NULL,        1 << 3,       1,           -1 },
-	{ "Steam",   		NULL,       NULL,        1 << 3,       1,           -1 },
-	{ "Pavucontrol",	NULL,       NULL,        1 << 4,       0,           -1 },
-	{ "mpv",		NULL,       NULL,        1 << 7,       0,           -1 },
-	{ "discord",		NULL,       NULL,        1 << 9,       0,           -1 },
-	{ NULL,	      		NULL,       "neomutt",   1 << 8,       0,           -1 },
-	{ NULL,   		NULL,       "ncmpcpp",   1 << 7,       0,           -1 },
-	{ NULL,	      		NULL,       "calcurse",  1 << 6,       0,           -1 },
-	{ NULL,	     	 	NULL,       "newsboat",  1 << 5,       0,           -1 },
-	{ NULL,	     	 	NULL,       "pulsemixer",1 << 4,      0,           -1 },
+	/* class      		instance    title        tags mask     iscentered	isfloating   monitor */
+	{ "Gimp",     		NULL,       NULL,        0,            1,		1,           -1 },
+	{ "jetbrains-studio",   NULL,       NULL,        1 << 1,       1,		1,           -1 },
+	{ "Firefox",  		NULL,       NULL,        1 << 2,       0,		0,           -1 },
+	{ "Surf",    		NULL,       NULL,        1 << 2,       0,		0,           -1 },
+	{ "qutebrowser",	NULL,       NULL,        1 << 2,       0,		0,           -1 },
+	{ "tabbed",   		NULL,       NULL,        1 << 2,       0,		0,           -1 },
+	{ "Lutris",   		NULL,       NULL,        1 << 3,       0,		0,           -1 },
+	{ "Wine",   		NULL,       NULL,        1 << 3,       1,		1,           -1 },
+	{ "Steam",   		NULL,       NULL,        1 << 3,       0,		1,           -1 },
+	{ "Pavucontrol",	NULL,       NULL,        1 << 4,       0,		0,           -1 },
+	{ "mpv",		NULL,       NULL,        1 << 7,       0,		0,           -1 },
+	{ "discord",		NULL,       NULL,        1 << 9,       0,		0,           -1 },
+	{ NULL,	      		NULL,       "neomutt",   1 << 8,       0,		0,           -1 },
+	{ NULL,   		NULL,       "ncmpcpp",   1 << 7,       0,		0,           -1 },
+	{ NULL,	      		NULL,       "calcurse",  1 << 6,       0,		0,           -1 },
+	{ NULL,	     	 	NULL,       "newsboat",  1 << 5,       0,		0,           -1 },
+	{ NULL,	     	 	NULL,       "pulsemixer",1 << 4,       0,		0,           -1 },
 };
 
 /* layout(s) */

@@ -6,7 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 static char *font = "DejaVuSansMono Nerd Font:pixelsize=14:antialias=true:autohint=true";
-static int borderpx = 35;
+static int borderpx = 25;
 
 /*
  * What program is execed by st depends of these precedence rules:
