@@ -2,6 +2,7 @@
 cd ~/
 compton &
 setxkbmap -layout us,fr -option grp:alt_shift_toggle
+xset r rate 175 60
 st -e htop &
 sleep 0.5s
 st -e ranger &
