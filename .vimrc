@@ -48,3 +48,4 @@ set clipboard=unnamedplus
 	inoremap <? <?php  ?><left><left><left>
 	inoremap <?<CR> <?php<CR>?><ESC>O
 	inoremap << <<<space>
+	inoremap >> >><space>
