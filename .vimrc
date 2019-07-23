@@ -39,8 +39,6 @@ set clipboard=unnamedplus
 " Comfy
 	inoremap " ""<left>
 	inoremap ' ''<left>
-	inoremap "" ""
-	inoremap '' ''
 	inoremap ( ()<left>
 	inoremap [ []<left>
 	inoremap { {}<left>
@@ -53,3 +51,9 @@ set clipboard=unnamedplus
 	inoremap << <<<space>
 	inoremap ><space> ><space>
 	inoremap >> >><space>
+	inoremap "" ""
+	inoremap '' ''
+	inoremap () ()
+	inoremap [] []
+	inoremap {} {}
+	inoremap <> <>
