@@ -30,19 +30,21 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      		instance    title       	tags mask     isfloating   monitor */
-	{ "Gimp",     		NULL,       NULL,       	0,            1,           -1 },
-	{ "Firefox",  		NULL,       NULL,       	1 << 2,       0,           -1 },
-	{ "trayer",   		NULL,       NULL,       	1 << 8,       0,           -1 },
-	{ "Surf",    		NULL,       NULL,       	1 << 2,       0,           -1 },
-	{ "tabbed",   		NULL,       NULL,       	1 << 2,       0,           -1 },
-	{ "jetbrains-studio",   NULL,       NULL,       	1 << 1,       1,           -1 },
-	{ "trayer",		NULL,       NULL,       	1 << 9,       0,           -1 },
-	{ NULL,	      		NULL,       "neomutt",  	1 << 8,       0,           -1 },
-	{ NULL,	      		NULL,       "ncmpcpp", 		1 << 7,       0,           -1 },
-	{ NULL,	      		NULL,       "calcurse", 	1 << 6,       0,           -1 },
-	{ NULL,	     	 	NULL,       "newsboat", 	1 << 5,       0,           -1 },
-	{ NULL,	     	 	NULL,       "pulsemixer", 	1 << 4,       0,           -1 },
+	/* class      		instance    		title       	tags mask     isfloating   monitor */
+	{ "Gimp",     		NULL,       		NULL,       	0,            1,           -1 },
+	{ "Tor Browser",	"TorLauncher",	        NULL,       	0,            1,           -1 },
+	{ "Tor Browser",	"Navigator",	        NULL,       	1 << 2,       0,           -1 },
+	{ "Firefox",  		NULL,       		NULL,       	1 << 2,       0,           -1 },
+	{ "trayer",   		NULL,       		NULL,       	1 << 8,       0,           -1 },
+	{ "Surf",    		NULL,       		NULL,       	1 << 2,       0,           -1 },
+	{ "tabbed",   		NULL,       		NULL,       	1 << 2,       0,           -1 },
+	{ "jetbrains-studio",   NULL,       		NULL,       	1 << 1,       1,           -1 },
+	{ "trayer",		NULL,       		NULL,       	1 << 9,       0,           -1 },
+	{ NULL,	      		NULL,       		"neomutt",  	1 << 8,       0,           -1 },
+	{ NULL,	      		NULL,       		"ncmpcpp", 	1 << 7,       0,           -1 },
+	{ NULL,	      		NULL, 		        "calcurse", 	1 << 6,       0,           -1 },
+	{ NULL,	     	 	NULL,       		"newsboat", 	1 << 5,       0,           -1 },
+	{ NULL,	     	 	NULL,       		"pulsemixer", 	1 << 4,       0,           -1 },
 };
 
 /* layout(s) */
