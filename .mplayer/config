@@ -3,6 +3,6 @@
 # default cdrom
 cdrom="/dev/sr0"
 # cache setting
-cache=2000
+cache=4000
 # set audio driver
 ao=pulse
