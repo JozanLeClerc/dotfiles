@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "DroidSansMono Nerd Font:pixelsize=15:antialias=true:hinting=true";
-static int borderpx = 2;
+static char *font = "DroidSansMono Nerd Font:pixelsize=14:antialias=true:hinting=true";
+static int borderpx = 0;
 
 /*
  * What program is execed by st depends of these precedence rules:
