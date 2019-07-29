@@ -1,9 +1,5 @@
 let mapleader =","
 
-"call plug#begin('~/.config/nvim/plugged')
-"call plug#end()
-
-execute pathogen#infect()
 set bg=light
 set go=a
 set mouse=a
