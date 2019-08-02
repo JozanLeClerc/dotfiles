@@ -41,7 +41,7 @@ set clipboard=unnamedplus
 	autocmd FileType c inoremap { {}<left>
 	autocmd FileType c inoremap {<CR> {<CR>}<ESC>O
 	autocmd FileType c inoremap {;<CR> {<CR>};<ESC>O
-	autocmd FileType c nnoremap <C-m> i<CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
+	autocmd FileType c nnoremap <Leader>M i<CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
 
 " C++
 	autocmd FileType cpp inoremap " ""<left>
@@ -55,7 +55,7 @@ set clipboard=unnamedplus
 	autocmd FileType cpp inoremap << <<<space>
 	autocmd FileType cpp inoremap ><space> ><space>
 	autocmd FileType cpp inoremap >> >><space>
-	autocmd FileType cpp nnoremap <C-m> i<CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
+	autocmd FileType cpp nnoremap <Leader>M i<CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
 
 " = Web =
 " HTML
