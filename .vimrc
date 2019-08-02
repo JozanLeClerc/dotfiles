@@ -39,8 +39,10 @@ set clipboard=unnamedplus
 	autocmd FileType c inoremap ( ()<left>
 	autocmd FileType c inoremap [ []<left>
 	autocmd FileType c inoremap { {}<left>
+	autocmd FileType c inoremap < <><left>
 	autocmd FileType c inoremap {<CR> {<CR>}<ESC>O
 	autocmd FileType c inoremap {;<CR> {<CR>};<ESC>O
+	autocmd FileType c inoremap <= <=
 	autocmd FileType c nnoremap <Leader>M i<CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
 
 " C++
@@ -49,12 +51,14 @@ set clipboard=unnamedplus
 	autocmd FileType cpp inoremap ( ()<left>
 	autocmd FileType cpp inoremap [ []<left>
 	autocmd FileType cpp inoremap { {}<left>
+	autocmd FileType cpp inoremap < <><left>
 	autocmd FileType cpp inoremap {<CR> {<CR>}<ESC>O
 	autocmd FileType cpp inoremap {;<CR> {<CR>};<ESC>O
 	autocmd FileType cpp inoremap <<space> <<space>
 	autocmd FileType cpp inoremap << <<<space>
 	autocmd FileType cpp inoremap ><space> ><space>
 	autocmd FileType cpp inoremap >> >><space>
+	autocmd FileType cpp inoremap <= <=
 	autocmd FileType cpp nnoremap <Leader>M i<CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
 
 " = Web =
@@ -65,7 +69,6 @@ set clipboard=unnamedplus
 	autocmd FileType html inoremap [ []<left>
 	autocmd FileType html inoremap { {}<left>
 	autocmd FileType html inoremap {<CR> {<CR>}<ESC>O
-	autocmd FileType html inoremap {;<CR> {<CR>};<ESC>O
 	autocmd FileType html inoremap < <><left>
 
 " PHP
@@ -75,7 +78,6 @@ set clipboard=unnamedplus
 	autocmd FileType php inoremap [ []<left>
 	autocmd FileType php inoremap { {}<left>
 	autocmd FileType php inoremap {<CR> {<CR>}<ESC>O
-	autocmd FileType php inoremap {;<CR> {<CR>};<ESC>O
 	autocmd FileType php inoremap < <><left>
 	autocmd FileType php inoremap <? <?php  ?><left><left><left>
 	autocmd FileType php inoremap <?<CR> <?php<CR>?><ESC>O
