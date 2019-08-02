@@ -31,22 +31,56 @@ set clipboard=unnamedplus
 " Compile document, be it groff/LaTeX/markdown/etc.
 	"map <leader>c :w! \| !compiler <c-r>%<CR>
 	autocmd BufWritePost *.tex !compiler %
+	
+" === Comfy ===
+" C
+	autocmd FileType c inoremap " ""<left>
+	autocmd FileType c inoremap ' ''<left>
+	autocmd FileType c inoremap ( ()<left>
+	autocmd FileType c inoremap [ []<left>
+	autocmd FileType c inoremap { {}<left>
+	autocmd FileType c inoremap {<CR> {<CR>}<ESC>O
+	autocmd FileType c inoremap {;<CR> {<CR>};<ESC>O
+	autocmd FileType c nnoremap <C-m> i<CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
 
-" Comfy
-	inoremap " ""<left>
-	inoremap ' ''<left>
-	inoremap ( ()<left>
-	inoremap [ []<left>
-	inoremap { {}<left>
-	inoremap {<CR> {<CR>}<ESC>O
-	inoremap {;<CR> {<CR>};<ESC>O
-	inoremap < <><left>
-	inoremap <? <?php  ?><left><left><left>
-	inoremap <?<CR> <?php<CR>?><ESC>O
-	inoremap <<space> <<space>
-	inoremap << <<<space>
-	inoremap ><space> ><space>
-	inoremap >> >><space>
+" C++
+	autocmd FileType cpp inoremap " ""<left>
+	autocmd FileType cpp inoremap ' ''<left>
+	autocmd FileType cpp inoremap ( ()<left>
+	autocmd FileType cpp inoremap [ []<left>
+	autocmd FileType cpp inoremap { {}<left>
+	autocmd FileType cpp inoremap {<CR> {<CR>}<ESC>O
+	autocmd FileType cpp inoremap {;<CR> {<CR>};<ESC>O
+	autocmd FileType cpp inoremap <<space> <<space>
+	autocmd FileType cpp inoremap << <<<space>
+	autocmd FileType cpp inoremap ><space> ><space>
+	autocmd FileType cpp inoremap >> >><space>
+	autocmd FileType cpp nnoremap <C-m> i<CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
+
+" = Web =
+" HTML
+	autocmd FileType html inoremap " ""<left>
+	autocmd FileType html inoremap ' ''<left>
+	autocmd FileType html inoremap ( ()<left>
+	autocmd FileType html inoremap [ []<left>
+	autocmd FileType html inoremap { {}<left>
+	autocmd FileType html inoremap {<CR> {<CR>}<ESC>O
+	autocmd FileType html inoremap {;<CR> {<CR>};<ESC>O
+	autocmd FileType html inoremap < <><left>
+
+" PHP
+	autocmd FileType php inoremap " ""<left>
+	autocmd FileType php inoremap ' ''<left>
+	autocmd FileType php inoremap ( ()<left>
+	autocmd FileType php inoremap [ []<left>
+	autocmd FileType php inoremap { {}<left>
+	autocmd FileType php inoremap {<CR> {<CR>}<ESC>O
+	autocmd FileType php inoremap {;<CR> {<CR>};<ESC>O
+	autocmd FileType php inoremap < <><left>
+	autocmd FileType php inoremap <? <?php  ?><left><left><left>
+	autocmd FileType php inoremap <?<CR> <?php<CR>?><ESC>O
+
+" Just in case
 	inoremap "" ""
 	inoremap '' ''
 	inoremap () ()
