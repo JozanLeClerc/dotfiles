@@ -42,8 +42,11 @@ set clipboard=unnamedplus
 	autocmd FileType c inoremap < <><left>
 	autocmd FileType c inoremap {<CR> {<CR>}<ESC>O
 	autocmd FileType c inoremap {;<CR> {<CR>};<ESC>O
+	autocmd FileType c inoremap <<space> <<space>
+	autocmd FileType c inoremap ><space> ><space>
 	autocmd FileType c inoremap <= <=
-	autocmd FileType c nnoremap <Leader>M i<CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
+	autocmd FileType c nnoremap <Leader>m o#include<space><stdio.h><CR>#include<space><string.h><CR>#include<space><stdlib.h><CR>#include<space><stddef.h><CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
+	autocmd FileType c nnoremap <Leader>M o#include<space><stdio.h><CR>#include<space><string.h><CR>#include<space><stdlib.h><CR>#include<space><stddef.h><CR>int<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<CR>return<space>0;<CR>if<space>(argv[])<space>{}<CR>return<space>0;<CR>}<up><ESC>O
 
 " C++
 	autocmd FileType cpp inoremap " ""<left>
@@ -59,7 +62,8 @@ set clipboard=unnamedplus
 	autocmd FileType cpp inoremap ><space> ><space>
 	autocmd FileType cpp inoremap >> >><space>
 	autocmd FileType cpp inoremap <= <=
-	autocmd FileType cpp nnoremap <Leader>M i<CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
+	autocmd FileType cpp nnoremap <Leader>m oint<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
+	autocmd FileType cpp nnoremap <Leader>M oint<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<CR>return<space>0;<CR>if<space>(argv[])<space>{}<CR>return<space>0;<CR>}<up><ESC>O
 
 " = Web =
 " HTML
@@ -83,6 +87,11 @@ set clipboard=unnamedplus
 	autocmd FileType php inoremap <?<CR> <?php<CR>?><ESC>O
 
 " Just in case
+	inoremap " ""<left>
+	inoremap ' ''<left>
+	inoremap ( ()<left>
+	inoremap [ []<left>
+	inoremap { {}<left>
 	inoremap "" ""
 	inoremap '' ''
 	inoremap () ()
