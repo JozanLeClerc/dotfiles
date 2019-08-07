@@ -11,9 +11,10 @@ let mapleader =","
 	nnoremap c "_c
 	set nocompatible
 	filetype plugin indent on
-	syntax on
 	set encoding=utf-8
 	set number
+	set cursorline
+	syntax on
 
 " Enable autocompletion:
 	set wildmode=longest,list,full
@@ -47,7 +48,7 @@ let mapleader =","
 	autocmd FileType c inoremap ><space> ><space>
 	autocmd FileType c inoremap <= <=
 	autocmd FileType c nnoremap <Leader>m o#include<space><stdio.h><CR>#include<space><string.h><CR>#include<space><stdlib.h><CR>#include<space><stddef.h><CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
-	autocmd FileType c nnoremap <Leader>M o#include<space><stdio.h><CR>#include<space><string.h><CR>#include<space><stdlib.h><CR>#include<space><stddef.h><CR>int<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<CR>return<space>0;<CR>if<space>(argv[])<space>{}<CR>return<space>0;<CR>}<up><ESC>O
+	autocmd FileType c nnoremap <Leader>M o#include<space><stdio.h><CR>#include<space><string.h><CR>#include<space><stdlib.h><CR>#include<space><stddef.h><CR>int<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<space>{<CR>printf("NOT<space>ENOUGH<space>ARGS");<CR>return<space>0;<CR>}<CR>return<space>0;<CR>}<up><ESC>Oprintf();<left><left>
 
 " C++
 	autocmd FileType cpp inoremap " ""<left>
@@ -65,6 +66,7 @@ let mapleader =","
 	autocmd FileType cpp inoremap <= <=
 	autocmd FileType cpp nnoremap <Leader>m oint<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
 	autocmd FileType cpp nnoremap <Leader>M oint<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<CR>return<space>0;<CR>if<space>(argv[])<space>{}<CR>return<space>0;<CR>}<up><ESC>O
+	autocmd FileType cpp nnoremap <Leader>M oint<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<CR>cout<space><<<space>"NOT<space>ENOUGH<space>ARGS"<space><<<space>endl;<space>return<space>0;<CR>return<space>0;<CR>}<up><ESC>O
 
 " = Web =
 " HTML
