@@ -1,12 +1,13 @@
 let mapleader =","
 
-set bg=light
-set go=a
-set mouse=a
-set nohlsearch
-set clipboard=unnamedplus
 
 " Some basics:
+	set bg=light
+	set go=a
+	set mouse=a
+	set nohlsearch
+	set clipboard=unnamedplus
+	set tabstop=4
 	nnoremap c "_c
 	set nocompatible
 	filetype plugin indent on
