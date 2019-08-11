@@ -2,7 +2,7 @@ let mapleader =","
 
 
 " Some basics:
-	set bg=light
+"	set bg=light
 	set go=a
 	set mouse=a
 	set nohlsearch
@@ -13,6 +13,7 @@ let mapleader =","
 	filetype plugin indent on
 	set encoding=utf-8
 	set number
+	set ruler
 	set cursorline
 	syntax on
 
@@ -33,6 +34,9 @@ let mapleader =","
 " Compile document, be it groff/LaTeX/markdown/etc.
 	"map <leader>c :w! \| !compiler <c-r>%<CR>
 	autocmd BufWritePost *.tex !compiler %
+
+" Compile C file
+	autocmd FileType c noremap <silent> <F8> :w<CR>:!clear;gcc<space>-Wall<space>-Wextra<space>-Werror %<CR>
 	
 " === Comfy ===
 " C
@@ -66,7 +70,7 @@ let mapleader =","
 	autocmd FileType cpp inoremap <= <=
 	autocmd FileType cpp nnoremap <Leader>m oint<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
 	autocmd FileType cpp nnoremap <Leader>M oint<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<CR>return<space>0;<CR>if<space>(argv[])<space>{}<CR>return<space>0;<CR>}<up><ESC>O
-	autocmd FileType cpp nnoremap <Leader>M oint<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<CR>cout<space><<<space>"NOT<space>ENOUGH<space>ARGS"<space><<<space>endl;<space>return<space>-1;<CR>return<space>0;<CR>}<up><ESC>O
+	autocmd FileType cpp nnoremap <Leader>M oint<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<space>{<CR>cout<space><<<space>"NOT<space>ENOUGH<space>ARGS"<space><<<space>endl;<CR>return<space>-1;<CR>}<CR>return<space>0;<CR>}<up><ESC>O
 
 " = Web =
 " HTML
