@@ -14,7 +14,6 @@ let mapleader =","
 	set encoding=utf-8
 	set number
 	set ruler
-	set cursorline
 	syntax on
 
 " Enable autocompletion:
@@ -37,8 +36,8 @@ let mapleader =","
 
 " Compile C file
 	autocmd FileType c noremap <silent> <F8> :w<CR>:!clear;gcc<space>-Wall<space>-Wextra<space>-Werror % <CR>
-	autocmd FileType c noremap <F9> :!clear; ./a.out  && echo "~>\n\n.vimrc 2.1-release Tilde Edition by Joe"<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
-	autocmd FileType c noremap <F10> :!clear; ./a.out && echo "~>\n\n.vimrc 2.1-release Tilde Edition by Joe"<CR>
+	autocmd FileType c noremap <F9> :!clear; ./a.out  && echo "~>\n\n.vimrc 2.1.1-release Tilde Edition by Joe"<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
+	autocmd FileType c noremap <F10> :!clear; ./a.out && echo "~>\n\n.vimrc 2.1.1-release Tilde Edition by Joe"<CR>
 " === Comfy ===
 " C
 	autocmd FileType c inoremap " ""<left>
