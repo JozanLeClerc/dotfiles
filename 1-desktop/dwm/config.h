@@ -1,8 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 /* appearance */
 
-static const unsigned int borderpx  	 = 3;        /* border pixel of windows */
-static const unsigned int gappx     	 = 30;	     /* gaps between windows */
+static const unsigned int borderpx  	 = 2;        /* border pixel of windows */
+static const unsigned int gappx     	 = 15;	     /* gaps between windows */
 static const unsigned int snap      	 = 12;       /* snap pixel */
 static const unsigned int systraypinning = 0;        /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;        /* systray spacing */
@@ -32,19 +32,21 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      		instance    title        tags mask     iscentered	isfloating   monitor */
+	{ "St",     			NULL,       NULL,        0,            1,		0,           -1 },
 	{ "Gimp",     			NULL,       NULL,        0,            1,		1,           -1 },
+	{ "qjackctl",  			NULL,       NULL,        0,            1,		1,           -1 },
 	{ "jetbrains-studio",   NULL,       NULL,        1 << 1,       1,		1,           -1 },
-	{ "Firefox",  			NULL,       NULL,        1 << 2,       0,		0,           -1 },
-	{ "Surf",    			NULL,       NULL,        1 << 2,       0,		0,           -1 },
-	{ "qutebrowser",		NULL,       NULL,        1 << 2,       0,		0,           -1 },
-	{ "tabbed",   			NULL,       NULL,        1 << 2,       0,		0,           -1 },
-	{ "Lutris",   			NULL,       NULL,        1 << 3,       0,		0,           -1 },
-	{ "Wine",   			NULL,       NULL,        1 << 3,       0,		1,           -1 },
-	{ "Steam",   			NULL,       NULL,        1 << 3,       0,		0,           -1 },
-	{ "Pavucontrol",		NULL,       NULL,        1 << 4,       0,		0,           -1 },
-	{ "mpv",				NULL,       NULL,        1 << 7,       0,		0,           -1 },
-	{ "discord",			NULL,       NULL,        1 << 9,       0,		0,           -1 },
-	{ NULL,	      			NULL,       "neomutt",   1 << 8,       0,		0,           -1 },
+	{ "Firefox",  			NULL,       NULL,        1 << 2,       1,		0,           -1 },
+	{ "Surf",    			NULL,       NULL,        1 << 2,       1,		0,           -1 },
+	{ "qutebrowser",		NULL,       NULL,        1 << 2,       1,		0,           -1 },
+	{ "tabbed",   			NULL,       NULL,        1 << 2,       1,		0,           -1 },
+	{ "Lutris",   			NULL,       NULL,        1 << 3,       1,		0,           -1 },
+	{ "Wine",   			NULL,       NULL,        1 << 3,       1,		1,           -1 },
+	{ "Steam",   			NULL,       NULL,        1 << 3,       1,		0,           -1 },
+	{ "Pavucontrol",		NULL,       NULL,        1 << 4,       1,		0,           -1 },
+	{ "mpv",				NULL,       NULL,        1 << 7,       1,		0,           -1 },
+	{ "discord",			NULL,       NULL,        1 << 9,       1,		0,           -1 },
+	{ NULL,	      			NULL,       "neomutt",   1 << 8,       1,		0,           -1 },
 	{ NULL,   				NULL,       "ncmpcpp",   1 << 7,       0,		0,           -1 },
 	{ NULL,	      			NULL,       "calcurse",  1 << 6,       0,		0,           -1 },
 	{ NULL,	     		 	NULL,       "newsboat",  1 << 5,       0,		0,           -1 },
@@ -89,9 +91,9 @@ static const char *backldeccmd[] = { "xbacklight", "-dec", "10", NULL };
 // static const char *volupcmd[] 	 = { "amixer", "set", "Master", "5%+", NULL };
 // static const char *voldowncmd[]	 = { "amixer", "set", "Master", "5%-", NULL };
 // static const char *volmutecmd[]	 = { "amixer", "set", "Master", "toggle", NULL };
-static const char *volupcmd[] 	 = { "pactl", "set-sink-volume", "2", "+5%", NULL };
-static const char *voldowncmd[]	 = { "pactl", "set-sink-volume", "2", "-5%", NULL };
-static const char *volmutecmd[]	 = { "pactl", "set-sink-mute", "2", "toggle", NULL };
+static const char *volupcmd[] 	 = { "pactl", "set-sink-volume", "1", "+5%", NULL };
+static const char *voldowncmd[]	 = { "pactl", "set-sink-volume", "1", "-5%", NULL };
+static const char *volmutecmd[]	 = { "pactl", "set-sink-mute", "1", "toggle", NULL };
 static const char *refbarcmd[]	 = { "refbar", NULL };
 static const char *rangercmd[]	 = { "st", "-e", "ranger", NULL };
 
