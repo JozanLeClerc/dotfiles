@@ -93,6 +93,15 @@ let mapleader =","
 	autocmd FileType php inoremap <? <?php  ?><left><left><left>
 	autocmd FileType php inoremap <?<CR> <?php<CR>?><ESC>O
 
+" CSS
+	autocmd FileType css inoremap " ""<left>
+	autocmd FileType css inoremap ' ''<left>
+	autocmd FileType css inoremap ( ()<left>
+	autocmd FileType css inoremap [ []<left>
+	autocmd FileType css inoremap { {}<left>
+	autocmd FileType css inoremap {<CR> {<CR>}<ESC>O
+
+
 " Just in case
 	inoremap " ""<left>
 	inoremap ' ''<left>
