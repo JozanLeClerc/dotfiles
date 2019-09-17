@@ -85,6 +85,7 @@ static const char *dmenucmd[]	 = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont
 static const char *roficmd[]   	 = { "rofi", "-show","run", "-lines", "15","-width", "60", "-padding", "50", "-columns", "3", "-font", "NotoSans 14", "-scroll-method", "1", NULL };
 static const char *termcmd[]   	 = { "st", NULL };
 static const char *qbcmd[]  	 = { "qutebrowser", NULL };
+static const char *lutriscmd[] 	 = { "lutris", NULL };
 static const char *lockcmd[]	 = { "i3lock-fancy", NULL };
 static const char *backlinccmd[] = { "xbacklight", "-inc", "10", NULL };
 static const char *backldeccmd[] = { "xbacklight", "-dec", "10", NULL };
@@ -108,6 +109,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_l,	   					spawn,				{.v = lockcmd } },
 	{ MODKEY,				XK_1,	   					spawn,				{.v = rangercmd } },
 	{ MODKEY,				XK_3,	   		   			spawn,				{.v = qbcmd } },
+	{ MODKEY,				XK_4,	   		   			spawn,				{.v = lutriscmd } },
 	{ MODKEY,               XK_Escape, 		  			togglebar,			{0} },
 	{ MODKEY,               XK_j,      		  			focusstack,			{.i = +1 } },
 	{ MODKEY,               XK_k,      		  			focusstack,			{.i = -1 } },
@@ -153,6 +155,7 @@ static Key keys[] = {
 	TAGKEYS(                XK_F9,						8)
 	TAGKEYS(                XK_F10,						9)
 	TAGKEYS(                XK_3,						2)
+	TAGKEYS(                XK_4,						3)
 	{ MODKEY,               XK_u,						focusurgent,		{0} },
 	{ MODKEY|ShiftMask,     XK_e,						quit,				{0} },
 };
