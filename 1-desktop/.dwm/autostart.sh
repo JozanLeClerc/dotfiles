@@ -11,7 +11,7 @@ sleep 0.5s
 st -e ranger &
 sleep 0.5s
 st &
-#mpd &
+mpd &
 #mopidy &
 st -e neomutt &
 st -e ncmpcpp &
@@ -47,6 +47,6 @@ kbl(){
 	echo -e "layout: $layout"
 }
 while true; do
-	xsetroot -name " $(kbl) | $(tem) | $(dsk) | $(ips) | $(bat) | $(dte)"
+	xsetroot -name " $(kbl) | $(tem) | $(dsk) | $(ips) | $(dte)"
 	sleep 1m # Update time 1 minute
 done &
