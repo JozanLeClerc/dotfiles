@@ -3,13 +3,13 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/jozan/.oh-my-zsh"
-export TERM="st-256color"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="jozanofastora"
+
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -69,7 +69,6 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -99,25 +98,82 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-function powerline_precmd() {
-    PS1="$(powerline-shell --shell zsh $?)"
-}
 
-function install_powerline_precmd() {
-  for s in "${precmd_functions[@]}"; do
-    if [ "$s" = "powerline_precmd" ]; then
-      return
-    fi
-  done
-  precmd_functions+=(powerline_precmd)
-}
+### UNCOMMENT TO RE-ENABLE POWERLINE SHELL ###
 
-if [ "$TERM" != "linux" ]; then
-    install_powerline_precmd
-fi
-POWERLEVEL9K_MODE="nerdfont-complete"
-source  ~/.oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme
-
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh dir dir_writable os_icon)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time root_indicator background_jobs vcs symfony2_tests)
+## function powerline_precmd() {
+##     PS1="$(powerline-shell --shell zsh $?)"
+## }
+## 
+## function install_powerline_precmd() {
+##   for s in "${precmd_functions[@]}"; do
+##     if [ "$s" = "powerline_precmd" ]; then
+##       return
+##     fi
+##   done
+##   precmd_functions+=(powerline_precmd)
+## }
+## 
+## if [ "$TERM" != "linux" ]; then
+##     install_powerline_precmd
+## fi
+## POWERLEVEL9K_MODE="nerdfont-complete"
+## source  ~/.oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme
+## 
+## POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh dir dir_writable os_icon)
+## POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time root_indicator background_jobs vcs symfony2_tests)
 # POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+
+
+# ======================================================================================== #
+# =========================================== REMAKE ===================================== #
+# ======================================================================================== #
+
+# Colors and change prompt
+# autoload -U colors && colors
+# PS1="%B%{$fg[blue]%}[%n@%M %{$fg[magenta]%}%~%{$fg[blue]%}]%{$reset_color%}%% "
+
+# History
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.cache/zsh/history
+
+# vi-mode
+bindkey -v
+export KEYTIMEOUT=1
+
+# git
+plugins=(git)
+
+# Use vim keys in tab complete menu:
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
+
+# Change cursor shape for different vi modes.
+function zle-keymap-select {
+		if [[ ${KEYMAP} == vicmd ]] ||
+				[[ $1 = 'block' ]]; then
+						echo -ne '\e[1 q'
+		elif [[ ${KEYMAP} == main ]] ||
+				[[ ${KEYMAP} == viins ]] ||
+				[[ ${KEYMAP} = '' ]] ||
+				[[ $1 = 'beam' ]]; then
+						echo -ne '\e[1 q'
+		fi
+}
+zle -N zle-keymap-select
+echo -ne '\e[1 q' # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[1 q' ;} # Use beam shape cursor for each new prompt.
+
+# Edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
+
+# Syntax colors
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+
+# Alias
+alias c='clear'
