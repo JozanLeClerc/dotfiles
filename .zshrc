@@ -134,9 +134,9 @@ source $ZSH/oh-my-zsh.sh
 # PS1="%B%{$fg[blue]%}[%n@%M %{$fg[magenta]%}%~%{$fg[blue]%}]%{$reset_color%}%% "
 
 # History
-HISTSIZE=10000
-SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
+## HISTSIZE=10000
+## SAVEHIST=10000
+## HISTFILE=~/.cache/zsh/history
 
 # vi-mode
 bindkey -v
