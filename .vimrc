@@ -19,6 +19,10 @@ let mapleader =","
 " Enable autocompletion:
 	set wildmode=longest,list,full
 
+" Previous / next buffer
+	noremap <C-j> :bp<CR>
+	noremap <C-k> :bn<CR>
+
 " Disables automatic commenting on newline:
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
