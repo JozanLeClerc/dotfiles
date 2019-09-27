@@ -1,8 +1,10 @@
 #!/bin/bash
+
 cd ~/
 compton &
+feh --bg-scale /home/jozan/Images/dwm.png &
 setxkbmap -layout us,fr -option grp:alt_shift_toggle
-xset r rate 175 60
+xset r rate 225 60
 dunst > /dev/null 2>&1 &
 st -e htop &
 sleep 0.5s
