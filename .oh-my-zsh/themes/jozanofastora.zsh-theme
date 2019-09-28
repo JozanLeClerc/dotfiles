@@ -19,7 +19,7 @@ fi
 # PROMPT='%{$fg[$user_color]%}$(_fishy_collapsed_wd)%{$reset_color%}%(!.#.>) '
 # PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
 
-PS1='%B%{$fg[blue]%}[%n@%M %{$fg[green]%}%~%{$fg[blue]%}]%{$reset_color%}%% '
+PS1='%B%{$fg[blue]%}[%n@%M %{$fg[green]%}%c%{$fg[blue]%}]%{$reset_color%}%% '
 
 local return_status="%{$fg_bold[red]%}%(?..%?)%{$reset_color%}"
 RPROMPT="${RPROMPT}"'${return_status}$(git_prompt_info)$(git_prompt_status)%{$reset_color%}'
