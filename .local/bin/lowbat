@@ -1,0 +1,21 @@
+#!/bin/bash
+
+notify() {
+				notify-send "Low battery" "Please plug in computer" -u critical -t 15000
+				echo "beep beep - low battery" | espeak
+}
+
+while [ 1 ]; do
+				acstat=$(acpi | awk '{print $3}' | rev | cut -c 2- | rev)
+				batlvl=$(acpi | awk '{print $4}' | rev | cut -c 3- | rev)
+				while [[ $acstat == "Discharging" && $batlvl -lt 25 ]]; do
+								$(notify)
+								sleep 20
+								acstat=$(acpi | awk '{print $3}' | rev | cut -c 2- | rev)
+								batlvl=$(acpi | awk '{print $4}' | rev | cut -c 3- | rev)
+								if [[ $acstat == "Charging" ]]; then
+												break
+								fi
+				done
+				sleep 240
+done
