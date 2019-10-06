@@ -5,7 +5,9 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "DroidSansMono Nerd Font:pixelsize=14:antialias=true:hinting=true";
+//static char *font = "DroidSansMono Nerd Font:pixelsize=14:antialias=true:hinting=true";
+//static char *font = "Inconsolata Nerd Font:pixelsize=16:antialias=true:hinting=true";
+static char *font = "UbuntuMono Nerd Font:pixelsize=16:antialias=true:hinting=true";
 static int borderpx = 0;
 
 /*
@@ -84,51 +86,94 @@ unsigned int tabspaces = 8;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	/* 8 normal colors */
+	/* 8 normal Atelier forest */
 	// Black
-	"#151515",
+	"#1b1918",
 	// Red
-	"#ac4142",
+	"#f22c40",
 	// Green
-	"#90a050",
+	"#7b9726",
 	// Yellow
-	"#f4bf75",
+	"#c38418",
 	// Blue
-	"#6a9fb5",
+	"#407ee7",
 	// Magenta
-	"#aa759f",
+	"#6666ea",
 	// Cyan
-	"#75b5aa",
+	"#3d97b8",
 	// White
-	"#d0d0d0",
+	"#a8a19f",
 
-	/* 8 bright colors */
-	
+	/* 8 normal colors 
+	** // Black
+	** "#151515",
+	** // Red
+	** "#ac4142",
+	** // Green
+	** "#90a050",
+	** // Yellow
+	** "#f4bf75",
+	** // Blue
+	** "#6a9fb5",
+	** // Magenta
+	** "#aa759f",
+	** // Cyan
+	** "#75b5aa",
+	** // White
+	** "#d0d0d0",
+	** 8 normal colors */
+
+	/* 8 bright Atelier forest */
 	// Black
-	"#41535B",
+	"#766e6b",
 	// Red
-	"#ac4142",
+	"#df5320",
 	// Green
-	"#90a050",
+	"#2c2421",
 	// Yellow
-	"#f4bf75",
+	"#68615e",
 	// Blue
-	"#6a9fb5",
+	"#9c9491",
 	// Magenta
-	"#aa759f",
+	"#e6e2e0",
 	// Cyan
-	"#75b5aa",
+	"#c33ff3",
 	// White
-	"#f5f5f5",
+	"#f1efee",
+	/* 8 bright colors
+	** // Black
+	** "#41535B",
+	** // Red
+	** "#ac4142",
+	** // Green
+	** "#90a050",
+	** // Yellow
+	** "#f4bf75",
+	** // Blue
+	** "#6a9fb5",
+	** // Magenta
+	** "#aa759f",
+	** // Cyan
+	** "#75b5aa",
+	** // White
+	** "#f5f5f5",
+	8 bright colors */
 
 	[255] = 0,
 
 	/* more colors can be added after 255 to use with DefaultXX */
-	/*"#0A0C0D",*/
+	/* Normal
+	** // Background
+	** "#0D0E0F",
+	** // Foreground
+	** "#F3F4F5",
+	Normal */
+
+	/* Atelier forest */
 	// Background
-	"#0D0E0F",
+	"#1b1918",
 	// Foreground
-	"#F3F4F5",
+	"#a8a19f",
 };
 
 
