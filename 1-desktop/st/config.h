@@ -7,7 +7,7 @@
  */
 static char *font = "DejaVuSansMono Nerd Font:pixelsize=14:antialias=true:autohint=true";
 /* static int borderpx = 25; */
-static int borderpx = 0;
+static int borderpx = 12;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -84,8 +84,8 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-/* float alpha = 0.98; */
-float alpha = 1;
+float alpha = 0.45;
+// float alpha = 1; 
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
