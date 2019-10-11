@@ -1,10 +1,12 @@
+let mapleader=","
+
 " Plugins
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 " Some basics:
-"	set bg=light
+	"set bg=light
 	set go=a
 	set mouse=a
 	set nohlsearch
@@ -25,13 +27,11 @@ call plug#end()
 " Previous / next buffer
 	noremap <C-k> :bprevious<CR>
 	noremap <C-j> :bnext<CR>
-	map <C-S-t> :bp <BAR> bd #<CR>
+	noremap <leader>w :w<CR> :bp <BAR> :bd #<CR>
 
 " Airline
 	let g:airline#extensions#tabline#enabled = 1
 	let g:airline#extensions#tabline#fnamemod = ':t'
-	"let g:airline_left_sep = '>'
-	"let g:airline_right_sep = '<'
 	let g:airline_detect_modified = 1
 	let g:airline_detect_paste = 1
 	let g:airline_detect_crypt = 1
