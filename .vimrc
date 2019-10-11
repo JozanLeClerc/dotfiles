@@ -1,5 +1,6 @@
-let mapleader =","
-
+" Plugins
+call plug#begin('~/.vim/plugged')
+call plug#end()
 
 " Some basics:
 "	set bg=light
@@ -15,19 +16,24 @@ let mapleader =","
 	set number
 	set ruler
 	syntax on
+	set hidden
 
 " Enable autocompletion:
 	set wildmode=longest,list,full
 
 " Previous / next buffer
-	noremap <C-j> :bp<CR>
-	noremap <C-k> :bn<CR>
+	noremap <C-k> :bprevious<CR>
+	noremap <C-j> :bnext<CR>
+	map <C-w> :bp <BAR> bd #<CR>
+
+" Airline
+	let g:airline#extensions#tabline#enabled = 1
+	let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Disables automatic commenting on newline:
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Powerline
-	set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 	set laststatus=2
 	set t_Co=256
 
@@ -40,8 +46,8 @@ let mapleader =","
 
 " Compile C file
 	autocmd FileType c noremap <silent> <F8> :w<CR>:!clear;gcc<space>-Wall<space>-Wextra<space>-Werror % <CR>
-	autocmd FileType c noremap <F9> :!clear; ./a.out  && echo "~>\n\n.vimrc 2.1.1-release Tilde Edition by Joe"<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
-	autocmd FileType c noremap <F10> :!clear; ./a.out && echo "~>\n\n.vimrc 2.1.1-release Tilde Edition by Joe"<CR>
+	autocmd FileType c noremap <F9> :!clear; ./a.out  && echo "~>\n\n.vimrc 2.3-release Tilde Edition by Joe"<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
+	autocmd FileType c noremap <F10> :!clear; ./a.out && echo "~>\n\n.vimrc 2.3-release Tilde Edition by Joe"<CR>
 " === Comfy ===
 " C
 	autocmd FileType c inoremap " ""<left>
@@ -118,3 +124,5 @@ let mapleader =","
 	inoremap [] []
 	inoremap {} {}
 	inoremap <> <>
+
+" .vimrc 2.3-release | Copyright Joe 2k19
