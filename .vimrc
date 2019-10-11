@@ -1,5 +1,6 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 " Some basics:
@@ -24,11 +25,20 @@ call plug#end()
 " Previous / next buffer
 	noremap <C-k> :bprevious<CR>
 	noremap <C-j> :bnext<CR>
-	map <C-w> :bp <BAR> bd #<CR>
+	map <C-S-t> :bp <BAR> bd #<CR>
 
 " Airline
 	let g:airline#extensions#tabline#enabled = 1
 	let g:airline#extensions#tabline#fnamemod = ':t'
+	"let g:airline_left_sep = '>'
+	"let g:airline_right_sep = '<'
+	let g:airline_detect_modified = 1
+	let g:airline_detect_paste = 1
+	let g:airline_detect_crypt = 1
+	let g:airline_theme = 'term'
+	let g:airline_powerline_fonts = 1
+	let g:airline_symbols_ascii = 1
+	let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 
 " Disables automatic commenting on newline:
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
