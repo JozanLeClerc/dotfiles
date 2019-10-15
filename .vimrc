@@ -83,12 +83,18 @@ call plug#end()
 	autocmd BufWritePost *.tex !compiler %
 
 " Compile C file
-	autocmd FileType c noremap <F5> :w<CR> :!clear<CR> :!~/.vim/cf5.sh;<CR>
-	autocmd FileType c noremap <F6> :w<CR> :!clear<CR> :!~/.vim/cf6.sh;<CR>
+	autocmd FileType c noremap <F5> :w<CR> :!clear<CR> :!~/.vim/c/f5.sh;<CR>
+	autocmd FileType c noremap <F6> :w<CR> :!clear<CR> :!~/.vim/c/f6.sh;<CR>
 	autocmd FileType c noremap <F8> :w<CR>:!gcc<space>-Wall<space>-Wextra<space>-Werror %<CR>
-	autocmd FileType c noremap <F9> :w<CR> :!clear<CR> :!~/.vim/cf9.sh % 
-	autocmd FileType c noremap <F10> :w<CR> :!clear<CR> :!~/.vim/cf10.sh %<CR>
+	autocmd FileType c noremap <F9> :w<CR> :!clear<CR> :!~/.vim/c/f9.sh % 
+	autocmd FileType c noremap <F10> :w<CR> :!clear<CR> :!~/.vim/c/f10.sh %<CR>
 
+" Compile C++ file
+	autocmd FileType cpp noremap <F5> :w<CR> :!clear<CR> :!~/.vim/cpp/f5.sh;<CR>
+	autocmd FileType cpp noremap <F6> :w<CR> :!clear<CR> :!~/.vim/cpp/f6.sh;<CR>
+	autocmd FileType cpp noremap <F8> :w<CR>:!g++<space>-Wall<space>-Wextra<space>-Werror %<CR>
+	autocmd FileType cpp noremap <F9> :w<CR> :!clear<CR> :!~/.vim/cpp/f9.sh % 
+	autocmd FileType cpp noremap <F10> :w<CR> :!clear<CR> :!~/.vim/cpp/f10.sh %<CR>
 " === Comfy ===
 " C
 	autocmd FileType c inoremap " ""<left>

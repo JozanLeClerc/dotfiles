@@ -5,10 +5,11 @@ if [ $? -ne 0 ]; then
 	exit
 fi
 echo "__"
-./a.out ${@:2}
+./a.out
 ret=$?
 if [ $ret -ne 0 ]; then
-	echo -n "~> retrun $ret"
+	echo "~>"
+	echo -n "retrun $ret"
 	if [ $ret -eq 139 ]; then
 		echo " - Segv!"
 	elif [ $ret -eq 134 ]; then

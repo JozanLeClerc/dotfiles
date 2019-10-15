@@ -1,15 +1,15 @@
 #!/bin/zsh
 
-file=$(pwd)"/a.out"
-if [ ! -r $file ]; then
-	echo "Failed! a.out does not exist"
+g++ -Wall -Wextra -Werror $1
+if [ $? -ne 0 ]; then
 	exit
 fi
 echo "__"
-./a.out
+./a.out ${@:2}
 ret=$?
 if [ $ret -ne 0 ]; then
-	echo -n "~> retrun $ret"
+	echo "~>"
+	echo -n "retrun $ret"
 	if [ $ret -eq 139 ]; then
 		echo " - Segv!"
 	elif [ $ret -eq 134 ]; then
