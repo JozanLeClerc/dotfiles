@@ -2,6 +2,7 @@ let mapleader=","
 
 " Plugins
 call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
@@ -12,6 +13,8 @@ call plug#end()
 	set nohlsearch
 	set clipboard=unnamedplus
 	set tabstop=4
+	set softtabstop=4
+	set shiftwidth=4
 	nnoremap c "_c
 	set nocompatible
 	filetype plugin indent on
@@ -25,9 +28,9 @@ call plug#end()
 	set wildmode=longest,list,full
 
 " Previous / next buffer
-	noremap <C-k> :bprevious<CR>
-	noremap <C-j> :bnext<CR>
-	noremap <leader>w :w<CR> :bp <BAR> :bd #<CR>
+	noremap <silent> <C-k> :bprevious<CR>
+	noremap <silent> <C-j> :bnext<CR>
+	noremap <silent> <leader>w :w <BAR> :bp <BAR> :bd #<CR>
 
 " Airline
 	let g:airline#extensions#tabline#enabled = 1
@@ -39,6 +42,31 @@ call plug#end()
 	let g:airline_powerline_fonts = 1
 	let g:airline_symbols_ascii = 1
 	let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+
+" Cursor mode
+	let g:airline#extensions#cursormode#enabled = 1
+	let g:cursormode_color_map = {
+	\	"i": 		"#7da9c7",
+	\	"n": 		"#eac179",
+	\	"R": 		"#bb5653",
+	\	"r": 		"#bb5653",
+	\	"v": 		"#b06597",
+	\	"V": 		"#b06597",
+	\	"\<C-V>":	"#b06597",
+	\}
+
+" 10 buffers jump
+	let g:airline#extensions#tabline#buffer_idx_mode = 1
+	nmap <leader>1 <Plug>AirlineSelectTab1
+	nmap <leader>2 <Plug>AirlineSelectTab2
+	nmap <leader>3 <Plug>AirlineSelectTab3
+	nmap <leader>4 <Plug>AirlineSelectTab4
+	nmap <leader>5 <Plug>AirlineSelectTab5
+	nmap <leader>6 <Plug>AirlineSelectTab6
+	nmap <leader>7 <Plug>AirlineSelectTab7
+	nmap <leader>8 <Plug>AirlineSelectTab8
+	nmap <leader>9 <Plug>AirlineSelectTab9
+	nmap <leader>0 <Plug>AirlineSelectTab10
 
 " Disables automatic commenting on newline:
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -55,9 +83,12 @@ call plug#end()
 	autocmd BufWritePost *.tex !compiler %
 
 " Compile C file
-	autocmd FileType c noremap <silent> <F8> :w<CR>:!clear;gcc<space>-Wall<space>-Wextra<space>-Werror % <CR>
-	autocmd FileType c noremap <F9> :!clear; ./a.out  && echo "~>\n\n.vimrc 2.3-release Tilde Edition by Joe"<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
-	autocmd FileType c noremap <F10> :!clear; ./a.out && echo "~>\n\n.vimrc 2.3-release Tilde Edition by Joe"<CR>
+	autocmd FileType c noremap <F5> :w<CR> :!clear<CR> :!~/.vim/cf5.sh;<CR>
+	autocmd FileType c noremap <F6> :w<CR> :!clear<CR> :!~/.vim/cf6.sh;<CR>
+	autocmd FileType c noremap <F8> :w<CR>:!gcc<space>-Wall<space>-Wextra<space>-Werror %<CR>
+	autocmd FileType c noremap <F9> :w<CR> :!clear<CR> :!~/.vim/cf9.sh % 
+	autocmd FileType c noremap <F10> :w<CR> :!clear<CR> :!~/.vim/cf10.sh %<CR>
+
 " === Comfy ===
 " C
 	autocmd FileType c inoremap " ""<left>
@@ -75,6 +106,9 @@ call plug#end()
 	autocmd FileType c nnoremap <Leader>M o#include<space><stdio.h><CR>#include<space><string.h><CR>#include<space><stdlib.h><CR>#include<space><stddef.h><CR>int<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<space>{<CR>printf("NOT<space>ENOUGH<space>ARGS\n");<CR>return<space>1;<CR>}<CR>return<space>0;<CR>}<up><ESC>Oprintf();<left><left>
 
 " C++
+	autocmd FileType cpp noremap <silent> <F8> :w<CR>:!g++<space>-Wall<space>-Wextra<space>-Werror -O3 % <CR>
+	autocmd FileType cpp noremap <F9> :w<CR>:!g++ -Wall -Wextra -Werror -O3 %; ./a.out  ; echo "~>\n\n.vimrc 2.3.1-release Tilde Edition by Joe"; rm a.out<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
+	autocmd FileType cpp noremap <F10> :w<CR>:!g++ -Wall -Wextra -Werror -O3 %; ./a.out; echo "~>\n\n.vimrc 2.3.1-release Tilde Edition by Joe"; rm a.out<CR>
 	autocmd FileType cpp inoremap " ""<left>
 	autocmd FileType cpp inoremap ' ''<left>
 	autocmd FileType cpp inoremap ( ()<left>
@@ -135,4 +169,4 @@ call plug#end()
 	inoremap {} {}
 	inoremap <> <>
 
-" .vimrc 2.3-release | Copyright Joe 2k19
+" .vimrc 2.4.1-release | Copyright Joe 2k19
