@@ -11,7 +11,7 @@ if [ $ret -ne 0 ]; then
 	echo "~>"
 	echo -n "retrun $ret"
 	if [ $ret -eq 139 ]; then
-		echo " - Segv!"
+		echo " - Segmentation fault!"
 	elif [ $ret -eq 134 ]; then
 		echo " - Abort!"
 	elif [ $ret -eq 138 ]; then
