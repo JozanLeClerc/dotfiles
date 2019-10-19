@@ -1,6 +1,11 @@
-(setq mac-control-modifier 'control)
-(setq mac-command-modifier 'meta)
-(setq mac-right-option-modifier 'control)
+;; (setq mac-control-modifier 'control)
+;; (setq mac-command-modifier 'meta)
+;; (setq mac-right-option-modifier 'control)
+
+(setq mac-option-key-is-meta nil
+      mac-command-key-is-meta t
+      mac-command-modifier 'meta
+      mac-option-modifier 'none)
 
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
@@ -15,10 +20,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+	("73a13a70fd111a6cd47f3d4be2260b1e4b717dbf635a9caee6442c949fad41cd" "da538070dddb68d64ef6743271a26efd47fbc17b52cc6526d932b9793f92b718" "9b1c580339183a8661a84f5864a6c363260c80136bd20ac9f00d7e1d662e936a" "1b27e3b3fce73b72725f3f7f040fd03081b576b1ce8bbdfcb0212920aec190ad" default)))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-	(color-theme electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
+	(magit smart-tabs-mode airline-themes color-theme electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
  '(tabbar-separator (quote (0.2))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -29,21 +37,33 @@
 
 (menu-bar-mode -1)
 
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+	  backup-by-copying t
+	  version-control t
+	  delete-old-versions t
+	  kept-new-versions 20
+	  kept-old-versions 5)
+
 (require 'evil)
 (evil-mode t)
 
-(setq evil-emacs-state-cursor '("red" box))
-(setq evil-normal-state-cursor '("yellow" box))
-(setq evil-visual-state-cursor '("magenta" box))
-(setq evil-insert-state-cursor '("yellow" bar))
-(setq evil-replace-state-cursor '("red" hollow))
-(setq evil-operator-state-cursor '("red" hollow))
+;; (setq evil-emacs-state-cursor '("red" box))
+;; (setq evil-normal-state-cursor '("yellow" box))
+;; (setq evil-visual-state-cursor '("magenta" box))
+;; (setq evil-insert-state-cursor '("yellow" bar))
+;; (setq evil-replace-state-cursor '("red" hollow))
+;; (setq evil-operator-state-cursor '("red" hollow))
+
+
+(require 'tabbar)
+(global-set-key (kbd "M-k") nil)
+(global-set-key (kbd "M-j") nil)
+(global-set-key (kbd "M-k") 'tabbar-backward)
+(global-set-key (kbd "M-j") 'tabbar-forward)
 
 (use-package tabbar
   :ensure t
   :bind
-  ("<C-k>" . tabbar-backward-tab)
-  ("<C-j>" . tabbar-forward-tab)
 
   :config
   (set-face-attribute
@@ -149,6 +169,7 @@ mouse-3: Open %S in another window"
 (global-evil-search-highlight-persist 1)
 
 (evil-leader/set-key "SPC" 'evil-search-highlight-persist-remove-all)
+(evil-leader/set-key "w" 'kill-buffer)
 
 (require 'helm-config)
 (require 'helm-misc)
@@ -178,8 +199,13 @@ mouse-3: Open %S in another window"
 		       "*helm-my-buffers*")))
 
 (require 'powerline)
-(powerline-evil-vim-color-theme)
 (display-time-mode t)
+(line-number-mode t)
+(column-number-mode t)
+(setq mode-line-format nil)
+
+(require 'airline-themes)
+(load-theme 'airline-raven)
 
 (require 'color-identifiers-mode)
 (global-color-identifiers-mode)
@@ -226,8 +252,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ))
 (ad-activate 'paredit-mode)
 
-(require 'electric-spacing)
-(add-hook 'c-mode-hook #'electric-spacing-mode)
+;; (require 'electric-spacing)
+;; (add-hook 'c-mode-hook #'electric-spacing-mode)
+
 (add-hook 'c-mode-hook
 		  (lambda ()
 			(unless (file-exists-p "Makefile")
@@ -238,24 +265,38 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 				   ;; $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
 				   (let ((file (file-name-nondirectory buffer-file-name)))
 					 (format "%s %s %s -o a.out"
-							 (or (getenv "CC") "clang")
+							 (or (getenv "CC") "gcc")
 							 (buffer-name)
 							 (or (getenv "CFLAGS") "-Wall -Wextra -Werror -g3")
 							       ))))))
 
-(defun exec-c-f9 ()
+(setq compilation-finish-function
+(lambda (buf str)
+    (if (null (string-match ".*exited abnormally.*" str))
+        ;;no errors, make the compilation window go away in a few seconds
+        (progn
+          (run-at-time
+           "2 sec" nil 'delete-windows-on
+           (get-buffer-create "*compilation*"))
+          (message "")))))
+
+(defun exec-f9 ()
   (interactive)
   (defvar comp)
-  (setq comp (concat "clang -Wall -Wextra -Werror -g3 " (buffer-name)))
-  (compile comp))
+  (when (string= (file-name-extension buffer-file-name) "c")
+	(setq comp (concat "gcc -Wall -Wextra -Werror -g3 " (buffer-name))))
+  (when (string= (file-name-extension buffer-file-name) "cpp")
+	(setq comp (concat "g++ -Wall -Wextra -Werror -g3 " (buffer-name))))
+  (compile comp)
+  (compilation-finish-function))
 
-(defun exec-c-f10 ()
+(defun exec-f10 ()
   "Asks for a command and executes it in inferior shell with current buffer
 as input."
   (interactive)
   (defvar exec)
-  (setq exec "./a.out; echo \"~> $?\n\n.emacs v1.1-beta by Joe\"; rm a.out;")
+  (setq exec "./a.out; echo \"~>\n$?\n\n.emacs v0.3-beta by Joe\"; rm a.out; rm -rf a.out.dSYM;")
   (shell-command exec))
 
-(global-set-key [f9] 'exec-c-f9)
-(global-set-key [f10] 'exec-c-f10)
+(global-set-key [f9]  'exec-f9)
+(global-set-key [f10] 'exec-f10)
