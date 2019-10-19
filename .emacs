@@ -1,3 +1,15 @@
+(setq mac-control-modifier 'control)
+(setq mac-command-modifier 'meta)
+(setq mac-right-option-modifier 'control)
+
+(require 'package)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/1"))
+
+(setq package-enable-at-startup nil)
+(package-initialize)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -6,20 +18,14 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (elscreen-tab ## tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode))))
+	(color-theme electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
+ '(tabbar-separator (quote (0.2))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-(require 'package)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/1"))
-
-(setq package-enable-at-startup nil)
-(package-initialize)
 
 (menu-bar-mode -1)
 
@@ -36,8 +42,8 @@
 (use-package tabbar
   :ensure t
   :bind
-  ("<C-S-iso-lefttab>" . tabbar-backward)
-  ("<C-tab>" . tabbar-forward)
+  ("<C-k>" . tabbar-backward-tab)
+  ("<C-j>" . tabbar-forward-tab)
 
   :config
   (set-face-attribute
@@ -175,8 +181,6 @@ mouse-3: Open %S in another window"
 (powerline-evil-vim-color-theme)
 (display-time-mode t)
 
-(define-key global-map (kbd "RET") 'newline-and-indent)
-
 (require 'color-identifiers-mode)
 (global-color-identifiers-mode)
 
@@ -200,3 +204,58 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
 (global-set-key [escape] 'evil-exit-emacs-state)
+
+(setq-default indent-tabs-mode t)
+(setq tab-always-indent t)
+(setq-default tab-width 4)
+(setq tab-width 4)
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
+
+(setq c-default-style "bsd")
+
+(require 'autopair)
+(autopair-global-mode)
+
+(require 'paredit)
+(defadvice paredit-mode (around disable-autopairs-around (arg))
+  ad-do-it
+  (if (null ad-return-value)
+    (autopair-mode 1)
+  (autopair-mode 0)
+))
+(ad-activate 'paredit-mode)
+
+(require 'electric-spacing)
+(add-hook 'c-mode-hook #'electric-spacing-mode)
+(add-hook 'c-mode-hook
+		  (lambda ()
+			(unless (file-exists-p "Makefile")
+			  (set (make-local-variable 'compile-command)
+				   ;; emulate make's .c.o implicit pattern rule, but with
+				   ;; different defaults for the CC, CPPFLAGS, and CFLAGS
+				   ;; variables:
+				   ;; $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
+				   (let ((file (file-name-nondirectory buffer-file-name)))
+					 (format "%s %s %s -o a.out"
+							 (or (getenv "CC") "clang")
+							 (buffer-name)
+							 (or (getenv "CFLAGS") "-Wall -Wextra -Werror -g3")
+							       ))))))
+
+(defun exec-c-f9 ()
+  (interactive)
+  (defvar comp)
+  (setq comp (concat "clang -Wall -Wextra -Werror -g3 " (buffer-name)))
+  (compile comp))
+
+(defun exec-c-f10 ()
+  "Asks for a command and executes it in inferior shell with current buffer
+as input."
+  (interactive)
+  (defvar exec)
+  (setq exec "./a.out; echo \"~> $?\n\n.emacs v1.1-beta by Joe\"; rm a.out;")
+  (shell-command exec))
+
+(global-set-key [f9] 'exec-c-f9)
+(global-set-key [f10] 'exec-c-f10)
