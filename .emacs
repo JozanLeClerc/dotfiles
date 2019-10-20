@@ -22,11 +22,11 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-	("73a13a70fd111a6cd47f3d4be2260b1e4b717dbf635a9caee6442c949fad41cd" "da538070dddb68d64ef6743271a26efd47fbc17b52cc6526d932b9793f92b718" "9b1c580339183a8661a84f5864a6c363260c80136bd20ac9f00d7e1d662e936a" "1b27e3b3fce73b72725f3f7f040fd03081b576b1ce8bbdfcb0212920aec190ad" default)))
+	("b6f06081b007b57be61b82fb53f27315e2cf38fa690be50d6d63d2b62a408636" "d8a7a7d2cffbc55ec5efbeb5d14a5477f588ee18c5cddd7560918f9674032727" "a11043406c7c4233bfd66498e83600f4109c83420714a2bd0cd131f81cbbacea" "67b11ee5d10f1b5f7638035d1a38f77bca5797b5f5b21d16a20b5f0452cbeb46" "4c8372c68b3eab14516b6ab8233de2f9e0ecac01aaa859e547f902d27310c0c3" "b8c5adfc0230bd8e8d73450c2cd4044ad7ba1d24458e37b6dec65607fc392980" "b5cff93c3c6ed12d09ce827231b0f5d4925cfda018c9dcf93a2517ce3739e7f1" "cdc2a7ba4ecf0910f13ba207cce7080b58d9ed2234032113b8846a4e44597e41" "72c530c9c8f3561b5ab3bf5cda948cd917de23f48d9825b7a781fe1c0d737f2f" "780c67d3b58b524aa485a146ad9e837051918b722fd32fd1b7e50ec36d413e70" "73a13a70fd111a6cd47f3d4be2260b1e4b717dbf635a9caee6442c949fad41cd" "da538070dddb68d64ef6743271a26efd47fbc17b52cc6526d932b9793f92b718" "9b1c580339183a8661a84f5864a6c363260c80136bd20ac9f00d7e1d662e936a" "1b27e3b3fce73b72725f3f7f040fd03081b576b1ce8bbdfcb0212920aec190ad" default)))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-	(magit smart-tabs-mode airline-themes color-theme electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
+	(color-theme-modern auto-complete-c-headers command-log-mode auto-complete magit smart-tabs-mode airline-themes electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
  '(tabbar-separator (quote (0.2))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -47,12 +47,12 @@
 (require 'evil)
 (evil-mode t)
 
-;; (setq evil-emacs-state-cursor '("red" box))
-;; (setq evil-normal-state-cursor '("yellow" box))
-;; (setq evil-visual-state-cursor '("magenta" box))
-;; (setq evil-insert-state-cursor '("yellow" bar))
-;; (setq evil-replace-state-cursor '("red" hollow))
-;; (setq evil-operator-state-cursor '("red" hollow))
+(setq evil-emacs-state-cursor '("red" box))
+(setq evil-normal-state-cursor '("yellow" box))
+(setq evil-visual-state-cursor '("magenta" box))
+(setq evil-insert-state-cursor '("yellow" bar))
+(setq evil-replace-state-cursor '("red" hollow))
+(setq evil-operator-state-cursor '("red" hollow))
 
 
 (require 'tabbar)
@@ -60,6 +60,7 @@
 (global-set-key (kbd "M-j") nil)
 (global-set-key (kbd "M-k") 'tabbar-backward)
 (global-set-key (kbd "M-j") 'tabbar-forward)
+(global-set-key [backtab] "\t")
 
 (use-package tabbar
   :ensure t
@@ -200,9 +201,6 @@ mouse-3: Open %S in another window"
 
 (require 'powerline)
 (display-time-mode t)
-(line-number-mode t)
-(column-number-mode t)
-(setq mode-line-format nil)
 
 (require 'airline-themes)
 (load-theme 'airline-raven)
@@ -212,6 +210,11 @@ mouse-3: Open %S in another window"
 
 (require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+
+(require 'auto-complete)
+
+(require 'auto-complete-config)
+(ac-config-default)
 
 (defun minibuffer-keyboard-quit ()
   "Abort recursive edit.
@@ -284,7 +287,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (interactive)
   (defvar comp)
   (when (string= (file-name-extension buffer-file-name) "c")
-	(setq comp (concat "gcc -Wall -Wextra -Werror -g3 " (buffer-name))))
+	;; tmp (setq comp (concat "gcc -Wall -Wextra -Werror -g3 " (buffer-name))))
+	(setq comp (concat "make -j4 run")))
   (when (string= (file-name-extension buffer-file-name) "cpp")
 	(setq comp (concat "g++ -Wall -Wextra -Werror -g3 " (buffer-name))))
   (compile comp)
@@ -295,7 +299,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 as input."
   (interactive)
   (defvar exec)
-  (setq exec "./a.out; echo \"~>\n$?\n\n.emacs v0.3-beta by Joe\"; rm a.out; rm -rf a.out.dSYM;")
+  (setq exec "./a.out; echo \"~>\n$?\n\n.emacs v0.4-beta by Joe\"; rm a.out; rm -rf a.out.dSYM;")
   (shell-command exec))
 
 (global-set-key [f9]  'exec-f9)
