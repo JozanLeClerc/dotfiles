@@ -7,6 +7,9 @@
       mac-command-modifier 'meta
       mac-option-modifier 'none)
 
+(setq x-alt-keysym 'meta)
+(set-keyboard-coding-system nil)
+
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -33,7 +36,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(font-lock-function-name-face ((t (:foreground "color-27")))))
 
 (menu-bar-mode -1)
 
@@ -288,7 +291,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (defvar comp)
   (when (string= (file-name-extension buffer-file-name) "c")
 	;; tmp (setq comp (concat "gcc -Wall -Wextra -Werror -g3 " (buffer-name))))
-	(setq comp (concat "make -j4 run")))
+	(setq comp (concat "make -j4 build")))
   (when (string= (file-name-extension buffer-file-name) "cpp")
 	(setq comp (concat "g++ -Wall -Wextra -Werror -g3 " (buffer-name))))
   (compile comp)
