@@ -29,7 +29,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-	(color-theme-modern auto-complete-c-headers command-log-mode auto-complete magit smart-tabs-mode airline-themes electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
+	(## color-theme-modern auto-complete-c-headers command-log-mode auto-complete magit smart-tabs-mode airline-themes electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
  '(tabbar-separator (quote (0.2))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -63,6 +63,7 @@
 (global-set-key (kbd "M-j") nil)
 (global-set-key (kbd "M-k") 'tabbar-backward)
 (global-set-key (kbd "M-j") 'tabbar-forward)
+
 (global-set-key [backtab] "\t")
 
 (use-package tabbar
@@ -285,25 +286,62 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
            "2 sec" nil 'delete-windows-on
            (get-buffer-create "*compilation*"))
           (message "")))))
+(defun promptargs ()
+  (interactive)
+  (message "Args are %s" (read-string "Enter args: ")))
+
+(defun exec-f5 ()
+  (interactive)
+  (defvar make)
+  (setq make "make -j3 build")
+  (compile make)
+  (compilation-finish-function)) 
+
+(defun exec-f6 ()
+  (interactive)
+  (defvar comp)
+  (when (string= (file-name-extension buffer-file-name) "c")
+	(setq comp (concat "clang -Wall -Wextra -Werror -g3 " (buffer-name))))
+  (when (string= (file-name-extension buffer-file-name) "cpp")
+	(setq comp (concat "clang++ -Wall -Wextra -Werror -g3 " (buffer-name))))
+  (compile comp)
+  (compilation-finish-function))
+
+(defun exec-f7 ()
+  (interactive)
+  (defvar exec)
+  (setq exec "./a.out; ret=$?; echo \"~>\"; if [ $ret -ne 0 ]; then echo -n \"$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\n\n.emacs v0.5-beta by Joe\" && rm a.out && rm -rf a.out.dSYM")
+  (save-buffer)
+  (async-shell-command exec))
 
 (defun exec-f9 ()
   (interactive)
   (defvar comp)
+  (defvar exec)
   (when (string= (file-name-extension buffer-file-name) "c")
-	;; tmp (setq comp (concat "gcc -Wall -Wextra -Werror -g3 " (buffer-name))))
-	(setq comp (concat "make -j4 build")))
+	(setq comp (concat "clang -Wall -Wextra -Werror -g3 " (buffer-name))))
   (when (string= (file-name-extension buffer-file-name) "cpp")
-	(setq comp (concat "g++ -Wall -Wextra -Werror -g3 " (buffer-name))))
+	(setq comp (concat "clang++ -Wall -Wextra -Werror -g3 " (buffer-name))))
+  (setq exec (concat "./a.out " (read-string "Enter args: ") "; ret=$?; echo \"~>\"; if [ $ret -ne 0 ]; then echo -n \"$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\n\n.emacs v0.5-beta by Joe\" && rm a.out && rm -rf a.out.dSYM"))
+  (save-buffer)
   (compile comp)
-  (compilation-finish-function))
+  (async-shell-command exec))
 
 (defun exec-f10 ()
-  "Asks for a command and executes it in inferior shell with current buffer
-as input."
   (interactive)
+  (defvar comp)
   (defvar exec)
-  (setq exec "./a.out; echo \"~>\n$?\n\n.emacs v0.4-beta by Joe\"; rm a.out; rm -rf a.out.dSYM;")
-  (shell-command exec))
+  (when (string= (file-name-extension buffer-file-name) "c")
+	(setq comp (concat "clang -Wall -Wextra -Werror -g3 " (buffer-name))))
+  (when (string= (file-name-extension buffer-file-name) "cpp")
+	(setq comp (concat "clang++ -Wall -Wextra -Werror -g3 " (buffer-name))))
+  (setq exec "./a.out; ret=$?; echo \"~>\"; if [ $ret -ne 0 ]; then echo -n \"$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\n\n.emacs v0.5-beta by Joe\" && rm a.out && rm -rf a.out.dSYM")
+  (save-buffer)
+  (compile comp)
+  (async-shell-command exec))
 
+(global-set-key [f5]  'exec-f5)
+(global-set-key [f6]  'exec-f6)
+(global-set-key [f7]  'exec-f7)
 (global-set-key [f9]  'exec-f9)
 (global-set-key [f10] 'exec-f10)
