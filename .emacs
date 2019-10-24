@@ -1,7 +1,6 @@
 ;; (setq mac-control-modifier 'control)
 ;; (setq mac-command-modifier 'meta)
 ;; (setq mac-right-option-modifier 'control)
-
 (setq mac-option-key-is-meta nil
       mac-command-key-is-meta t
       mac-command-modifier 'meta
@@ -29,16 +28,19 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-	(## color-theme-modern auto-complete-c-headers command-log-mode auto-complete magit smart-tabs-mode airline-themes electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
+	(neotree ranger ## color-theme-modern auto-complete-c-headers command-log-mode auto-complete magit smart-tabs-mode airline-themes electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
  '(tabbar-separator (quote (0.2))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(font-lock-function-name-face ((t (:foreground "color-27")))))
+ '(font-lock-function-name-face ((t (:foreground "color-27"))))
+ '(neo-dir-link-face ((t (:foreground "Blue"))))
+ '(neo-file-link-face ((t (:foreground "color-252")))))
 
 (menu-bar-mode -1)
+(global-display-line-numbers-mode)
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
 	  backup-by-copying t
@@ -64,7 +66,12 @@
 (global-set-key (kbd "M-k") 'tabbar-backward)
 (global-set-key (kbd "M-j") 'tabbar-forward)
 
-(global-set-key [backtab] "\t")
+(evil-define-key 'normal global-map (kbd "C-o") 'delete-other-windows)
+(evil-define-key 'normal global-map (kbd "C-k") 'windmove-up)
+(evil-define-key 'normal global-map (kbd "C-j") 'windmove-down)
+(evil-define-key 'normal global-map (kbd "C-h") 'windmove-left)
+(evil-define-key 'normal global-map (kbd "C-l") 'windmove-right)
+(evil-define-key 'insert global-map [backtab] "\t")
 
 (use-package tabbar
   :ensure t
@@ -190,8 +197,6 @@ mouse-3: Open %S in another window"
       scroll-conservatively 9999
       scroll-step 1)
 
-(global-display-line-numbers-mode)
-
 (defun helm-my-buffers ()
   (interactive)
   (let ((helm-ff-transformer-show-only-basename nil))
@@ -259,8 +264,30 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ))
 (ad-activate 'paredit-mode)
 
-;; (require 'electric-spacing)
-;; (add-hook 'c-mode-hook #'electric-spacing-mode)
+(require 'magit)
+
+(require 'ranger)
+(ranger-override-dired-mode t)
+
+(require 'neotree)
+(setq neo-smart-open t)
+(setq neo-vc-integration '(char))
+(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+(evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
+(evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
+(evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
+(evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
+(neotree-show)
+(use-package neotree
+  (add-hook 'neo-after-create-hook
+		  (lambda (&rest _) (display-line-numbers-mode -1))))
+
+(require 'electric-spacing)
+(add-hook 'c-mode-hook #'electric-spacing-mode)
 
 (add-hook 'c-mode-hook
 		  (lambda ()
@@ -286,6 +313,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
            "2 sec" nil 'delete-windows-on
            (get-buffer-create "*compilation*"))
           (message "")))))
+
 (defun promptargs ()
   (interactive)
   (message "Args are %s" (read-string "Enter args: ")))
@@ -294,6 +322,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (interactive)
   (defvar make)
   (setq make "make -j3 build")
+  (save-buffer)
   (compile make)
   (compilation-finish-function)) 
 
@@ -304,14 +333,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 	(setq comp (concat "clang -Wall -Wextra -Werror -g3 " (buffer-name))))
   (when (string= (file-name-extension buffer-file-name) "cpp")
 	(setq comp (concat "clang++ -Wall -Wextra -Werror -g3 " (buffer-name))))
+  (save-buffer)
   (compile comp)
   (compilation-finish-function))
 
 (defun exec-f7 ()
   (interactive)
   (defvar exec)
-  (setq exec "./a.out; ret=$?; echo \"~>\"; if [ $ret -ne 0 ]; then echo -n \"$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\n\n.emacs v0.5-beta by Joe\" && rm a.out && rm -rf a.out.dSYM")
-  (save-buffer)
+  (setq exec "./a.out; ret=$?; echo \"~>\"; if [ $ret -ne 0 ]; then echo -n \"$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\n\n.emacs v0.6-beta by Joe\" && rm a.out && rm -rf a.out.dSYM")
   (async-shell-command exec))
 
 (defun exec-f9 ()
@@ -322,7 +351,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 	(setq comp (concat "clang -Wall -Wextra -Werror -g3 " (buffer-name))))
   (when (string= (file-name-extension buffer-file-name) "cpp")
 	(setq comp (concat "clang++ -Wall -Wextra -Werror -g3 " (buffer-name))))
-  (setq exec (concat "./a.out " (read-string "Enter args: ") "; ret=$?; echo \"~>\"; if [ $ret -ne 0 ]; then echo -n \"$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\n\n.emacs v0.5-beta by Joe\" && rm a.out && rm -rf a.out.dSYM"))
+  (setq exec (concat "./a.out " (read-string "Enter args: ") "; ret=$?; echo \"~>\"; if [ $ret -ne 0 ]; then echo -n \"$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\n\n.emacs v0.6-beta by Joe\" && rm a.out && rm -rf a.out.dSYM"))
   (save-buffer)
   (compile comp)
   (async-shell-command exec))
@@ -335,10 +364,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 	(setq comp (concat "clang -Wall -Wextra -Werror -g3 " (buffer-name))))
   (when (string= (file-name-extension buffer-file-name) "cpp")
 	(setq comp (concat "clang++ -Wall -Wextra -Werror -g3 " (buffer-name))))
-  (setq exec "./a.out; ret=$?; echo \"~>\"; if [ $ret -ne 0 ]; then echo -n \"$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\n\n.emacs v0.5-beta by Joe\" && rm a.out && rm -rf a.out.dSYM")
   (save-buffer)
-  (compile comp)
-  (async-shell-command exec))
+  (compile-comp)
+  (exec-f7))
 
 (global-set-key [f5]  'exec-f5)
 (global-set-key [f6]  'exec-f6)
