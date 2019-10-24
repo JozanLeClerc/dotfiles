@@ -8,7 +8,7 @@ super + Return
 
 # program launcher
 super + p
-	rofi -show run -lines 15 -width 60 -padding 50 -columns 3 -font "NotoSans 14" -scroll-method 1
+	dmenu_run -m 1 -fn "monospace:size=10" -nb "#222222" -nf "#bbbbbb" -sb "#005577" -sf "#eeeeee"
 
 # make sxhkd reload its configuration files:
 super + control + r
@@ -82,25 +82,25 @@ super + {o,i}
 
 # focus or send to the given desktop
 super + {_,shift + }{F1}
-	bspc {desktop -f,node -d} '^1'
+	bspc {desktop -f,node -d} shell
 super + {_,shift + }{F2}
-	bspc {desktop -f,node -d} '^2'
+	bspc {desktop -f,node -d} code
 super + {_,shift + }{F3}
-	bspc {desktop -f,node -d} '^3'
+	bspc {desktop -f,node -d} web
 super + {_,shift + }{F4}
-	bspc {desktop -f,node -d} '^4'
+	bspc {desktop -f,node -d} game
 super + {_,shift + }{F5}
-	bspc {desktop -f,node -d} '^5'
+	bspc {desktop -f,node -d} settings
 super + {_,shift + }{F6}
-	bspc {desktop -f,node -d} '^6'
+	bspc {desktop -f,node -d} news
 super + {_,shift + }{F7}
-	bspc {desktop -f,node -d} '^7'
+	bspc {desktop -f,node -d} cal
 super + {_,shift + }{F8}
-	bspc {desktop -f,node -d} '^8'
+	bspc {desktop -f,node -d} media
 super + {_,shift + }{F9}
-	bspc {desktop -f,node -d} '^9'
+	bspc {desktop -f,node -d} mail
 super + {_,shift + }{F10}
-	bspc {desktop -f,node -d} '^10'
+	bspc {desktop -f,node -d} social
 #
 # preselect
 #
@@ -126,7 +126,7 @@ super + ctrl + shift + space
 #
 
 # expand a window by moving one of its side outward
-super + shift + {Left,Down,Up,Right}
+control + alt + {Left,Down,Up,Right}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
