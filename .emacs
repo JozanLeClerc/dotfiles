@@ -40,7 +40,8 @@
  '(neo-file-link-face ((t (:foreground "color-252")))))
 
 (menu-bar-mode -1)
-(global-display-line-numbers-mode)
+(global-linum-mode)
+(setq linum-format "%3d\u2502")
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
 	  backup-by-copying t
@@ -282,9 +283,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
 (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
 (neotree-show)
-(use-package neotree
-  (add-hook 'neo-after-create-hook
-		  (lambda (&rest _) (display-line-numbers-mode -1))))
 
 (require 'electric-spacing)
 (add-hook 'c-mode-hook #'electric-spacing-mode)
