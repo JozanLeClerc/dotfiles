@@ -1,6 +1,3 @@
-;; (setq mac-control-modifier 'control)
-;; (setq mac-command-modifier 'meta)
-;; (setq mac-right-option-modifier 'control)
 (setq mac-option-key-is-meta nil
       mac-command-key-is-meta t
       mac-command-modifier 'meta
@@ -15,7 +12,7 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/1"))
 
 (setq package-enable-at-startup nil)
-(package-initialize)
+;; (package-initialize)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -28,7 +25,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-	(neotree ranger ## color-theme-modern auto-complete-c-headers command-log-mode auto-complete magit smart-tabs-mode airline-themes electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
+	(eshell-prompt-extras eshell-fixed-prompt pyenv-mode s realgud-lldb neotree ranger ## color-theme-modern auto-complete-c-headers command-log-mode auto-complete magit smart-tabs-mode airline-themes electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
  '(tabbar-separator (quote (0.2))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -36,12 +33,18 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(font-lock-function-name-face ((t (:foreground "color-27"))))
+ '(magit-section-highlight ((t (:background "color-237"))))
  '(neo-dir-link-face ((t (:foreground "Blue"))))
- '(neo-file-link-face ((t (:foreground "color-252")))))
+ '(neo-file-link-face ((t (:foreground "color-252"))))
+ '(neo-vc-default-face ((t (:foreground "color-251"))))
+ '(neo-vc-up-to-date-face ((t (:foreground "green"))))
+ '(tabbar-default ((t (:inherit variable-pitch :background "gray25" :foreground "gray50" :height 0.8)))))
 
 (menu-bar-mode -1)
-(global-linum-mode)
-(setq linum-format "%3d\u2502")
+;; (global-linum-mode)
+(add-hook 'prog-mode-hook 'linum-mode)
+(add-hook 'text-mode-hook 'linum-mode)
+(setq linum-format "%3d ")
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
 	  backup-by-copying t
@@ -67,6 +70,11 @@
 (global-set-key (kbd "M-k") 'tabbar-backward)
 (global-set-key (kbd "M-j") 'tabbar-forward)
 
+(evil-define-key 'insert global-map (kbd "C-o") 'delete-other-windows)
+(evil-define-key 'insert global-map (kbd "C-k") 'windmove-up)
+(evil-define-key 'insert global-map (kbd "C-j") 'windmove-down)
+(evil-define-key 'insert global-map (kbd "C-h") 'windmove-left)
+(evil-define-key 'insert global-map (kbd "C-l") 'windmove-right)
 (evil-define-key 'normal global-map (kbd "C-o") 'delete-other-windows)
 (evil-define-key 'normal global-map (kbd "C-k") 'windmove-up)
 (evil-define-key 'normal global-map (kbd "C-j") 'windmove-down)
@@ -266,13 +274,44 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (ad-activate 'paredit-mode)
 
 (require 'magit)
+(defun mu-magit-kill-buffers (param)
+  "Restore window configuration and kill all Magit buffers."
+  (let ((buffers (magit-mode-get-buffers)))
+    (magit-restore-window-configuration)
+    (mapc #'kill-buffer buffers)))
+(defcustom magit-bury-buffer-function 'magit-restore-window-configuration
+  "The function used to bury or kill the current Magit buffer."
+  :package-version '(magit . "2.3.0")
+  :group 'magit-buffers
+  :type '(radio (function-item quit-window)
+                (function-item magit-mode-quit-window)
+                (function-item magit-restore-window-configuration)
+                (function :tag "Function")))
+(defun magit-restore-window-configuration (&optional kill-buffer)
+  "Bury or kill the current buffer and restore previous window configuration."
+  (let ((winconf magit-previous-window-configuration)
+        (buffer (current-buffer))
+        (frame (selected-frame)))
+    (quit-window kill-buffer (selected-window))
+    (when (and winconf (equal frame (window-configuration-frame winconf)))
+      (set-window-configuration winconf)
+      (when (buffer-live-p buffer)
+        (with-current-buffer buffer
+          (setq magit-previous-window-configuration nil))))))
+(defun mu-magit-kill-buffers ()
+  "Restore window configuration and kill all Magit buffers."
+  (interactive)
+  (let ((buffers (magit-mode-get-buffers)))
+    (magit-restore-window-configuration)
+    (mapc #'kill-buffer buffers)))
+(bind-key "q" #'mu-magit-kill-buffers magit-status-mode-map)
 
 (require 'ranger)
 (ranger-override-dired-mode t)
 
 (require 'neotree)
 (setq neo-smart-open t)
-(setq neo-vc-integration '(char))
+(setq neo-vc-integration '(face))
 (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
 (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
 (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
@@ -284,8 +323,28 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
 (neotree-show)
 
-(require 'electric-spacing)
-(add-hook 'c-mode-hook #'electric-spacing-mode)
+(require 'realgud-lldb)
+
+;; (setq eshell-highlight-prompt nil)
+;; (setq eshell-prompt-regexp "^[^#$\n]*[#$]*> "
+;; 	  eshell-prompt-function
+;; 	  (lambda nil
+;; 		(concat
+;; 		 (if (string= (eshell/pwd) (getenv "HOME"))
+;; 			 "jozan" (eshell/basename (eshell/pwd)))
+;; 		 (if (= (user-uid) 0) " #> " " $> "))))
+
+(defun eshell-clear-buffer ()
+  "Clear terminal"
+  (interactive)
+  (let ((inhibit-read-only t))
+	(erase-buffer)
+	(eshell-send-input)))
+(add-hook 'eshell-mode-hook
+		  '(lambda()
+			 (local-set-key (kbd "C-l") 'eshell-clear-buffer)))
+;; (require 'electric-spacing)
+;; (add-hook 'c-mode-hook #'electric-spacing-mode)
 
 (add-hook 'c-mode-hook
 		  (lambda ()
@@ -319,7 +378,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (defun exec-f5 ()
   (interactive)
   (defvar make)
-  (setq make "make -j3 build")
+  (setq make "make -j5 build")
   (save-buffer)
   (compile make)
   (compilation-finish-function)) 
@@ -338,7 +397,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (defun exec-f7 ()
   (interactive)
   (defvar exec)
-  (setq exec "./a.out; ret=$?; echo \"~>\"; if [ $ret -ne 0 ]; then echo -n \"$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\n\n.emacs v0.6-beta by Joe\" && rm a.out && rm -rf a.out.dSYM")
+  (setq exec "./a.out; ret=$?; echo \"~>\"; if [ $ret -ne 0 ]; then echo -n \"$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\n\n.emacs v0.7-beta by Joe\" && rm -f a.out && rm -rf a.out.dSYM")
   (async-shell-command exec))
 
 (defun exec-f9 ()
@@ -349,7 +408,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 	(setq comp (concat "clang -Wall -Wextra -Werror -g3 " (buffer-name))))
   (when (string= (file-name-extension buffer-file-name) "cpp")
 	(setq comp (concat "clang++ -Wall -Wextra -Werror -g3 " (buffer-name))))
-  (setq exec (concat "./a.out " (read-string "Enter args: ") "; ret=$?; echo \"~>\"; if [ $ret -ne 0 ]; then echo -n \"$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\n\n.emacs v0.6-beta by Joe\" && rm a.out && rm -rf a.out.dSYM"))
+  (setq exec (concat "./a.out " (read-string "Enter args: ") "; ret=$?; echo \"~>\"; if [ $ret -ne 0 ]; then echo -n \"$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\n\n.emacs v0.7-beta by Joe\" && rm -f a.out && rm -rf a.out.dSYM"))
   (save-buffer)
   (compile comp)
   (async-shell-command exec))
@@ -363,9 +422,18 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (when (string= (file-name-extension buffer-file-name) "cpp")
 	(setq comp (concat "clang++ -Wall -Wextra -Werror -g3 " (buffer-name))))
   (save-buffer)
-  (compile-comp)
+  (compile comp)
   (exec-f7))
 
+(defun my/go-full-shell ()
+  (interactive)
+  (split-window-below)
+  (windmove-down)
+  (shrink-window 6)
+  (eshell))
+
+(global-set-key [f1]  'my/go-full-shell)
+(global-set-key [f2]  'neotree-toggle)
 (global-set-key [f5]  'exec-f5)
 (global-set-key [f6]  'exec-f6)
 (global-set-key [f7]  'exec-f7)
