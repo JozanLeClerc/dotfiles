@@ -1,28 +1,30 @@
 # Custom theme by Joe based on Fishy theme.
 
-_fishy_collapsed_wd() {
-  echo $(pwd | perl -pe '
-   BEGIN {
-      binmode STDIN,  ":encoding(UTF-8)";
-      binmode STDOUT, ":encoding(UTF-8)";
-   }; s|^$ENV{HOME}|~|g; s|/([^/.])[^/]*(?=/)|/$1|g; s|/\.([^/])[^/]*(?=/)|/.$1|g
-')
-}
+#_fishy_collapsed_wd() {
+#  echo $(pwd | perl -pe '
+#   BEGIN {
+#      binmode STDIN,  ":encoding(UTF-8)";
+#      binmode STDOUT, ":encoding(UTF-8)";
+#   }; s|^$ENV{HOME}|~|g; s|/([^/.])[^/]*(?=/)|/$1|g; s|/\.([^/])[^/]*(?=/)|/.$1|g
+#')
+#}
 
-local user_color="green"
-if [ $? -gt 0 ]; then
-	user_color="red"
-elif [ $? -lt 0 ]; then
-	user_color="red"
-fi
-
-PROMPT='%{$fg[$user_color]%}$(_fishy_collapsed_wd)%{$reset_color%}%(!.#.>) '
-PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
-
-#PS1='%B%{$fg[blue]%}[%n@%M %{$fg[green]%}%c%{$fg[blue]%}]%{$reset_color%}%% '
+#local user_color="green"
+#if [ $? -gt 0 ]; then
+#	user_color="red"
+#elif [ $? -lt 0 ]; then
+#	user_color="red"
+#fi
 
 local return_status="%{$fg_bold[red]%}%(?..%?)%{$reset_color%}"
-RPROMPT="${RPROMPT}"'${return_status}$(git_prompt_info) $(git_prompt_status)%{$reset_color%}'
+
+#PROMPT='%{$fg[green]%}$(_fishy_collapsed_wd)%{$reset_color%}%(!.#.>) '
+#PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
+
+PS1='%B%{$fg[blue]%}%M%{$fg[blue]%}%%%{$reset_color%} '
+
+#RPROMPT="${RPROMPT}"'${return_status}$(git_prompt_info) $(git_prompt_status)%{$reset_color%}'
+RPROMPT="${RPROMPT}"'${return_status}'
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" "
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
