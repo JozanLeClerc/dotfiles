@@ -2,6 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
+export PATH="${HOME}/.local/bin:/usr/lib/llvm/9/bin:${PATH}"
 export ZSH="/home/jozan/.oh-my-zsh"
 export EDITOR="emacs"
 
@@ -10,7 +11,6 @@ export EDITOR="emacs"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="jozanofastora"
-#ZSH_THEME="fishy"
 
 
 # Set list of themes to pick from when loading at random
@@ -136,8 +136,8 @@ source $ZSH/oh-my-zsh.sh
 # PS1="%B%{$fg[blue]%}[%n@%M %{$fg[magenta]%}%~%{$fg[blue]%}]%{$reset_color%}%% "
 
 # History
-## HISTSIZE=10000
-## SAVEHIST=10000
+HISTSIZE=100
+SAVEHIST=100
 ## HISTFILE=~/.cache/zsh/history
 
 # vi-mode
@@ -149,10 +149,10 @@ plugins=(git)
 # Change cursor shape for different vi modes.
 
 # Syntax colors
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+source /home/jozan/Packages/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
 # Alias
 alias c='clear'
-alias vim='nvim'
-alias emacs='TERM=xterm-256color emacs'
+alias bc='clear; bc'
+alias emacs='TERM=xterm-256color emacs -nw'
 alias msfconsole='TERM=xterm-256color msfconsole'

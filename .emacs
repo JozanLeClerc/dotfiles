@@ -6,12 +6,16 @@
 (setq x-alt-keysym 'meta)
 (set-keyboard-coding-system nil)
 
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
+
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/1"))
 
 (setq package-enable-at-startup nil)
+(setq package-check-signature nil)
 ;; (package-initialize)
 
 (custom-set-variables
