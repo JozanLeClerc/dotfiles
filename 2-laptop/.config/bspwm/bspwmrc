@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 export SXHKD_SHELL=/bin/zsh
 export PATH="${HOME}/.local/bin:${PATH}"
