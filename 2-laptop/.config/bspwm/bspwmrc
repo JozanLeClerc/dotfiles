@@ -4,6 +4,7 @@ export SXHKD_SHELL=/bin/zsh
 export PATH="${HOME}/.local/bin:${PATH}"
 
 # KILL
+rm /home/jozan/.calcurse/.calcurse.pid
 killall sxhkd
 killall compton
 killall st
@@ -76,9 +77,11 @@ bspc desktop -f 05
 st -e ncpamixer &
 sleep 1s
 bspc desktop -f 02
-st -e TERM=xterm-256color emacs -nw &
+export TERM=xterm-256color
+st -e emacs -nw &
 sleep 1s
 bspc desktop -f 01
+export TERM=st-256color
 st -e gotop -b &
 sleep 0.5s
 st &
