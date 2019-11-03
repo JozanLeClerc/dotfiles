@@ -37,6 +37,7 @@ bspc rule -a Wine desktop='^4' state=floating
 bspc rule -a Mixbus32C desktop='^2' state=floating follow=on
 bspc rule -a Mixbus32c-4.3.19 state=floating layer=above
 bspc rule -a Pavucontrol desktop='^5'
+bspc rule -a Spotify desktop='^5'
 bspc rule -a discord desktop='^10'
 bspc rule -a Slack desktop='^10'
 bspc rule -a mplayer2 state=floating
@@ -55,15 +56,15 @@ run dunst > /dev/null 2>&1 &
 run mpd > /dev/null 2>&1 &
 #mopidy &
 sleep 1s
-bspc desktop -f '^9'
-st -e neomutt &
-sleep 0.3s
+#bspc desktop -f '^9'
+#st -e neomutt &
+#sleep 0.3s
 bspc desktop -f '^8'
 st -e ncmpcpp &
 sleep 0.3s
-bspc desktop -f '^7'
-st -e calcurse &
-sleep 0.3s
+#bspc desktop -f '^7'
+#st -e calcurse &
+#sleep 0.3s
 bspc desktop -f '^5'
 st -e ncpamixer &
 sleep 0.3s
@@ -75,7 +76,7 @@ sleep 0.1s
 st -e ranger &
 sleep 0.1s
 bspc node -f west
-bspc node -z right -160 0
+bspc node -z right -200 0
 sleep 0.1s
 bspc node -f east
 bspc node -z top 0 120
