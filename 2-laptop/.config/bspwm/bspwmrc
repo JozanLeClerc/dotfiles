@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/zsh
 
 export SXHKD_SHELL=/bin/zsh
 export PATH="${HOME}/.local/bin:${PATH}"
+source /home/jozan/.zshrc
 
 function run {
 	if ! pgrep $1 ;
@@ -33,7 +34,7 @@ bspc config borderless_monocle	true
 bspc config gapless_monocle		true
 
 bspc rule -a qutebrowser desktop=03 follow=on
-bspc rule -a firefox desktop=03 =on
+bspc rule -a firefox desktop=03 follow=on
 bspc rule -a Lutris desktop=04 follow=on
 bspc rule -a Steam desktop=04 follow=on
 bspc rule -a Wine desktop=04 state=floating
@@ -59,48 +60,48 @@ run dunst > /dev/null 2>&1 &
 run mpd > /dev/null 2>&1 &
 run lowbat > /dev/null 2>&1 &
 #mopidy 2>&1 &
-sleep 5s
+sleep 3s
 
 
 bspc desktop -f 09
 st -e neomutt &
-sleep 1s
+sleep 0.3s
 
 bspc desktop -f 08
 st -e ncmpcpp &
-sleep 1s
+sleep 0.3s
 
 bspc desktop -f 07
 st -e calcurse &
-sleep 1s
+sleep 0.3s
 
 bspc desktop -f 06
 st -e newsboat &
-sleep 1s
+sleep 0.3s
 
 bspc desktop -f 05
 st -e ncpamixer &
-sleep 1s
+sleep 0.3s
 
 bspc desktop -f 02
 st &
-sleep 1s
+sleep 0.3s
 
 bspc desktop -f 01
 st -e gotop -b &
-sleep 0.5s
+sleep 0.3s
 st &
-sleep 0.5s
+sleep 0.3s
 st -e lf &
-sleep 0.5s
+sleep 0.3s
 bspc node -f west
 bspc node -z right -200 0
-sleep 0.5s
+sleep 0.3s
 bspc node -f east
 bspc node -z top 0 60
-sleep 0.5s
+sleep 0.3s
 bspc node -f north
-sleep 0.5s
+sleep 0.3s
 
 if [ $ret -eq 0 ]; then
 	bspc desktop -f 02

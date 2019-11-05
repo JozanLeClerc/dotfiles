@@ -2,7 +2,7 @@
 set  color256
 set  drawbox
 set  tabstop 4
-set  ratios '1:4'
+set  ratios '1:7'
 set  noicons
 set  nopreview
 
