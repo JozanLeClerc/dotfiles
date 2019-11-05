@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-	st	
+	st
 
 # program launcher
 super + p
@@ -157,7 +157,7 @@ super + {Left,Down,Up,Right}
 # some quick start apps
 #
 super + 1
-	st -e ranger
+	st -e lf
 super + 2
 	st
 super + 3
