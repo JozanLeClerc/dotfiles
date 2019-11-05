@@ -1,0 +1,19 @@
+### Set
+set  color256
+set  drawbox
+set  tabstop 4
+set  ratios '1:4'
+set  noicons
+set  nopreview
+
+### Cmd
+cmd   mkdir %mkdir $1
+cmd   touch %touch $1
+
+###	 Map
+map  gr cd /
+map  D delete
+map  <f-2> rename
+map  <f-5> push :touch<space>
+map  <f-7> push :mkdir<space>
+map  <f-10> quit
