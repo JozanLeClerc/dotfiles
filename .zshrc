@@ -11,7 +11,7 @@ export EDITOR="emacs"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="jozanofastora"
-PS1='%B%{$fg[magenta]%}%M%%%{$reset_color%} '
+PS1='%B%{$fg[magenta]%}%M %{$fg[blue]%}%c%{$fg[magenta]%}%%%{$reset_color%} '
 RPS1="${RPS1}"'%{$fg_bold[red]%}%(?..%?)%{$reset_color%}'
 
 # Set list of themes to pick from when loading at random
@@ -137,8 +137,8 @@ source $ZSH/oh-my-zsh.sh
 # PS1="%B%{$fg[blue]%}[%n@%M %{$fg[magenta]%}%~%{$fg[blue]%}]%{$reset_color%}%% "
 
 # History
-HISTSIZE=100
-SAVEHIST=100
+HISTSIZE=1000
+SAVEHIST=1000
 ## HISTFILE=~/.cache/zsh/history
 
 # vi-mode

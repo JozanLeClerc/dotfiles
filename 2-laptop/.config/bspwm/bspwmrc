@@ -34,7 +34,7 @@ bspc config borderless_monocle	true
 bspc config gapless_monocle		true
 
 bspc rule -a qutebrowser desktop=03 follow=on
-bspc rule -a firefox desktop=03 follow=on
+bspc rule -a Firefox desktop=03 follow=on
 bspc rule -a Lutris desktop=04 follow=on
 bspc rule -a Steam desktop=04 follow=on
 bspc rule -a Wine desktop=04 state=floating
@@ -48,8 +48,6 @@ bspc rule -a Dunst layer=above
 
 # START
 
-sleep 1s
-
 run sxhkd > /dev/null 2>&1 &
 run compton > /dev/null 2>&1 &
 run feh --bg-fill /home/jozan/Images/wallpaper.png > /dev/null 2>&1 &
@@ -60,32 +58,33 @@ run dunst > /dev/null 2>&1 &
 run mpd > /dev/null 2>&1 &
 run lowbat > /dev/null 2>&1 &
 #mopidy 2>&1 &
-sleep 3s
+
+sleep 5s
 
 
 bspc desktop -f 09
 st -e neomutt &
-sleep 0.3s
+sleep 0.8s
 
 bspc desktop -f 08
 st -e ncmpcpp &
-sleep 0.3s
+sleep 0.8s
 
 bspc desktop -f 07
 st -e calcurse &
-sleep 0.3s
+sleep 0.8s
 
 bspc desktop -f 06
 st -e newsboat &
-sleep 0.3s
+sleep 0.8s
 
 bspc desktop -f 05
 st -e ncpamixer &
-sleep 0.3s
+sleep 0.8s
 
 bspc desktop -f 02
 st &
-sleep 0.3s
+sleep 0.8s
 
 bspc desktop -f 01
 st -e gotop -b &
