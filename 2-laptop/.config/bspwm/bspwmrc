@@ -97,7 +97,7 @@ bspc node -f west
 bspc node -z right -200 0
 sleep 0.3s
 bspc node -f east
-bspc node -z top 0 60
+bspc node -z top 0 70
 sleep 0.3s
 bspc node -f north
 sleep 0.3s
