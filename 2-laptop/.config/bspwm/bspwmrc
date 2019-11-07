@@ -64,27 +64,27 @@ sleep 5s
 
 bspc desktop -f 09
 st -e neomutt &
-sleep 0.8s
+sleep 1s
 
 bspc desktop -f 08
 st -e ncmpcpp &
-sleep 0.8s
+sleep 1s
 
 bspc desktop -f 07
 st -e calcurse &
-sleep 0.8s
+sleep 1s
 
 bspc desktop -f 06
 st -e newsboat &
-sleep 0.8s
+sleep 1s
 
 bspc desktop -f 05
 st -e ncpamixer &
-sleep 0.8s
+sleep 1s
 
 bspc desktop -f 02
 st &
-sleep 0.8s
+sleep 1s
 
 bspc desktop -f 01
 st -e gotop -b &
