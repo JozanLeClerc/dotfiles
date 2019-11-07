@@ -83,7 +83,7 @@ st -e ncpamixer &
 sleep 1s
 
 bspc desktop -f 02
-st &
+st -e zsh -c 'TERM=xterm-256color; emacs -nw' &
 sleep 1s
 
 bspc desktop -f 01
