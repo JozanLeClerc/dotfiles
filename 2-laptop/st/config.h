@@ -7,7 +7,7 @@
  */
 //static char *font = "DroidSansMono Nerd Font:pixelsize=14:antialias=true:hinting=true";
 //static char *font = "Inconsolata Nerd Font:pixelsize=16:antialias=true:hinting=true";
-static char *font = "UbuntuMono Nerd Font:pixelsize=16:antialias=true:hinting=true";
+static char *font = "DejaVuSansMono:pixelsize=14:antialias=true:hinting=true";
 static int borderpx = 0;
 
 /*
@@ -86,26 +86,30 @@ unsigned int tabspaces = 8;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	/* 8 normal Atelier forest */
-	// Black
-	"#1b1918",
-	// Red
-	"#f22c40",
-	// Green
-	"#7b9726",
-	// Yellow
-	"#c38418",
-	// Blue
-	"#407ee7",
-	// Magenta
-	"#6666ea",
-	// Cyan
-	"#3d97b8",
-	// White
-	"#a8a19f",
+	/* gruvbox */
+	"#282828", /* hard contrast: #1d2021 / soft contrast: #32302f */
+	"#cc241d",
+	"#98971a",
+	"#d79921",
+	"#458588",
+	"#b16286",
+	"#689d6a",
+	"#a89984",
+	"#928374",
+	"#fb4934",
+	"#b8bb26",
+	"#fabd2f",
+	"#83a598",
+	"#d3869b",
+	"#8ec07c",
+	"#ebdbb2",
+	[255] = 0,
+	"#040404",
+	"#ebdbb2",
 
-	/* 8 normal colors 
-	** // Black
+	/* 8 normal colors */
+	// Black
+	/*
 	** "#151515",
 	** // Red
 	** "#ac4142",
@@ -121,27 +125,11 @@ static const char *colorname[] = {
 	** "#75b5aa",
 	** // White
 	** "#d0d0d0",
-	** 8 normal colors */
+	*/
 
-	/* 8 bright Atelier forest */
+	/* 8 bright colors */
 	// Black
-	"#766e6b",
-	// Red
-	"#df5320",
-	// Green
-	"#2c2421",
-	// Yellow
-	"#68615e",
-	// Blue
-	"#9c9491",
-	// Magenta
-	"#e6e2e0",
-	// Cyan
-	"#c33ff3",
-	// White
-	"#f1efee",
-	/* 8 bright colors
-	** // Black
+	/*
 	** "#41535B",
 	** // Red
 	** "#ac4142",
@@ -157,23 +145,18 @@ static const char *colorname[] = {
 	** "#75b5aa",
 	** // White
 	** "#f5f5f5",
-	8 bright colors */
-
-	[255] = 0,
+	**
+	** [255] = 0,
+	*/
 
 	/* more colors can be added after 255 to use with DefaultXX */
-	/* Normal
-	** // Background
+	/* Normal */
+	// Background
+	/*
 	** "#0D0E0F",
 	** // Foreground
 	** "#F3F4F5",
-	Normal */
-
-	/* Atelier forest */
-	// Background
-	"#1b1918",
-	// Foreground
-	"#a8a19f",
+	*/
 };
 
 
