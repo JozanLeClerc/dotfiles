@@ -2,5 +2,3 @@
 
 xrandr --output LVDS1 --off
 xrandr --output VGA1 --primary
-
-bspc monitor VGA1 -d shell code web game settings news cal media mail social
