@@ -16,7 +16,7 @@
 
 (setq package-enable-at-startup nil)
 (setq package-check-signature nil)
-;; (package-initialize)
+(package-initialize)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
