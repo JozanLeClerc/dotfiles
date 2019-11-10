@@ -1,10 +1,9 @@
-#!/bin/zsh
+#!/bin/sh
 
 g++ -Wall -Wextra -Werror $1
 if [ $? -ne 0 ]; then
 	exit
 fi
-echo "__"
 ./a.out ${@:2}
 ret=$?
 if [ $ret -ne 0 ]; then
@@ -22,5 +21,7 @@ if [ $ret -ne 0 ]; then
 else
 	echo "~>"
 fi
-echo  "\n\n.vimrc 2.4.1-release Tilde Edition by Joe"
+echo
+echo
+echo  ".vimrc 2.4.1-release Tilde Edition by Joe"
 rm -f a.out

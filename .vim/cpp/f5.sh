@@ -1,6 +1,6 @@
-#!/bin/zsh
+#!/bin/sh
 
-make -j4
+make -j5
 if [ $? -ne 0 ]; then
 	exit
 fi
