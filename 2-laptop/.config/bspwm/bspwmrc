@@ -1,13 +1,13 @@
-#!/bin/zsh
+#!/bin/sh
 
 export SXHKD_SHELL=/bin/zsh
 export PATH="${HOME}/.local/bin:${PATH}"
-source /home/jozan/.zshrc
+#source /home/jozan/.zshrc
 
 function run {
 	if ! pgrep $1 ;
 	then
-		$@&
+		$@
 	fi
 }
 
@@ -39,7 +39,7 @@ bspc rule -a Lutris desktop=04 follow=on
 bspc rule -a Steam desktop=04 follow=on
 bspc rule -a Wine desktop=04 state=floating
 bspc rule -a discord desktop=10
-bspc rule -a Slack desktop=10 follow=off
+bspc rule -a Slack desktop=10
 bspc rule -a Zathura state=tiled
 bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
@@ -53,14 +53,12 @@ run compton > /dev/null 2>&1 &
 run feh --bg-fill /home/jozan/Pictures/wallpaper.png > /dev/null 2>&1 &
 setxkbmap -layout us,fr -option grp:alt_shift_toggle > /dev/null 2>&1
 xset r rate 200 80 > /dev/null 2>&1
-numlockx on > /dev/null 2>&1
 run dunst > /dev/null 2>&1 &
 run mpd > /dev/null 2>&1 &
 run lowbat > /dev/null 2>&1 &
 #mopidy 2>&1 &
 
 sleep 5s
-
 
 bspc desktop -f 09
 st -e neomutt &
@@ -89,7 +87,7 @@ sleep 1s
 bspc desktop -f 01
 st -e gotop -b &
 sleep 0.3s
-st &
+st -e zsh -c 'clear; cowsay "Welcome back, partner!"; zsh -i' &
 sleep 0.3s
 st -e vifm &
 sleep 0.3s
@@ -106,4 +104,4 @@ if [ $ret -eq 0 ]; then
 	bspc desktop -f 02
 fi
 
-slack --no-sandbox &
+#run slack --no-sandbox &
