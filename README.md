@@ -108,9 +108,10 @@ Here are some of the main key bindings provided by my `sxhkdrc`:
 When using my `vim` or `nvim` configuration, make sure you placed my `.vim` into your home directory. In there are handy scripts.  
 They can be executed through the following commands, in **normal mode**:
 
+
 + `F5` executes `make -j5`
-+ `F7` executes `./a.out`. **~>** is added to standard out directly at the end of your program output so you can see clearly where it ends. If something else than **0** is being returned, the return value is displayed.
-+ `F9` prompts for arguments
++ `F6` executes `./a.out`. **~>** is added to standard out directly at the end of your program output so you can see clearly where it ends. If something else than **0** is being returned, the return value is displayed.
++ `F9` prompts for arguments then executes `gcc` (or `g++`) with `-Wall -Wextra -Werror` flags ont the current C or C++ buffer. Then it runs `./a.out` with the arguments you entered before.
 
 Obviously, `make` and `gcc` appear as dependencies for these functions.
 
