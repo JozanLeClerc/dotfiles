@@ -1,0 +1,12 @@
+split -v
+resize -h 30%
+split
+resize -v 70%
+focus
+select 2
+focus
+split
+resize -v 05%
+select 4
+focus
+select 3
