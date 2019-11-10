@@ -30,6 +30,7 @@ There `1-desktop` or `2-laptop` becomes your `$HOME` directory.
 + GNU Emacs
 + urlview
 + xinit
++ GNU Screen
 
 ## Scripts
 
