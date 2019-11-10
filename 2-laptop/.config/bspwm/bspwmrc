@@ -50,7 +50,7 @@ bspc rule -a Dunst layer=above
 
 run sxhkd > /dev/null 2>&1 &
 run compton > /dev/null 2>&1 &
-run feh --bg-fill /home/jozan/Images/wallpaper.png > /dev/null 2>&1 &
+run feh --bg-fill /home/jozan/Pictures/wallpaper.png > /dev/null 2>&1 &
 setxkbmap -layout us,fr -option grp:alt_shift_toggle > /dev/null 2>&1
 xset r rate 200 80 > /dev/null 2>&1
 numlockx on > /dev/null 2>&1
@@ -106,4 +106,4 @@ if [ $ret -eq 0 ]; then
 	bspc desktop -f 02
 fi
 
-Slack &
+slack --no-sandbox &
