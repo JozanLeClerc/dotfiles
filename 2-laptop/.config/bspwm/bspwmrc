@@ -39,7 +39,7 @@ bspc rule -a Lutris desktop=04 follow=on
 bspc rule -a Steam desktop=04 follow=on
 bspc rule -a Wine desktop=04 state=floating
 bspc rule -a discord desktop=10
-bspc rule -a Slack desktop=10
+bspc rule -a Slack desktop=10 follow=off
 bspc rule -a Zathura state=tiled
 bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
