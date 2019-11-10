@@ -80,7 +80,7 @@ Might not work on your your specific GPU + screen setup.
 My dwm autostart script that runs once the window manager is initialized.  
 It launches some programs and sets some settings.
 
-`.vim/*`
+`.vim/`
 
 Used in vim to config compile C and C++ code of various manner. See [About vim](https://github.com/JozanLeClerc/dotfiles#about-vim) for more informations.
 
