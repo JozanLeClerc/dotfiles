@@ -42,38 +42,38 @@ You can find them in `.local/bin` and .
 
 `compiler`
 
-Run by **vim** when saving a LaTeX file. It compiles it into pdf.  
+Run by `vim` when saving a LaTeX file. It compiles it into pdf.  
 It was design to complie many other file formats like C, go, etc but I an not using it.
 
 `texclear`
 
-Run by **vim** when exiting that cleans all junk files generated when compiling LaTeX.
+Run by `vim` when exiting that cleans all junk files generated when compiling LaTeX.
 
 `refbar`
 
-Run by **dwm** to refresh its status bar when switching keyboard layouts (alt+shift).
+Run by `dwm` to refresh its status bar when switching keyboard layouts (alt+shift).
 
 `webview.sh`
 
-Used in **neomutt** and **newboat** to open media content. Uses **sxiv**, **mpv** and **wget**. Defaults to **QuteBrowser** in case of weird file extension.
+Used in `urlview` to open content with the pertinent program. Uses `sxiv`, `mpv` and `wget`. Defaults to `qutebrowser` in case of weird file extension.
 
 `lowbat`
 
-A script to notify me when my ThinkPad is low on battery. Uses **libnotify** and **espeak**.
+A script to notify me when my ThinkPad is low on battery. Uses `libnotify` and `espeak`.
 
 `dualscreen`
 
-Uses **xrandr** to switch screen setup from built-in laptop screen (LVDS1) only to this plus VGA1 out, setting VGA1 to primary.  
+Uses `xrandr` to switch screen setup from built-in laptop screen (LVDS1) only to this plus VGA1 out, setting VGA1 to primary.  
 Might not work on your your specific GPU + screen config.
 
 `mainscreen`
 
-Uses **xrandr** to switch off any other screen output and use only the laptop built-in (LVDS1).  
+Uses `xrandr` to switch off any other screen output and use only the laptop built-in (LVDS1).  
 Might not work on your your specific GPU + screen setup.
 
 `swscreen`
 
-Uses **xrandr** to switch screen setup from built-in laptop screen (LVDS1) only to VGA1 out only, setting it to primary.  
+Uses `xrandr` to switch screen setup from built-in laptop screen (LVDS1) only to VGA1 out only, setting it to primary.  
 Might not work on your your specific GPU + screen setup.
 
 `autostart.sh`
