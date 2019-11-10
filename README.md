@@ -1,17 +1,18 @@
 # README in progress
 #  Joe's dotfiles
-Here are my most precious dotfiles as well as a few handy scripts. 
+Here are my most precious dotfiles as well as a few handy scripts.  
 There are a few of these programs I don't use anymore. Their corresponding dotfiles won't receive updates and might be deleted as well.
 
 ## Config files
 
-Dotfiles for the following programs can be found all over the repo. 
+Dotfiles for the following programs can be found all over the repo.  
 They are placed in the corresponding directories where they should be deployed on your system, the repo root being your `$HOME` folder, usually under `/home/user` for GNU/Linux or `/Users/user` for macOS.
 
-Some files here can be found in `1-desktop` and `2-laptop` directories. Some of them are doubled, some are unique. They are specific for my desktop or laptop usage. 
+Some files here can be found in `1-desktop` and `2-laptop` directories. Some of them are doubled, some are unique. They are specific for my desktop or laptop usage.  
 There `1-desktop` or `2-laptop` becomes your `$HOME` directory.
 
-+ dunst 
+
++ dunst  
 + lf
 + nvim
 + vim
@@ -40,7 +41,7 @@ You can find them in `.local/bin` and .
 
 `compiler`
 
-Run by **vim** when saving a LaTeX file. It compiles it into pdf. 
+Run by **vim** when saving a LaTeX file. It compiles it into pdf.  
 It was design to complie many other file formats like C, go, etc but I an not using it.
 
 `texclear`
@@ -61,27 +62,31 @@ A script to notify me when my ThinkPad is low on battery. Uses **libnotify** and
 
 `dualscreen`
 
-Uses **xrandr** to switch screen setup from built-in laptop screen (LVDS1) only to this plus VGA1 out, setting VGA1 to primary. 
+Uses **xrandr** to switch screen setup from built-in laptop screen (LVDS1) only to this plus VGA1 out, setting VGA1 to primary.  
 Might not work on your your specific GPU + screen config.
 
 `mainscreen`
 
-Uses **xrandr** to switch off any other screen output and use only the laptop built-in (LVDS1). 
+Uses **xrandr** to switch off any other screen output and use only the laptop built-in (LVDS1).  
 Might not work on your your specific GPU + screen setup.
 
 `swscreen`
 
-Uses **xrandr** to switch screen setup from built-in laptop screen (LVDS1) only to VGA1 out only, setting it to primary. 
+Uses **xrandr** to switch screen setup from built-in laptop screen (LVDS1) only to VGA1 out only, setting it to primary.  
 Might not work on your your specific GPU + screen setup.
 
 `autostart.sh`
 
-My dwm autostart script that runs once the window manager is initialized. 
+My dwm autostart script that runs once the window manager is initialized.  
 It launches some programs and sets some settings.
+
+`.vim/*`
+
+Used in vim to config compile C and C++ code of various manner. See # About vim for more informations.
 
 ## bspwm controls
 
-My `bspwm` and `sxhkd` configs are in here. In this list **"window"** is being called **"tile"**. 
+My `bspwm` and `sxhkd` configs are in here. In this list **"window"** is being called **"tile"**.  
 Here are some of the main key bindings provided by my `sxhkdrc`:
 + **switch** to workspace 1-10 with `super+{F1-F10}`
 + **move** focused tile to workspace 1-10 with `super+shift+{F1-F10}`
@@ -89,8 +94,24 @@ Here are some of the main key bindings provided by my `sxhkdrc`:
 + **kill** focused tile with `super+q`
 + **focus** tile left/down/up/right with `super+{h/j/k/l}`
 + **move** focused tile left/down/up/right with `super+shift+{h/j/k/l}`
-+ **resize** focused tile to outside with
++ **expend** focused tile left/down/up/right with `ctrl+alt+{left/down/up/right}`
++ **shrink** focused tile left/down/up/right with `ctrl+super+{left/down/up/right}`
++ **select direction** of the next application left/down/up/right with `ctrl+super+{h/j/k/l}`
++ **invoke** `vifm` with `super+1`
++ **invoke** `st` with `super+2` (same as `super+return`
++ **invoke** `firefox` with `super+3`
++ **exit** `bspwm` with `super+shift+e`
++ **restart** `bspwm` with `super+shift+r`
 
-## vimrc
+## About vim
 
-## GNU Emacs
+When using my `vim` or `nvim` configuration, make sure you placed my `.vim` into your home directory. In there are handy scripts.  
+They can be executed through the following commands, in **normal mode**:
+
++ `F5` executes `make -j5`
++ `F7` executes `./a.out`. **~>** is added to standard out directly at the end of your program output so you can see clearly where it ends. If something else than **0** is being returned, the return value is displayed.
++ `F9` prompts for arguments
+
+Obviously, `make` and `gcc` appear as dependencies for these functions.
+
+## About GNU Emacs
