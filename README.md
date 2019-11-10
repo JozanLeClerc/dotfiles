@@ -11,7 +11,6 @@ They are placed in the corresponding directories where they should be deployed o
 Some files here can be found in `1-desktop` and `2-laptop` directories. Some of them are doubled, some are unique. They are specific for my desktop or laptop usage.  
 There `1-desktop` or `2-laptop` becomes your `$HOME` directory.
 
-
 + dunst  
 + lf
 + vifm
@@ -31,8 +30,6 @@ There `1-desktop` or `2-laptop` becomes your `$HOME` directory.
 + GNU Emacs
 + urlview
 + xinit
-+ ~surf~
-+ ~ranger~
 
 ## Scripts
 
