@@ -157,7 +157,7 @@ super + {Left,Down,Up,Right}
 # some quick start apps
 #
 super + 1
-	st -e lf
+	st -e vifm
 super + 2
 	st
 super + 3
