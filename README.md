@@ -81,7 +81,7 @@ It launches some programs and sets some settings.
 
 `.vim/*`
 
-Used in vim to config compile C and C++ code of various manner. See # About vim for more informations.
+Used in vim to config compile C and C++ code of various manner. See [About vim](https://github.com/JozanLeClerc/dotfiles#about-vim) for more informations.
 
 ## bspwm controls
 
