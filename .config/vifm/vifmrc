@@ -40,6 +40,7 @@ nnoremap I cw<c-a>
 nnoremap cc cw<c-u>
 nnoremap A cw
 nnoremap ,w :set wrap!<cr>
+nnoremap zh za
 nmap <space> tj
 nmap q ZQ
 
