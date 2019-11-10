@@ -21,7 +21,6 @@ There `1-desktop` or `2-laptop` becomes your `$HOME` directory.
 + mplayer
 + newsboat
 + my custom Oh My Zsh theme
-+ surf
 + vim
 + bspwm
 + sxhkd
@@ -32,6 +31,8 @@ There `1-desktop` or `2-laptop` becomes your `$HOME` directory.
 + GNU Emacs
 + urlview
 + xinit
++ ~surf~
++ ~ranger~
 
 ## Scripts
 
