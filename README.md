@@ -14,6 +14,7 @@ There `1-desktop` or `2-laptop` becomes your `$HOME` directory.
 
 + dunst  
 + lf
++ vifm
 + nvim
 + vim
 + CDE (experimental)
@@ -109,9 +110,10 @@ When using my `vim` or `nvim` configuration, make sure you placed my `.vim` into
 They can be executed through the following commands, in **normal mode**:
 
 
-+ `F5` executes `make -j5`
-+ `F6` executes `./a.out`. **~>** is added to standard out directly at the end of your program output so you can see clearly where it ends. If something else than **0** is being returned, the return value is displayed.
-+ `F9` prompts for arguments then executes `gcc` (or `g++`) with `-Wall -Wextra -Werror` flags ont the current C or C++ buffer. Then it runs `./a.out` with the arguments you entered before.
++ `F5` executes `make -j5` in the current directory
++ `F6` executes `./a.out`. **~>** is added to standard out directly at the end of your program output so you can see clearly where it ends. If something else than **0** is being returned, the return value is displayed. Finally deletes a.out
++ `F9` prompts for arguments then executes `gcc` (or `g++`) with `-Wall -Wextra -Werror` flags ont the current C or C++ buffer. Then it runs `./a.out` with the arguments you entered before, then deletes it
++ `F10` executes `gcc` (or `g++`) with `-Wall -Wextra -Werror` flags ont the current C or C++ buffer. Then it runs `./a.out` and deletes it
 
 Obviously, `make` and `gcc` appear as dependencies for these functions.
 
