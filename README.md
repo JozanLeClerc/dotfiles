@@ -134,7 +134,7 @@ Here are the cool key bindings I added:
 
 + `F1` splits horizontally and opens/reopens an **\*eshell\*** buffer
 + `F2` toggles **neotree** on and off
-+ `F5` runs `make -j5` in a **\*compilation\** buffer. If compilation is successful, the buffer closes after **1 second**, otherwise it stays opened
++ `F5` runs `make -j5` in a **\*compilation\** buffer. If compilation is successful, the buffer closes after **0.5 second**, otherwise it stays opened
 + `F6` runs `./a.out` in an **\*Async Shell Command\*** buffer, then deletes `a.out`
 + `F9` prompts for arguments, compiles the current buffer with `gcc` (or `g++`) with the flags `-Wall -Wextra -Werror -g3` in a **\*compilation\*** buffer, runs `./a.out` with the  previously entered arguments in an **\*Async Shell Command\*** buffer, then deletes `a.out`
 + `F10` acts the same as `F9` without asking for arguments
