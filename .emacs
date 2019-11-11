@@ -368,7 +368,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         ;;no errors, make the compilation window go away in a few seconds
         (progn
           (run-at-time
-           "2 sec" nil 'delete-windows-on
+           "0.5 sec" nil 'delete-windows-on
            (get-buffer-create "*compilation*"))
           (message "")))))
 
