@@ -3,7 +3,6 @@
 Here are my most precious dotfiles as well as a few handy scripts.  
 There are a few of these programs I don't use anymore. Their corresponding dotfiles won't receive updates and might be deleted as well.
 
-
 ## Config files
 
 Dotfiles for the following programs can be found all over the repo.  
