@@ -73,7 +73,7 @@ st -e gotop &
 sleep 0.1s
 st &
 sleep 0.1s
-st -e ranger &
+st -e vifm &
 sleep 0.1s
 bspc node -f west
 bspc node -z right -200 0
