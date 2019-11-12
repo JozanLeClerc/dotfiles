@@ -4,7 +4,8 @@
       mac-option-modifier 'none)
 
 (setq x-alt-keysym 'meta)
-(set-keyboard-coding-system nil)
+(set-keyboard-coding-system 'utf-8-unix)
+
 
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
@@ -203,9 +204,9 @@ mouse-3: Open %S in another window"
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 
-(setq scroll-margin 5
-      scroll-conservatively 9999
-      scroll-step 1)
+;; (setq scroll-margin 5
+;;       scroll-conservatively 9999
+;;       scroll-step 1)
 
 (defun helm-my-buffers ()
   (interactive)
@@ -347,20 +348,20 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (require 'electric-spacing)
 ;; (add-hook 'c-mode-hook #'electric-spacing-mode)
 
-(add-hook 'c-mode-hook
-		  (lambda ()
-			(unless (file-exists-p "Makefile")
-			  (set (make-local-variable 'compile-command)
-				   ;; emulate make's .c.o implicit pattern rule, but with
-				   ;; different defaults for the CC, CPPFLAGS, and CFLAGS
-				   ;; variables:
-				   ;; $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
-				   (let ((file (file-name-nondirectory buffer-file-name)))
-					 (format "%s %s %s -o a.out"
-							 (or (getenv "CC") "gcc")
-							 (buffer-name)
-							 (or (getenv "CFLAGS") "-Wall -Wextra -Werror -g3")
-							       ))))))
+;; (add-hook 'c-mode-hook
+;; 		  (lambda ()
+;; 			(unless (file-exists-p "Makefile")
+;; 			  (set (make-local-variable 'compile-command)
+;; 				   ;; emulate make's .c.o implicit pattern rule, but with
+;; 				   ;; different defaults for the CC, CPPFLAGS, and CFLAGS
+;; 				   ;; variables:
+;; 				   ;; $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
+;; 				   (let ((file (file-name-nondirectory buffer-file-name)))
+;; 					 (format "%s %s %s -o a.out"
+;; 							 (or (getenv "CC") "gcc")
+;; 							 (buffer-name)
+;; 							 (or (getenv "CFLAGS") "-Wall -Wextra -Werror -g3")
+;; 							       ))))))
 
 (setq compilation-finish-function
 (lambda (buf str)
@@ -368,7 +369,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         ;;no errors, make the compilation window go away in a few seconds
         (progn
           (run-at-time
-           "0.5 sec" nil 'delete-windows-on
+           "2 sec" nil 'delete-windows-on
            (get-buffer-create "*compilation*"))
           (message "")))))
 
