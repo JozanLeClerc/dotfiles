@@ -50,7 +50,7 @@ bspc rule -a Dunst layer=above
 
 run sxhkd > /dev/null 2>&1 &
 run compton > /dev/null 2>&1 &
-run feh --bg-fill /home/jozan/Pictures/wallpaper.png > /dev/null 2>&1 &
+run feh --bg-scale /home/jozan/Pictures/wallpaper.png > /dev/null 2>&1 &
 setxkbmap -layout us,fr -option grp:alt_shift_toggle > /dev/null 2>&1
 xset r rate 200 80 > /dev/null 2>&1
 run dunst > /dev/null 2>&1 &
