@@ -42,7 +42,7 @@ nnoremap A cw
 nnoremap ,w :set wrap!<cr>
 nnoremap zh za
 nmap <space> tj
-nmap q ZZ
+nmap q ZQ
 
 fileview */ tree %c -L 1 --dirsfirst
 fileview ../ tree %c -L 1 --dirsfirst
