@@ -93,7 +93,7 @@ Here are some of the main key bindings provided by my `sxhkdrc`:
 + **fire up** `st` terminal emulator with `super+return`. Check my own `st` build [here](https://github.com/JozanLeClerc/st)
 + **kill** focused tile with `super+q`
 + **focus** tile left/down/up/right with `super+{h/j/k/l}`
-+ **move** focused tile left/down/up/right with `super+shift+{h/j/k/l}`
++ **swap** focused tile with left/down/up/right with `super+shift+{h/j/k/l}`
 + **expend** focused tile left/down/up/right with `ctrl+alt+{left/down/up/right}`
 + **shrink** focused tile left/down/up/right with `ctrl+super+{left/down/up/right}`
 + **select direction** of the next application left/down/up/right with `ctrl+super+{h/j/k/l}`
