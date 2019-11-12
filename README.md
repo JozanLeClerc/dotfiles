@@ -78,11 +78,11 @@ Might not work on your your specific GPU + screen setup.
 `autostart.sh`
 
 My dwm autostart script that runs once the window manager is initialized.  
-It launches some programs and sets some settings.
+It launches some programs. Check my dwm build [here](https://github.com/JozanLeClerc/dwm).
 
 `.vim/`
 
-Used in vim to config compile C and C++ code of various manner. See [About vim](https://github.com/JozanLeClerc/dotfiles#about-vim) for more informations.
+Used in vim to config compile C and C++ code of various manner. See [About vim](#about-vim) for more informations.
 
 ## bspwm controls
 
@@ -90,7 +90,7 @@ My `bspwm` and `sxhkd` configs are in here. In this list **"window"** is being c
 Here are some of the main key bindings provided by my `sxhkdrc`:
 + **switch** to workspace 1-10 with `super+{F1-F10}`
 + **move** focused tile to workspace 1-10 with `super+shift+{F1-F10}`
-+ **fire up** `st` terminal emulator with `super+return`. Check my own `st` build [here](https://github.com/JozanLeClerc/st-laptop)
++ **fire up** `st` terminal emulator with `super+return`. Check my own `st` build [here](https://github.com/JozanLeClerc/st)
 + **kill** focused tile with `super+q`
 + **focus** tile left/down/up/right with `super+{h/j/k/l}`
 + **move** focused tile left/down/up/right with `super+shift+{h/j/k/l}`
