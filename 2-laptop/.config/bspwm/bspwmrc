@@ -104,4 +104,4 @@ if [ $ret -eq 0 ]; then
 	bspc desktop -f 02
 fi
 
-run slack --no-sandbox &
+run slack &
