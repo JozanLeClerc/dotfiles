@@ -58,7 +58,7 @@ Used in `urlview` to open content with the pertinent program. Uses `sxiv`, `mpv`
 
 `lowbat`
 
-A script to notify me when my ThinkPad is low on battery. Uses `libnotify` and `espeak`.
+A script to notify me when my ThinkPad is low on battery. Uses `libnotify` and `espeak`. Check my [lowbat repository](https://github.com/JozanLeClerc/lowbat.git).
 
 `dualscreen`
 
