@@ -20,8 +20,8 @@ dual=$?
 sleep 1s
 
 if [ $dual -eq 0 ]; then
-	bspc monitor LVDS1 -d 05 06 07 08 09 10
-	bspc monitor VGA1 -d 01 02 03 04
+	bspc monitor LVDS1 -d 04 05 06 07 08 09 10
+	bspc monitor VGA1 -d 01 02 03
 else
 	bspc monitor LVDS1 -d 01 02 03 04 05 06 07 08 09 10
 fi
@@ -74,12 +74,16 @@ bspc desktop -f 08
 st -e ncmpcpp &
 sleep 1s
 
-bspc desktop -f 07
+if [ $dual -eq 0 ]; then
+	bspc desktop -f 08
+else
+	bspc desktop -f 07
+fi
 st -e calcurse &
 sleep 1s
 
 if [ $dual -eq 0 ]; then
-	bspc desktop -f 07
+	bspc desktop -f 08
 else
 	bspc desktop -f 06
 fi
@@ -87,7 +91,7 @@ st -e newsboat &
 sleep 1s
 
 if [ $dual -eq 0 ]; then
-	bspc desktop -f 07
+	bspc desktop -f 08
 else
 	bspc desktop -f 05
 fi
@@ -103,7 +107,7 @@ st -e zsh -c 'TERM=xterm-256color; emacs -nw' &
 sleep 1s
 
 if [ $dual -eq 0 ]; then
-	bspc desktop -f 05
+	bspc desktop -f 04
 else
 	bspc desktop -f 01
 fi
