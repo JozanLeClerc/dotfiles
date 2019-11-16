@@ -103,7 +103,7 @@ st -e zsh -c 'TERM=xterm-256color; emacs -nw' &
 sleep 1s
 
 if [ $dual -eq 0 ]; then
-	bspc desktop -f 04
+	bspc desktop -f 05
 else
 	bspc desktop -f 01
 fi
