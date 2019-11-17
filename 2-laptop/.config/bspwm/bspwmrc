@@ -70,39 +70,39 @@ bspc desktop -f 09
 st -e neomutt &
 sleep 1s
 
-bspc desktop -f 08
-st -e ncmpcpp &
-sleep 1s
-
 if [ $dual -eq 0 ]; then
 	bspc desktop -f 08
-else
-	bspc desktop -f 07
-fi
-st -e calcurse &
-sleep 1s
-
-if [ $dual -eq 0 ]; then
-	bspc desktop -f 08
-else
-	bspc desktop -f 06
-fi
-st -e newsboat &
-sleep 1s
-
-if [ $dual -eq 0 ]; then
-	bspc desktop -f 08
-else
-	bspc desktop -f 05
-fi
-st -e ncpamixer &
-sleep 1s
-
-if [ $dual -eq 0 ]; then
+	st -e ncmpcpp &
+	sleep 0.3s
+	st -e newsboat &
+	sleep 0.3s
+	st -e ncpamixer &
+	sleep 0.3s
+	st -e calcurse &
+	sleep 0.3s
+	bspc node -f west
+	bspc node -f west
+	bspc node -z right -200 0
+	bspc node -f east
+	bspc node -z right -100 0
+	bspc node -z top 0 -50
 	bspc desktop -f 01
 else
+	bspc desktop -f 08
+	st -e ncmpcpp &
+	sleep 1s
+	bspc desktop -f 07
+	st -e calcurse &
+	sleep 1s
+	bspc desktop -f 06
+	st -e newsboat &
+	sleep 1s
+	bspc desktop -f 05
+	st -e ncpamixer &
+	sleep 1s
 	bspc desktop -f 02
 fi
+
 st -e zsh -c 'TERM=xterm-256color; emacs -nw' &
 sleep 1s
 
@@ -130,7 +130,7 @@ if [ $dual -eq 0 ]; then
 	bspc desktop -f 01
 fi
 
-ping -c4 gentoo.org
+ping -c2 gentoo.org
 ret=$?
 if [ $ret -eq 0 ]; then
 	run slack &
