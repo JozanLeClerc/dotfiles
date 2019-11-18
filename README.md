@@ -56,9 +56,10 @@ Run by `dwm` to refresh its status bar when switching keyboard layouts (alt+shif
 
 Used in `urlview` to open content with the pertinent program. Uses `sxiv`, `mpv` and `wget`. Defaults to `qutebrowser` in case of weird file extension.
 
-`lowbat`
+~`lowbat`~
 
-A script to notify me when my ThinkPad is low on battery. Uses `libnotify` and `espeak`. Check my [lowbat repository](https://github.com/JozanLeClerc/lowbat).
+~A script to notify me when my ThinkPad is low on battery. Uses `libnotify` and `espeak`.~  
+Now has its own repo, check my [lowbat repository](https://github.com/JozanLeClerc/lowbat).
 
 `dualscreen`
 
