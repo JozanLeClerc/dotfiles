@@ -130,7 +130,7 @@ if [ $dual -eq 0 ]; then
 	bspc desktop -f 01
 fi
 
-ping -c2 gentoo.org
+wget -q --spider https://gentoo.org > /dev/null
 ret=$?
 if [ $ret -eq 0 ]; then
 	run slack &
