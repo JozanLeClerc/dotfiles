@@ -6,7 +6,7 @@
 (setq x-alt-keysym 'meta)
 (set-keyboard-coding-system nil)
 
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 
 (require 'package)
@@ -16,7 +16,7 @@
 
 (setq package-enable-at-startup nil)
 (setq package-check-signature nil)
-;; (package-initialize)
+(package-initialize)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
