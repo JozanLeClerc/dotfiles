@@ -1,5 +1,5 @@
 * Joe's dotfiles
-Here are my most precious dotfiles as well as a few handy scripts.
+Here are my most precious dotfiles as well as a few handy scripts.  
 There are a few of these programs I don't use anymore. Their corresponding dotfiles won't receive updates and might be deleted as well.
 
 ** Config files
@@ -51,11 +51,6 @@ Run by ~dwm~ to refresh its status bar when switching keyboard layouts (alt+shif
 ~webview.sh~
 
 Used in ~urlview~ to open content with the pertinent program. Uses ~sxiv~, ~mpv~ and ~wget~. Defaults to ~QuteBrowser~ in case of weird file extension.
-
-~lowbat~
-
-A script to notify me when my ThinkPad is low on battery. Uses ~libnotify~ and ~espeak~. 
-Now has its own repo, check my [[https://github.com/JozanLeClerc/lowbat][lowbat repository]].
 
 ~dualscreen~
 
