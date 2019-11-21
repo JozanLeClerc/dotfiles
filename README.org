@@ -133,4 +133,4 @@ Here are the cool key bindings I added:
 - ~alt+{j/k}~ navigate through tabs
 - ~ctrl+{h/j/k/l}~ navigate through split panes
 - ~ctrl+o~ minimize all other split panes
-- =, w= kill current buffer
+- = , w = kill current buffer
