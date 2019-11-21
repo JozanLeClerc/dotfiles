@@ -1,5 +1,5 @@
 * Joe's dotfiles
-Here are my most precious dotfiles as well as a few handy scripts.  
+Here are my most precious dotfiles as well as a few handy scripts.
 There are a few of these programs I don't use anymore. Their corresponding dotfiles won't receive updates and might be deleted as well.
 
 ** Config files
@@ -34,13 +34,11 @@ Programs you can find configs for in this repository:
 ** Scripts
 Here is a description of the behaviour of the various scripts you can find in the repo.
 
-You can find them in ~.local/bin~ and .
-~.scripts~
+You can find them in ~.local/bin~.
 
 ~compiler~
 
-Run by ~vim~ when saving a LaTeX file. It compiles it into pdf.  
-It was design to complie many other file formats like C, go, etc but I an not using it.
+Run by ~vim~ when saving a LaTeX file. It compiles it into pdf. It was design to complie many other file formats like C, Go, etc but I an not using it.
 
 ~texclear~
 
@@ -61,8 +59,7 @@ Now has its own repo, check my [[https://github.com/JozanLeClerc/lowbat][lowbat 
 
 ~dualscreen~
 
-Uses ~xrandr~ to switch screen setup from built-in laptop screen (LVDS1) only to this plus VGA1 out, setting VGA1 to primary.  
-Might not work on your your specific GPU + screen config.
+Uses ~xrandr~ to switch screen setup from built-in laptop screen (LVDS1) only to this plus VGA1 out, setting VGA1 to primary. /Note:/ Might not work on your your specific GPU + screen config.
 
 ~mainscreen~
 
@@ -71,13 +68,11 @@ Might not work on your your specific GPU + screen setup.
 
 ~swscreen~
 
-Uses ~xrandr~ to switch screen setup from built-in laptop screen (LVDS1) only to VGA1 out only, setting it to primary.  
-Might not work on your your specific GPU + screen setup.
+Uses ~xrandr~ to switch screen setup from built-in laptop screen (LVDS1) only to VGA1 out only, setting it to primary. Might not work on your your specific GPU + screen setup.
 
 ~autostart.sh~
 
-My dwm autostart script that runs once the window manager is initialized.  
-It launches some programs. Check my dwm build [[https://github.com/JozanLeClerc/dwm][here]].
+My dwm autostart script that runs once the window manager is initialized. It launches some programs. Check my dwm build [[https://github.com/JozanLeClerc/dwm][here]].
 
 ~.vim/~
 
@@ -102,8 +97,7 @@ Here are some of the main key bindings provided by my ~sxhkdrc~:
 - *restart* ~bspwm~ with ~super+shift+r~
 
 ** About vim
-When using my ~vim~ or ~nvim~ configuration, make sure you placed my ~.vim~ into your home directory. In there are handy scripts.  
-They can be executed through the following commands, in *normal mode*:
+When using my ~vim~ or ~nvim~ configuration, make sure you placed my ~.vim~ into your home directory. In there are handy scripts. They can be executed through the following commands, in *normal mode*:
 
 
 - ~F5~ executes ~make -j5~ in the current directory
@@ -118,8 +112,7 @@ They can be executed through the following commands, in *normal mode*:
 Obviously, ~make~ and ~gcc~ appear as dependencies for these functions.
 
 ** About GNU Emacs
-I use a decent amount of packages in my configuration, like **Evil mode**, **Rainbow mode**, **neotree** etc... You will have to install them all manually on the first use or the config will not load entirely.  
-For this open **Emacs**, it will notify you about a missing package. To install it execute `M-x` and enter **the following connands**:
+I use a decent amount of packages in my configuration, like *Evil mode*, *Rainbow mode*, *neotree* etc... You will have to install them all manually on the first use or the config will not load entirely. For this open *Emacs*, it will notify you about a missing package. To install it execute ~M-x~ and enter *the following connands*:
 
 #+BEGIN_SRC emacs-lisp
 package-install
