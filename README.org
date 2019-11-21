@@ -10,7 +10,7 @@ Some files here can be found in ~1-desktop~ and ~2-laptop~ directories. Some of 
 There ~1-desktop~ or ~2-laptop~ becomes your ~$HOME~ directory.
 
 Programs you can find configs for in this repository:
-- dunst  
+- Dunst  
 - lf
 - vifm
 - nvim
