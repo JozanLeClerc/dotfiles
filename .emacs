@@ -4,9 +4,9 @@
       mac-option-modifier 'none)
 
 (setq x-alt-keysym 'meta)
-(set-keyboard-coding-system nil)
+(set-keyboard-coding-system 'utf-8)
 
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 
 (require 'package)
@@ -16,7 +16,7 @@
 
 (setq package-enable-at-startup nil)
 (setq package-check-signature nil)
-(package-initialize)
+;; (package-initialize)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -88,7 +88,6 @@
 (evil-define-key 'normal global-map (kbd "C-j") 'windmove-down)
 (evil-define-key 'normal global-map (kbd "C-h") 'windmove-left)
 (evil-define-key 'normal global-map (kbd "C-l") 'windmove-right)
-(evil-define-key 'insert global-map [backtab] "\t")
 
 (use-package tabbar
   :ensure t
@@ -224,6 +223,9 @@ mouse-3: Open %S in another window"
 			 helm-c-source-recentf
 			 helm-c-source-locate)
 		       "*helm-my-buffers*")))
+
+(setq display-time-string-forms
+       '((propertize (concat " " 24-hours ":" minutes " "))))
 
 (require 'powerline)
 (display-time-mode t)
@@ -437,9 +439,14 @@ buffer in current window."
 	(setq comp (concat "gcc -Wall -Wextra -Werror -g3 " (buffer-name))))
   (when (string= (file-name-extension buffer-file-name) "cpp")
 	(setq comp (concat "g++ -Wall -Wextra -Werror -g3 " (buffer-name))))
+  (when (string= (file-name-extension buffer-file-name) "rs")
+	(setq comp (concat "cargo run")))
   (save-buffer)
   (compile comp)
-  (exec-f6))
+  (when (string= (file-name-extension buffer-file-name) "c")
+	(exec-f6))
+  (when (string= (file-name-extension buffer-file-name) "cpp")
+	(exec-f6)))
 
 (defun exec-f12 ()
   (interactive)
