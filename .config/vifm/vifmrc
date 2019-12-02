@@ -43,6 +43,8 @@ nnoremap ,w :set wrap!<cr>
 nnoremap zh za
 nmap <space> tj
 nmap q ZQ
+nnoremap <F2> :rename<CR>
+nnoremap <F7> :mkdir<space>
 
 fileview */ tree %c -L 1 --dirsfirst
 fileview ../ tree %c -L 1 --dirsfirst
