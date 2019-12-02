@@ -4,6 +4,7 @@ let mapleader=","
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'jreybert/vimagit'
 call plug#end()
 
 " Some basics:
