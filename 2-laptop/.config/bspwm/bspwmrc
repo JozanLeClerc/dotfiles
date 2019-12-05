@@ -67,9 +67,9 @@ run lowbat > /dev/null 2>&1 &
 
 sleep 5s
 
-bspc desktop -f 09
-st -e neomutt &
-sleep 1s
+#bspc desktop -f 09
+#st -e neomutt &
+#sleep 1s
 
 if [ $dual -eq 0 ]; then
 	bspc desktop -f 08
