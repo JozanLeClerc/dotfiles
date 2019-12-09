@@ -65,6 +65,10 @@ Might not work on your your specific GPU + screen setup.
 
 Uses ~xrandr~ to switch screen setup from built-in laptop screen (LVDS1) only to VGA1 out only, setting it to primary. Might not work on your your specific GPU + screen setup.
 
+~todo-git-updater.sh~
+
+Daemon to adds, commits and pushs my todo list every three hours.
+
 ~autostart.sh~
 
 My dwm autostart script that runs once the window manager is initialized. It launches some programs. Check my dwm build [[https://github.com/JozanLeClerc/dwm][here]].
