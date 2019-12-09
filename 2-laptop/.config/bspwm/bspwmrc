@@ -4,7 +4,7 @@ export SXHKD_SHELL=/bin/zsh
 export PATH="${HOME}/.local/bin:${PATH}"
 
 run() {
-	if ! pgrep "$1" ;
+	if ! pgrep "$1";
 	then
 		"$@"
 	fi
@@ -62,6 +62,7 @@ run feh --bg-fill /home/jozan/Pictures/wallpaper.png > /dev/null 2>&1 &
 xset r rate 200 80 > /dev/null 2>&1
 run dunst > /dev/null 2>&1 &
 run mpd > /dev/null 2>&1 &
+run todo-git-updater.sh > /dev/null 2>&1
 run lowbat > /dev/null 2>&1 &
 #mopidy 2>&1 &
 
