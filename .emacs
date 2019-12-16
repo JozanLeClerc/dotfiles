@@ -6,17 +6,19 @@
 (setq x-alt-keysym 'meta)
 (set-keyboard-coding-system 'utf-8)
 
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/1"))
 
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+(autoload 'mu4e "mu4e" "Launch mu4e and show the main window" t)
+
 (setq package-enable-at-startup nil)
 (setq package-check-signature nil)
-;; (package-initialize)
+(package-initialize)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -24,18 +26,25 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "8d5f22f7dfd3b2e4fc2f2da46ee71065a9474d0ac726b98f647bc3c7e39f2819" "b6f06081b007b57be61b82fb53f27315e2cf38fa690be50d6d63d2b62a408636" "d8a7a7d2cffbc55ec5efbeb5d14a5477f588ee18c5cddd7560918f9674032727" "a11043406c7c4233bfd66498e83600f4109c83420714a2bd0cd131f81cbbacea" "67b11ee5d10f1b5f7638035d1a38f77bca5797b5f5b21d16a20b5f0452cbeb46" "4c8372c68b3eab14516b6ab8233de2f9e0ecac01aaa859e547f902d27310c0c3" "b8c5adfc0230bd8e8d73450c2cd4044ad7ba1d24458e37b6dec65607fc392980" "b5cff93c3c6ed12d09ce827231b0f5d4925cfda018c9dcf93a2517ce3739e7f1" "cdc2a7ba4ecf0910f13ba207cce7080b58d9ed2234032113b8846a4e44597e41" "72c530c9c8f3561b5ab3bf5cda948cd917de23f48d9825b7a781fe1c0d737f2f" "780c67d3b58b524aa485a146ad9e837051918b722fd32fd1b7e50ec36d413e70" "73a13a70fd111a6cd47f3d4be2260b1e4b717dbf635a9caee6442c949fad41cd" "da538070dddb68d64ef6743271a26efd47fbc17b52cc6526d932b9793f92b718" "9b1c580339183a8661a84f5864a6c363260c80136bd20ac9f00d7e1d662e936a" "1b27e3b3fce73b72725f3f7f040fd03081b576b1ce8bbdfcb0212920aec190ad" default))
+   (quote
+	("k84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "8d5f22f7dfd3b2e4fc2f2da46ee71065a9474d0ac726b98f647bc3c7e39f2819" "b6f06081b007b57be61b82fb53f27315e2cf38fa690be50d6d63d2b62a408636" "d8a7a7d2cffbc55ec5efbeb5d14a5477f588ee18c5cddd7560918f9674032727" "a11043406c7c4233bfd66498e83600f4109c83420714a2bd0cd131f81cbbacea" "67b11ee5d10f1b5f7638035d1a38f77bca5797b5f5b21d16a20b5f0452cbeb46" "4c8372c68b3eab14516b6ab8233de2f9e0ecac01aaa859e547f902d27310c0c3" "b8c5adfc0230bd8e8d73450c2cd4044ad7ba1d24458e37b6dec65607fc392980" "b5cff93c3c6ed12d09ce827231b0f5d4925cfda018c9dcf93a2517ce3739e7f1" "cdc2a7ba4ecf0910f13ba207cce7080b58d9ed2234032113b8846a4e44597e41" "72c530c9c8f3561b5ab3bf5cda948cd917de23f48d9825b7a781fe1c0d737f2f" "780c67d3b58b524aa485a146ad9e837051918b722fd32fd1b7e50ec36d413e70" "73a13a70fd111a6cd47f3d4be2260b1e4b717dbf635a9caee6442c949fad41cd" "da538070dddb68d64ef6743271a26efd47fbc17b52cc6526d932b9793f92b718" "9b1c580339183a8661a84f5864a6c363260c80136bd20ac9f00d7e1d662e936a" "1b27e3b3fce73b72725f3f7f040fd03081b576b1ce8bbdfcb0212920aec190ad" default)))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(org-babel-eval-in-repl rust-mode smart-mode-line-powerline-theme eshell-prompt-extras eshell-fixed-prompt pyenv-mode s realgud-lldb neotree ranger ## color-theme-modern auto-complete-c-headers command-log-mode auto-complete magit smart-tabs-mode airline-themes electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode))
- '(tabbar-separator '(0.2)))
+   (quote
+	(el-get slack websocket request emojify-logos emojify oauth2 circe mu4e-alert web-mode doom-themes doom-modeline all-the-icons-dired all-the-icons-gnus all-the-icons html5-schema phps-mode org-babel-eval-in-repl rust-mode smart-mode-line-powerline-theme eshell-prompt-extras eshell-fixed-prompt pyenv-mode s realgud-lldb neotree ranger ## color-theme-modern auto-complete-c-headers command-log-mode auto-complete magit smart-tabs-mode airline-themes electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
+ '(send-mail-function (quote smtpmail-send-it))
+ '(tabbar-separator (quote (0.2))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(font-lock-function-name-face ((t (:foreground "color-27"))))
+ '(helm-selection ((t (:background "color-177" :distant-foreground "black" :foreground "black" :weight semi-bold))))
+ '(highlight ((t (:background "color-177" :foreground "black" :weight semi-bold))))
  '(magit-section-highlight ((t (:background "color-237"))))
+ '(minibuffer-prompt ((t (:foreground "color-33"))))
+ '(mu4e-highlight-face ((t (:weight bold))))
  '(neo-dir-link-face ((t (:foreground "Blue"))))
  '(neo-file-link-face ((t (:foreground "color-252"))))
  '(neo-vc-default-face ((t (:foreground "color-251"))))
@@ -46,7 +55,7 @@
  '(tabbar-default ((t (:inherit variable-pitch :background "gray25" :foreground "gray50" :height 0.8)))))
 
 (menu-bar-mode -1)
-(tool-bar-mode -1)
+;; (tool-bar-mode -1)
 (add-hook 'prog-mode-hook 'linum-mode)
 (add-hook 'text-mode-hook 'linum-mode)
 (setq linum-format "%3d ")
@@ -57,6 +66,73 @@
 	  delete-old-versions t
 	  kept-new-versions 20
 	  kept-old-versions 5)
+
+(require 'mu4e)
+(require 'cl)
+(defun my-make-mu4e-context (name address signature)
+  "Return a mu4e context named NAME with :match-func matching
+  its ADDRESS in From or CC fields of the parent message. The
+  context's `user-mail-address' is set to ADDRESS and its
+  `mu4e-compose-signature' to SIGNATURE."
+  (lexical-let ((addr-lex address))
+	(make-mu4e-context :name name
+					   :vars `((user-mail-address . ,address)
+							   (mu4e-compose-signature . ,signature))
+					   :match-func
+					   (lambda (msg)
+						 (when msg
+						   (or (mu4e-message-contact-field-matches msg :to addr-lex)
+							   (mu4e-message-contact-field-matches msg :cc addr-lex)))))))
+
+(setq mu4e-contexts
+	  `( ,(my-make-mu4e-context "main" "bousset.rudy@gmail.com"
+								"")))
+
+(setq mu4e-sent-folder "/sent"
+      ;; mu4e-sent-messages-behavior 'delete ;; Unsure how this should be configured
+      mu4e-drafts-folder "/drafts"
+      user-mail-address "bousset.rudy@gmail.com"
+      smtpmail-default-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587)
+(defvar my-mu4e-account-alist
+  '(("Gmail"
+     (mu4e-sent-folder "/Gmail/sent")
+     (user-mail-address "bousset.rudy@gmail.com")
+     (smtpmail-smtp-user "bousset.rudy")
+     (smtpmail-local-domain "gmail.com")
+     (smtpmail-default-smtp-server "smtp.gmail.com")
+     (smtpmail-smtp-server "smtp.gmail.com")
+     (smtpmail-smtp-service 587)
+     )
+     ;; Include any other accounts here ...
+    ))
+(defun my-mu4e-set-account ()
+  "Set the account for composing a message.
+   This function is taken from: 
+     https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
+  (let* ((account
+    (if mu4e-compose-parent-message
+        (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
+    (string-match "/\\(.*?\\)/" maildir)
+    (match-string 1 maildir))
+      (completing-read (format "Compose with account: (%s) "
+             (mapconcat #'(lambda (var) (car var))
+            my-mu4e-account-alist "/"))
+           (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
+           nil t nil nil (caar my-mu4e-account-alist))))
+   (account-vars (cdr (assoc account my-mu4e-account-alist))))
+    (if account-vars
+  (mapc #'(lambda (var)
+      (set (car var) (cadr var)))
+        account-vars)
+      (error "No email account found"))))
+(add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
+
+(require 'mu4e-alert)
+(mu4e-alert-set-default-style 'libnotify)
+(add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+(add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
 
 (require 'origami)
 (origami-mode)
@@ -70,7 +146,6 @@
 (setq evil-insert-state-cursor '("yellow" bar))
 (setq evil-replace-state-cursor '("red" hollow))
 (setq evil-operator-state-cursor '("red" hollow))
-
 
 (require 'tabbar)
 (global-set-key (kbd "M-k") nil)
@@ -227,11 +302,47 @@ mouse-3: Open %S in another window"
 (setq display-time-string-forms
        '((propertize (concat " " 24-hours ":" minutes " "))))
 
-(require 'powerline)
-(display-time-mode t)
+;; (require 'powerline)
+;; (display-time-mode t)
 
-(require 'airline-themes)
-(load-theme 'airline-gruvbox-dark)
+;; (require 'airline-themes)
+;; (load-theme 'airline-gruvbox-dark)
+
+(require 'doom-modeline)
+(doom-modeline-mode 1)
+(setq doom-modeline-project-detection 'projectile)
+(setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
+(setq doom-modeline-icon (display-graphic-p))
+(setq doom-modeline-major-mode-icon t)
+(setq doom-modeline-major-mode-color-icon t)
+(setq doom-modeline-buffer-state-icon t)
+(setq doom-modeline-buffer-modification-icon t)
+(setq doom-modeline-unicode-fallback t)
+(setq doom-modeline-enable-word-count nil)
+(setq doom-modeline-buffer-encoding nil)
+(setq doom-modeline-indent-info nil)
+(setq doom-modeline-checker-simple-format t)
+(setq doom-modeline-number-limit 99)
+(setq doom-modeline-vcs-max-length 12)
+(setq doom-modeline-persp-name t)
+(setq doom-modeline-lsp t)
+(setq doom-modeline-github nil)
+(setq doom-modeline-github-interval (* 30 60))
+(setq doom-modeline-modal-icon t)
+(setq doom-modeline-mu4e t)
+(setq doom-modeline-irc t)
+(setq doom-modeline-irc-stylize 'identity)
+(setq doom-modeline-env-version t)
+(setq doom-modeline-env-python-executable "python-shell-interpreter")
+(setq doom-modeline-env-ruby-executable "ruby")
+(setq doom-modeline-env-perl-executable "perl")
+(setq doom-modeline-env-go-executable "go")
+(setq doom-modeline-env-elixir-executable "iex")
+(setq doom-modeline-env-rust-executable "rustc")
+(setq doom-modeline-env-load-string "...")
+(setq doom-modeline-before-update-env-hook nil)
+(setq doom-modeline-after-update-env-hook nil)
+(display-time)
 
 (require 'color-identifiers-mode)
 (global-color-identifiers-mode)
@@ -338,6 +449,31 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
 (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
 (neotree-show)
+
+;; set key for agenda
+(global-set-key (kbd "C-c a") 'org-agenda)
+
+;;file to save todo items
+(setq org-agenda-files (quote ("/home/jozan/.emacs.d/org/todo/todo.org")))
+
+;;set priority range from A to C with default A
+(setq org-highest-priority ?A)
+(setq org-lowest-priority ?C)
+(setq org-default-priority ?A)
+
+;;set colours for priorities
+(setq org-priority-faces '((?A . (:foreground "#F0DFAF" :weight bold))
+                           (?B . (:foreground "LightSteelBlue"))
+                           (?C . (:foreground "OliveDrab"))))
+
+;;open agenda in current window
+(setq org-agenda-window-setup (quote current-window))
+
+;;capture todo items using C-c c t
+(define-key global-map (kbd "C-c c") 'org-capture)
+(setq org-capture-templates
+      '(("t" "todo" entry (file+headline "/home/jozan/.emacs.d/org/todo/todo.org" "Tasks")
+         "* TODO [#A] %?")))
 
 (require 'realgud-lldb)
 
