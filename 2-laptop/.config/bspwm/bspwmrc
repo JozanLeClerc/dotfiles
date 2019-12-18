@@ -58,7 +58,11 @@ fi
 run sxhkd > /dev/null 2>&1 &
 run compton > /dev/null 2>&1 &
 setxkbmap -layout us,fr -option grp:alt_shift_toggle > /dev/null 2>&1
-run feh --bg-fill /home/jozan/Pictures/wallpaper.png > /dev/null 2>&1 &
+if [ $dual -eq 0 ]; then
+	feh --bg-tile /home/jozan/Pictures/wallpaper.png > /dev/null 2>&1
+else
+	feh --bg-fill /home/jozan/Pictures/wallpaper.png > /dev/null 2>&1
+fi
 xset r rate 200 80 > /dev/null 2>&1
 run dunst > /dev/null 2>&1 &
 run mpd > /dev/null 2>&1 &
@@ -110,10 +114,6 @@ sleep 1s
 
 if [ $dual -eq 0 ]; then
 	bspc desktop -f 04
-else
-	bspc desktop -f 01
-fi
-if [ $dual -eq 0 ]; then
 	st -e zsh -c 'clear; cowsay "Welcome back, partner!"; zsh -i' &
 	sleep 0.3s
 	st -e gotop -b &
@@ -125,6 +125,7 @@ if [ $dual -eq 0 ]; then
 	bspc node -z top 0 70
 	bspc node -f north
 else
+	bspc desktop -f 01
 	st -e gotop -b &
 	sleep 0.3s
 	st -e zsh -c 'clear; cowsay "Welcome back, partner!"; zsh -i' &
@@ -145,8 +146,6 @@ if [ $dual -eq 0 ]; then
 	bspc desktop -f 01
 fi
 
-wget -q --spider https://gentoo.org/ > /dev/null
-ret=$?
-if [ $ret -eq 0 ]; then
+if wget -q --spider https://gentoo.org/; then
 	run slack &
 fi
