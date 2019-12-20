@@ -31,7 +31,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-	(el-get slack websocket request emojify-logos emojify oauth2 circe mu4e-alert web-mode doom-themes doom-modeline all-the-icons-dired all-the-icons-gnus all-the-icons html5-schema phps-mode org-babel-eval-in-repl rust-mode smart-mode-line-powerline-theme eshell-prompt-extras eshell-fixed-prompt pyenv-mode s realgud-lldb neotree ranger ## color-theme-modern auto-complete-c-headers command-log-mode auto-complete magit smart-tabs-mode airline-themes electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
+	(org-mime flyspell-correct pdf-tools el-get slack websocket request emojify-logos emojify oauth2 circe mu4e-alert web-mode doom-themes doom-modeline all-the-icons-dired all-the-icons-gnus all-the-icons html5-schema phps-mode org-babel-eval-in-repl rust-mode smart-mode-line-powerline-theme eshell-prompt-extras eshell-fixed-prompt pyenv-mode s realgud-lldb neotree ranger ## color-theme-modern auto-complete-c-headers command-log-mode auto-complete magit smart-tabs-mode airline-themes electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
  '(send-mail-function (quote smtpmail-send-it))
  '(tabbar-separator (quote (0.2))))
 (custom-set-faces
@@ -67,67 +67,131 @@
 	  kept-new-versions 20
 	  kept-old-versions 5)
 
+(require 'org-mime)
 (require 'mu4e)
 (require 'cl)
-(defun my-make-mu4e-context (name address signature)
-  "Return a mu4e context named NAME with :match-func matching
-  its ADDRESS in From or CC fields of the parent message. The
-  context's `user-mail-address' is set to ADDRESS and its
-  `mu4e-compose-signature' to SIGNATURE."
-  (lexical-let ((addr-lex address))
-	(make-mu4e-context :name name
-					   :vars `((user-mail-address . ,address)
-							   (mu4e-compose-signature . ,signature))
-					   :match-func
-					   (lambda (msg)
-						 (when msg
-						   (or (mu4e-message-contact-field-matches msg :to addr-lex)
-							   (mu4e-message-contact-field-matches msg :cc addr-lex)))))))
 
+(setq mu4e-maildir (expand-file-name "~/Maildir"))
+
+(setq mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a"
+	  ;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
+	  mu4e-view-prefer-html t
+	  mu4e-update-interval 180
+	  mu4e-headers-auto-update t
+	  mu4e-compose-signature-auto-include nil
+	  mu4e-compose-format-flowed t)
+(add-to-list 'mu4e-view-actions
+			 '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+
+;; enable inline images
+(setq mu4e-view-show-images t)
+
+;; use imagemagick, if available
+(when (fboundp 'imagemagick-register-types)
+  (imagemagick-register-types))
+
+;; every new email composition gets its own frame!
+(setq mu4e-compose-in-new-frame t)
+
+;; don't save message to Sent Messages, IMAP takes care of this
+(setq mu4e-sent-messages-behavior 'delete)
+
+(add-hook 'mu4e-view-mode-hook #'visual-line-mode)
+
+;; <tab> to navigate to links, <RET> to open them in browser
+(add-hook 'mu4e-view-mode-hook
+		  (lambda()
+			;; try to emulate some of the eww key-bindings
+			(local-set-key (kbd "<RET>") 'mu4e~view-browse-url-from-binding)
+			(local-set-key (kbd "<tab>") 'shr-next-link)
+			(local-set-key (kbd "<backtab>") 'shr-previous-link)))
+
+;; from https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/elgoumx
+(add-hook 'mu4e-headers-mode-hook
+		  (defun my/mu4e-change-headers ()
+			(interactive)
+			(setq mu4e-headers-fields
+				  `((:human-date . 25) ;; alternatively, use :date
+					(:flags . 6)
+					(:from . 22)
+					(:thread-subject . ,(- (window-body-width) 70)) ;; alternatively, use :subject
+					(:size . 7)))))
+
+;; spell check
+(add-hook 'mu4e-compose-mode-hook
+		  (defun my-do-compose-stuff ()
+			"My settings for message composition."
+			(visual-line-mode)
+			(org-mu4e-compose-org-mode)
+			(use-hard-newlines -1)
+			(flyspell-mode)))
+
+(require 'smtpmail)
+
+;;rename files when moving
+;;NEEDED FOR MBSYNC
+(setq mu4e-change-filenames-when-moving t)
+
+;;set up queue for offline email
+;;use mu mkdir  ~/Maildir/acc/queue to set up first
+(setq smtpmail-queue-mail nil)  ;; start in normal mode
+
+;;from the info manual
+(setq mu4e-attachment-dir  "~/Downloads")
+
+(setq message-kill-buffer-on-exit t)
+(setq mu4e-compose-dont-reply-to-self t)
+
+(require 'org-mu4e)
+
+;; convert org mode to HTML automatically
+(setq org-mu4e-convert-to-html t)
+
+;;from vxlabs config
+;; show full addresses in view message (instead of just names)
+;; toggle per name with M-RET
+(setq mu4e-view-show-addresses 't)
+
+;; don't ask when quitting
+(setq mu4e-confirm-quit nil)
+
+;; mu4e-context
+(setq mu4e-context-policy 'pick-first)
+(setq mu4e-compose-context-policy 'always-ask)
 (setq mu4e-contexts
-	  `( ,(my-make-mu4e-context "main" "bousset.rudy@gmail.com"
-								"")))
-
-(setq mu4e-sent-folder "/sent"
-      ;; mu4e-sent-messages-behavior 'delete ;; Unsure how this should be configured
-      mu4e-drafts-folder "/drafts"
-      user-mail-address "bousset.rudy@gmail.com"
-      smtpmail-default-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587)
-(defvar my-mu4e-account-alist
-  '(("Gmail"
-     (mu4e-sent-folder "/Gmail/sent")
-     (user-mail-address "bousset.rudy@gmail.com")
-     (smtpmail-smtp-user "bousset.rudy")
-     (smtpmail-local-domain "gmail.com")
-     (smtpmail-default-smtp-server "smtp.gmail.com")
-     (smtpmail-smtp-server "smtp.gmail.com")
-     (smtpmail-smtp-service 587)
-     )
-     ;; Include any other accounts here ...
-    ))
-(defun my-mu4e-set-account ()
-  "Set the account for composing a message.
-   This function is taken from: 
-     https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
-  (let* ((account
-    (if mu4e-compose-parent-message
-        (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
-    (string-match "/\\(.*?\\)/" maildir)
-    (match-string 1 maildir))
-      (completing-read (format "Compose with account: (%s) "
-             (mapconcat #'(lambda (var) (car var))
-            my-mu4e-account-alist "/"))
-           (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
-           nil t nil nil (caar my-mu4e-account-alist))))
-   (account-vars (cdr (assoc account my-mu4e-account-alist))))
-    (if account-vars
-  (mapc #'(lambda (var)
-      (set (car var) (cadr var)))
-        account-vars)
-      (error "No email account found"))))
-(add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
+	  (list
+	   (make-mu4e-context
+		:name "work" ;;for acc1-gmail
+		:enter-func (lambda () (mu4e-message "Entering context work"))
+		:leave-func (lambda () (mu4e-message "Leaving context work"))
+		:match-func (lambda (msg)
+					  (when msg
+						(mu4e-message-contact-field-matches
+						 msg '(:from :to :cc :bcc) "acc1@gmail.com")))
+		:vars '((user-mail-address . "acc1@gmail.com")
+				(user-full-name . "User Account1")
+				(mu4e-sent-folder . "/acc1-gmail/[acc1].Sent Mail")
+				(mu4e-drafts-folder . "/acc1-gmail/[acc1].drafts")
+				(mu4e-trash-folder . "/acc1-gmail/[acc1].Bin")
+				(mu4e-compose-signature . (concat "Formal Signature\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
+				(mu4e-compose-format-flowed . t)
+				(smtpmail-queue-dir . "~/Maildir/acc1-gmail/queue/cur")
+				(message-send-mail-function . smtpmail-send-it)
+				(smtpmail-smtp-user . "acc1")
+				(smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+				(smtpmail-auth-credentials . (expand-file-name "~/.authinfo.gpg"))
+				(smtpmail-default-smtp-server . "smtp.gmail.com")
+				(smtpmail-smtp-server . "smtp.gmail.com")
+				(smtpmail-smtp-service . 587)
+				(smtpmail-debug-info . t)
+				(smtpmail-debug-verbose . t)
+				(mu4e-maildir-shortcuts . ( ("/acc1-gmail/INBOX"            . ?i)
+											("/acc1-gmail/[acc1].Sent Mail" . ?s)
+											("/acc1-gmail/[acc1].Trash"       . ?t)
+											("/acc1-gmail/[acc1].All Mail"  . ?a)
+											("/acc1-gmail/[acc1].Starred"   . ?r)
+											("/acc1-gmail/[acc1].drafts"    . ?d)
+											))))))
 
 (require 'mu4e-alert)
 (mu4e-alert-set-default-style 'libnotify)
@@ -342,6 +406,8 @@ mouse-3: Open %S in another window"
 (setq doom-modeline-env-load-string "...")
 (setq doom-modeline-before-update-env-hook nil)
 (setq doom-modeline-after-update-env-hook nil)
+(display-battery-mode)
+(column-number-mode)
 (display-time)
 
 (require 'color-identifiers-mode)
