@@ -1,0 +1,4 @@
+#!/bin/dash
+
+slock &
+sudo pm-suspend
