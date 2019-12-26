@@ -80,6 +80,34 @@
 	  kept-old-versions 5)
 #+END_SRC
 
+** Some org
+#+BEGIN_SRC emacs-lisp
+;; set key for agenda
+(global-set-key (kbd "C-c a") 'org-agenda)
+
+;;file to save todo items
+(setq org-agenda-files (quote ("/home/jozan/.emacs.d/org/todo/todo.org")))
+
+;;set priority range from A to C with default A
+(setq org-highest-priority ?A)
+(setq org-lowest-priority ?C)
+(setq org-default-priority ?A)
+
+;;set colours for priorities
+(setq org-priority-faces '((?A . (:foreground "#F0DFAF" :weight bold))
+						   (?B . (:foreground "LightSteelBlue"))
+						   (?C . (:foreground "OliveDrab"))))
+
+;;open agenda in current window
+(setq org-agenda-window-setup (quote current-window))
+
+;;capture todo items using C-c c t
+(define-key global-map (kbd "C-c c") 'org-capture)
+(setq org-capture-templates
+	  '(("t" "todo" entry (file+headline "/home/jozan/.emacs.d/org/todo/todo.org" "Tasks")
+		 "* TODO [#A] %?")))
+#+END_SRC
+
 ** Core packages
 *** mu4e
 #+BEGIN_SRC emacs-lisp
@@ -91,7 +119,7 @@
 
 (setq mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a"
 	  ;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
-	  mu4e-view-prefer-html t
+	  mu4e-view-prefer-html nil
 	  mu4e-update-interval 180
 	  mu4e-headers-auto-update t
 	  mu4e-compose-signature-auto-include nil
@@ -158,10 +186,10 @@
 (setq message-kill-buffer-on-exit t)
 (setq mu4e-compose-dont-reply-to-self t)
 
-(require 'org-mu4e)
+;; (require 'org-mu4e)
 
 ;; convert org mode to HTML automatically
-(setq org-mu4e-convert-to-html t)
+;; (setq org-mu4e-convert-to-html t)
 
 ;;from vxlabs config
 ;; show full addresses in view message (instead of just names)
@@ -184,18 +212,18 @@
 					  (when msg
 						(mu4e-message-contact-field-matches
 						 msg '(:from :to :cc :bcc) "bousset.rudy@gmail.com")))
-		:vars '((user-mail-address . "acc1@gmail.com")
-				(user-full-name . "User Account1")
+		:vars '((user-mail-address . "bousset.rudy@gmail.com")
+				(user-full-name . "Rudy Bousset")
 				(mu4e-sent-folder . "/acc1-gmail/[acc1].Sent Mail")
 				(mu4e-drafts-folder . "/acc1-gmail/[acc1].drafts")
 				(mu4e-trash-folder . "/acc1-gmail/[acc1].Trash")
 				(mu4e-compose-signature . (concat "Formal Signature\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
 				(mu4e-compose-format-flowed . t)
 				(smtpmail-queue-dir . "~/Maildir/acc1-gmail/queue/cur")
-				(message-send-mail-function . smtpmail-send-it)
-				(smtpmail-smtp-user . "acc1")
-				(smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
-				(smtpmail-auth-credentials . (expand-file-name "~/.authinfo.gpg"))
+				;; (message-send-mail-function . smtpmail-send-it)
+				(smtpmail-smtp-user . "bousset.rudy")
+				;; (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+				;; (smtpmail-auth-credentials . (expand-file-name "~/.authinfo.gpg"))
 				(smtpmail-default-smtp-server . "smtp.gmail.com")
 				(smtpmail-smtp-server . "smtp.gmail.com")
 				(smtpmail-smtp-service . 587)
@@ -204,7 +232,7 @@
 				(mu4e-maildir-shortcuts . ( ("/acc1-gmail/INBOX"            . ?i)
 											("/acc1-gmail/[acc1].Sent Mail" . ?s)
 											("/acc1-gmail/[acc1].Trash"       . ?t)
-											("/acc1-gmail/[acc1].All Mail"  . ?a)
+											;; ("/acc1-gmail/[acc1].All Mail"  . ?a)
 											("/acc1-gmail/[acc1].Starred"   . ?r)
 											("/acc1-gmail/[acc1].drafts"    . ?d)
 											))))))
@@ -569,34 +597,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (neotree-show)
 #+END_SRC
 
-*** Some org
-#+BEGIN_SRC emacs-lisp
-;; set key for agenda
-(global-set-key (kbd "C-c a") 'org-agenda)
-
-;;file to save todo items
-(setq org-agenda-files (quote ("/home/jozan/.emacs.d/org/todo/todo.org")))
-
-;;set priority range from A to C with default A
-(setq org-highest-priority ?A)
-(setq org-lowest-priority ?C)
-(setq org-default-priority ?A)
-
-;;set colours for priorities
-(setq org-priority-faces '((?A . (:foreground "#F0DFAF" :weight bold))
-						   (?B . (:foreground "LightSteelBlue"))
-						   (?C . (:foreground "OliveDrab"))))
-
-;;open agenda in current window
-(setq org-agenda-window-setup (quote current-window))
-
-;;capture todo items using C-c c t
-(define-key global-map (kbd "C-c c") 'org-capture)
-(setq org-capture-templates
-	  '(("t" "todo" entry (file+headline "/home/jozan/.emacs.d/org/todo/todo.org" "Tasks")
-		 "* TODO [#A] %?")))
-#+END_SRC
-
 *** lldb
 #+BEGIN_SRC emacs-lisp
 (require 'realgud-lldb)
@@ -618,6 +618,12 @@ buffer in current window."
 (global-set-key (kbd "C-c t") 'my/toggle-window-dedicated)
 #+END_SRC
 
+*** sidebar.el
+#+BEGIN_SRC emacs-lisp
+;; (add-to-list 'load-path "~/.local/share/icons-in-terminal")
+;; (add-to-list 'load-path "~/.emacs.d/sidebar.el")
+;; (require 'sidebar)
+#+END_SRC
 ** Compilation
 *** Close window after errorless compilation
 #+BEGIN_SRC emacs-lisp
