@@ -655,7 +655,7 @@ buffer in current window."
 (defun exec-f6 ()
   (interactive)
   (defvar exec)
-  (setq exec "./a.out; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v0.9-beta by Joe\"; rm -f a.out; rm -rf a.out.dSYM")
+  (setq exec "./a.out; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.0 by Joe\"; rm -f a.out; rm -rf a.out.dSYM")
   (async-shell-command exec))
 
 (defun exec-f9 ()
@@ -666,7 +666,7 @@ buffer in current window."
 	(setq comp (concat "gcc -Wall -Wextra -Werror -g3 " (buffer-name))))
   (when (string= (file-name-extension buffer-file-name) "cpp")
 	(setq comp (concat "g++ -Wall -Wextra -Werror -g3 " (buffer-name))))
-  (setq exec (concat "./a.out " (read-string "Enter args: ") "; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v0.9-beta by Joe\"; rm -f a.out; rm -rf a.out.dSYM"))
+  (setq exec (concat "./a.out " (read-string "Enter args: ") "; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.0 by Joe\"; rm -f a.out; rm -rf a.out.dSYM"))
   (save-buffer)
   (compile comp)
   (async-shell-command exec))
