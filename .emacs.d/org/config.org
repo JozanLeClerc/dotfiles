@@ -628,7 +628,7 @@ buffer in current window."
 *** evil nerd commenter
 #+BEGIN_SRC emacs-lisp
 (require 'evil-nerd-commenter)
-(evilnc-default-hotkeys)	
+(evilnc-default-hotkeys)
 #+END_SRC
 ** Compilation
 *** Close window after errorless compilation
