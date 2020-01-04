@@ -462,6 +462,8 @@ mouse-3: Open %S in another window"
 (display-battery-mode)
 (column-number-mode)
 (display-time)
+(doom-themes-visual-bell-config)
+(doom-themes-neotree-config)
 #+END_SRC
 
 *** Colors and rainbows
