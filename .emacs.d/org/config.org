@@ -232,7 +232,7 @@
 				(mu4e-maildir-shortcuts . ( ("/acc1-gmail/INBOX"            . ?i)
 											("/acc1-gmail/[acc1].Sent Mail" . ?s)
 											("/acc1-gmail/[acc1].Trash"       . ?t)
-											;; ("/acc1-gmail/[acc1].All Mail"  . ?a)
+											("/acc1-gmail/[acc1].All Mail"  . ?a)
 											("/acc1-gmail/[acc1].Starred"   . ?r)
 											("/acc1-gmail/[acc1].drafts"    . ?d)
 											))))))
@@ -623,6 +623,12 @@ buffer in current window."
 ;; (add-to-list 'load-path "~/.local/share/icons-in-terminal")
 ;; (add-to-list 'load-path "~/.emacs.d/sidebar.el")
 ;; (require 'sidebar)
+#+END_SRC
+
+*** evil nerd commenter
+#+BEGIN_SRC emacs-lisp
+(require 'evil-nerd-commenter)
+(evilnc-default-hotkeys)	
 #+END_SRC
 ** Compilation
 *** Close window after errorless compilation
