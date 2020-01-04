@@ -456,6 +456,12 @@ buffer in current window."
 ;; (add-to-list 'load-path "~/.emacs.d/sidebar.el")
 ;; (require 'sidebar)
 #+END_SRC
+
+*** evil nerd commenter
+#+BEGIN_SRC emacs-lisp
+(require 'evil-nerd-commenter)
+(evilnc-default-hotkeys)
+#+END_SRC
 ** Compilation
 *** Close window after errorless compilation
 #+BEGIN_SRC emacs-lisp
