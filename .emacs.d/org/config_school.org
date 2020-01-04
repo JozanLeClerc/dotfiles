@@ -291,7 +291,6 @@ mouse-3: Open %S in another window"
 (setq doom-modeline-env-load-string "...")
 (setq doom-modeline-before-update-env-hook nil)
 (setq doom-modeline-after-update-env-hook nil)
-(display-battery-mode)
 (column-number-mode)
 (display-time)
 #+END_SRC
