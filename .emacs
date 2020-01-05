@@ -23,7 +23,7 @@
  ;; If there is more than one, they won't work right.
  '(font-lock-function-name-face ((t (:foreground "color-27"))))
  '(helm-selection ((t (:background "color-177" :distant-foreground "black" :foreground "black" :weight semi-bold))))
- '(highlight ((t (:background "color-177" :foreground "black" :weight semi-bold))))
+ '(highlight ((t (:background "color-235" :weight semi-bold))))
  '(magit-section-highlight ((t (:background "color-237"))))
  '(minibuffer-prompt ((t (:foreground "color-33"))))
  '(mu4e-highlight-face ((t (:weight bold))))
@@ -31,6 +31,7 @@
  '(neo-file-link-face ((t (:foreground "color-252"))))
  '(neo-vc-default-face ((t (:foreground "color-251"))))
  '(neo-vc-up-to-date-face ((t (:foreground "green"))))
+ '(region ((t (:background "color-235"))))
  '(smerge-lower ((t (:background "yellow"))))
  '(smerge-markers ((t (:background "color-58"))))
  '(smerge-upper ((t (:background "brightcyan"))))
