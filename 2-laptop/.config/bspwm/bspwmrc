@@ -1,6 +1,8 @@
 #!/bin/dash
 
 export SXHKD_SHELL=/bin/zsh
+export XDG_CONFIG_HOME="${HOME}/.config"
+export EDITOR="nvim"
 export PATH="${HOME}/.local/bin:${PATH}"
 
 run() {
@@ -53,6 +55,7 @@ else
 	bspc rule -a mplayer2 state=floating
 	bspc rule -a Dunst layer=above
 fi
+bspc rule -a Main state=floating
 
 # START
 run sxhkd > /dev/null 2>&1 &
@@ -63,7 +66,7 @@ if [ $dual -eq 0 ]; then
 else
 	feh --bg-fill /home/jozan/Pictures/wallpaper.png > /dev/null 2>&1
 fi
-xset r rate 200 80 > /dev/null 2>&1
+xset r rate 200 100 > /dev/null 2>&1
 run dunst > /dev/null 2>&1 &
 run mpd > /dev/null 2>&1 &
 run todo-git-updater.sh > /dev/null 2>&1 &
