@@ -1,5 +1,5 @@
 * My emacs config
-** For the Macintosh OS by Stevey J
+** For the Macintosh OS by Stevey-J
 #+BEGIN_SRC emacs-lisp
 (setq mac-option-key-is-meta nil
 	  mac-command-key-is-meta t
@@ -13,6 +13,22 @@
 (set-keyboard-coding-system 'utf-8)
 
 ;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+
+(add-hook 'prog-mode-hook 'linum-mode)
+(add-hook 'text-mode-hook 'linum-mode)
+(setq linum-format "%3d ")
+
+(setq scroll-step 5)
+
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+	  backup-by-copying t
+	  version-control t
+	  delete-old-versions t
+	  kept-new-versions 20
+	  kept-old-versions 5)
 #+END_SRC
 
 ** MELPA
@@ -65,19 +81,6 @@
  '(smerge-markers ((t (:background "color-58"))))
  '(smerge-upper ((t (:background "brightcyan"))))
  '(tabbar-default ((t (:inherit variable-pitch :background "gray25" :foreground "gray50" :height 0.8)))))
-
-(menu-bar-mode -1)
-;; (tool-bar-mode -1)
-(add-hook 'prog-mode-hook 'linum-mode)
-(add-hook 'text-mode-hook 'linum-mode)
-(setq linum-format "%3d ")
-
-(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
-	  backup-by-copying t
-	  version-control t
-	  delete-old-versions t
-	  kept-new-versions 20
-	  kept-old-versions 5)
 #+END_SRC
 
 ** Some org
@@ -86,7 +89,7 @@
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 ;;file to save todo items
-(setq org-agenda-files (quote ("/home/jozan/.emacs.d/org/todo/todo.org")))
+(setq org-agenda-files (quote ("~/.emacs.d/org/todo/todo.org")))
 
 ;;set priority range from A to C with default A
 (setq org-highest-priority ?A)
@@ -101,11 +104,34 @@
 ;;open agenda in current window
 (setq org-agenda-window-setup (quote current-window))
 
-;;capture todo items using C-c c t
-(define-key global-map (kbd "C-c c") 'org-capture)
+;;capture todo items using C-c C-t t
+(define-key global-map (kbd "C-c C-t") 'org-capture)
 (setq org-capture-templates
 	  '(("t" "todo" entry (file+headline "/home/jozan/.emacs.d/org/todo/todo.org" "Tasks")
-		 "* TODO [#A] %?")))
+		 "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n")))
+
+;;open agenda in current window
+(setq org-agenda-window-setup (quote current-window))
+;;warn me of any deadlines in next 7 days
+(setq org-deadline-warning-days 7)
+;;show me tasks scheduled or due in next fortnight
+(setq org-agenda-span (quote fortnight))
+;;don't show tasks as scheduled if they are already shown as a deadline
+(setq org-agenda-skip-scheduled-if-deadline-is-shown t)
+;;don't give awarning colour to tasks with impending deadlines
+;;if they are scheduled to be done
+(setq org-agenda-skip-deadline-prewarning-if-scheduled (quote pre-scheduled))
+;;don't show tasks that are scheduled or have deadlines in the
+;;normal todo list
+(setq org-agenda-todo-ignore-deadlines (quote all))
+(setq org-agenda-todo-ignore-scheduled (quote all))
+;;sort tasks in order of when they are due and then by priority
+(setq org-agenda-sorting-strategy
+  (quote
+   ((agenda deadline-up priority-down)
+	(todo priority-down category-keep)
+	(tags priority-down category-keep)
+	(search category-keep))))
 #+END_SRC
 
 ** Core packages
@@ -118,10 +144,11 @@
 (setq mu4e-maildir (expand-file-name "~/Maildir"))
 
 (setq mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a"
-	  ;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
 	  mu4e-view-prefer-html nil
 	  mu4e-update-interval 180
+	  mu4e-index-update-in-background t
 	  mu4e-headers-auto-update t
+	  mu4e-index-update-error-warning t
 	  mu4e-compose-signature-auto-include nil
 	  mu4e-compose-format-flowed t)
 (add-to-list 'mu4e-view-actions
@@ -217,7 +244,7 @@
 				(mu4e-sent-folder . "/acc1-gmail/[acc1].Sent Mail")
 				(mu4e-drafts-folder . "/acc1-gmail/[acc1].drafts")
 				(mu4e-trash-folder . "/acc1-gmail/[acc1].Trash")
-				(mu4e-compose-signature . (concat "Formal Signature\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
+				(mu4e-compose-signature . (concat "Formal Signature\n" " "))
 				(mu4e-compose-format-flowed . t)
 				(smtpmail-queue-dir . "~/Maildir/acc1-gmail/queue/cur")
 				;; (message-send-mail-function . smtpmail-send-it)
@@ -231,7 +258,7 @@
 				(smtpmail-debug-verbose . t)
 				(mu4e-maildir-shortcuts . ( ("/acc1-gmail/INBOX"            . ?i)
 											("/acc1-gmail/[acc1].Sent Mail" . ?s)
-											("/acc1-gmail/[acc1].Trash"       . ?t)
+											("/acc1-gmail/[acc1].Trash"     . ?t)
 											("/acc1-gmail/[acc1].All Mail"  . ?a)
 											("/acc1-gmail/[acc1].Starred"   . ?r)
 											("/acc1-gmail/[acc1].drafts"    . ?d)
