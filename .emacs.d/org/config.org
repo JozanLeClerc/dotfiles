@@ -17,9 +17,11 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
-(add-hook 'prog-mode-hook 'linum-mode)
-(add-hook 'text-mode-hook 'linum-mode)
-(setq linum-format "%3d ")
+;; (add-hook 'prog-mode-hook 'linum-mode)
+;; (add-hook 'text-mode-hook 'linum-mode)
+;; (setq linum-format "%3d ")
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'text-mode-hook 'display-line-numbers-mode)
 
 (setq scroll-step 5)
 
@@ -681,7 +683,7 @@ buffer in current window."
 (defun exec-f5 ()
   (interactive)
   (defvar make)
-  (setq make "make -j5")
+  (setq make "make -j5 ASAN=1")
   (save-buffer)
   (compile make)
   (compilation-finish-function)) 
