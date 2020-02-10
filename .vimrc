@@ -1,11 +1,21 @@
-let mapleader=","
+" .vimrc 3.0 by Joe
 
 " Plugins
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jreybert/vimagit'
+Plug 'preservim/nerdtree'
+Plug 'jaxbot/semantic-highlight.vim'
+Plug 'mbbill/undotree'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'luochen1990/rainbow'
+Plug 'preservim/nerdcommenter'
 call plug#end()
+
+let mapleader=","
 
 " Some basics:
 	"set bg=light
@@ -25,13 +35,32 @@ call plug#end()
 	syntax on
 	set hidden
 
+" Nerdtree
+	autocmd StdinReadPre * let s:std_in=1
+	autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
 " Enable autocompletion:
 	set wildmode=longest,list,full
 
-" Previous / next buffer
-	noremap <silent> <C-k> :bprevious<CR>
-	noremap <silent> <C-j> :bnext<CR>
+" Some quick bindings
+	noremap <C-x>g :G<CR>
+	noremap <A-;> :call NERDComment(0,"toggle")<CR>
+	noremap <A-[> :resize -2<CR>
+	noremap <A-]> :resize +2<CR>
+	noremap <C-[> :vertical resize -2<CR>
+	noremap <C-]> :vertical resize +2<CR>
+	noremap <silent> <A-k> :bprevious<CR>
+	noremap <silent> <A-j> :bnext<CR>
+	noremap <C-h> <C-w>h
+	noremap <C-j> <C-w>j
+	noremap <C-k> <C-w>k
+	noremap <C-l> <C-w>l
+	noremap <C-o> <C-w>o
+	noremap <C-x>0 <C-w>q
+	noremap <C-x><C-f> :e<space>
 	noremap <silent> <leader>w :w <BAR> :bp <BAR> :bd #<CR>
+	noremap <silent> <C-x>k :w <BAR> :bp <BAR> :bd #<CR>
+	noremap :<CR> q:<up><CR>
 
 " Airline
 	let g:airline#extensions#tabline#enabled = 1
@@ -40,9 +69,26 @@ call plug#end()
 	let g:airline_detect_paste = 1
 	let g:airline_detect_crypt = 1
 	let g:airline_theme = 'term'
-	let g:airline_powerline_fonts = 1
+	"let g:airline_powerline_fonts = 1
 	let g:airline_symbols_ascii = 1
 	let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+
+" Rainbow
+	let g:rainbow_active = 1
+
+" Variables colors
+	let g:semanticTermColors = [28,1,2,3,4,5,6,7,25,9,10,34,12,13,14,15,16,125,124,19]
+	autocmd FileType c,cpp,php,java,html,rust,lisp,go,javascript,sh SemanticHighlightToggle
+
+" NERD Commenter
+	let g:NERDSpaceDelims = 1
+	let g:NERDCompactSexyComs = 1
+	let g:NERDDefaultAlign = 'left'
+	let g:NERDAltDelims_java = 1
+	let g:NERDCustomDelimiters = { 'c': { 'left': '/*','right': '*/' } }
+	let g:NERDCommentEmptyLines = 1
+	let g:NERDTrimTrailingWhitespace = 1
+	let g:NERDToggleCheckAllLines = 1
 
 " Cursor mode
 	let g:airline#extensions#cursormode#enabled = 1
@@ -58,6 +104,9 @@ call plug#end()
 
 " 10 buffers jump
 	let g:airline#extensions#tabline#buffer_idx_mode = 1
+	noremap <F1> :sp<CR><C-w>j:term<CR>:resize -10<CR>i
+	noremap <F2> :NERDTreeToggle<CR>
+	noremap <C-u> :UndotreeToggle<CR>
 	nmap <leader>1 <Plug>AirlineSelectTab1
 	nmap <leader>2 <Plug>AirlineSelectTab2
 	nmap <leader>3 <Plug>AirlineSelectTab3
@@ -84,96 +133,16 @@ call plug#end()
 	autocmd BufWritePost *.tex !compiler %
 
 " Compile C file
-	autocmd FileType c noremap <F5> :w<CR> :!clear<CR> :!~/.vim/c/f5.sh;<CR>
-	autocmd FileType c noremap <F6> :w<CR> :!clear<CR> :!~/.vim/c/f6.sh;<CR>
-	autocmd FileType c noremap <F8> :w<CR>:!gcc<space>-Wall<space>-Wextra<space>-Werror %<CR>
-	autocmd FileType c noremap <F9> :w<CR> :!clear<CR> :!~/.vim/c/f9.sh % 
-	autocmd FileType c noremap <F10> :w<CR> :!clear<CR> :!~/.vim/c/f10.sh %<CR>
-
-" Compile C++ file
-	autocmd FileType cpp noremap <F5> :w<CR> :!clear<CR> :!~/.vim/cpp/f5.sh;<CR>
-	autocmd FileType cpp noremap <F6> :w<CR> :!clear<CR> :!~/.vim/cpp/f6.sh;<CR>
-	autocmd FileType cpp noremap <F8> :w<CR>:!g++<space>-Wall<space>-Wextra<space>-Werror %<CR>
-	autocmd FileType cpp noremap <F9> :w<CR> :!clear<CR> :!~/.vim/cpp/f9.sh % 
-	autocmd FileType cpp noremap <F10> :w<CR> :!clear<CR> :!~/.vim/cpp/f10.sh %<CR>
+	autocmd FileType * noremap <F5> :w<CR> :!clear<CR> :!make -j5 ASAN=1<CR>
+	autocmd FileType * noremap <F6> :w<CR> :!clear<CR> :!./cub3d "map/map_one.cub"; ret=$?; echo "~>"; if [ $ret -ne 0 ]; then echo -n "$ret"; if [ $ret -eq 127 ]; then echo " - Missing a.out"; exit; elif [ $ret -eq 134 ]; then echo " - Abort\!"; elif [ $ret -eq 138 ]; then echo " - Bus error\!"; elif [ $ret -eq 139 ]; then echo " - Segmentation fault\!"; fi; fi; echo "\n\n.vimrc v3.0 Tilde Edition by Joe"<CR>
 " === Comfy ===
 " C
-	autocmd FileType c inoremap " ""<left>
-	autocmd FileType c inoremap ' ''<left>
-	autocmd FileType c inoremap ( ()<left>
-	autocmd FileType c inoremap [ []<left>
-	autocmd FileType c inoremap { {}<left>
-	autocmd FileType c inoremap < <><left>
-	autocmd FileType c inoremap {<CR> {<CR>}<ESC>O
-	autocmd FileType c inoremap {;<CR> {<CR>};<ESC>O
-	autocmd FileType c inoremap <<space> <<space>
-	autocmd FileType c inoremap ><space> ><space>
-	autocmd FileType c inoremap <= <=
 	autocmd FileType c nnoremap <Leader>m o#include<space><stdio.h><CR>#include<space><string.h><CR>#include<space><stdlib.h><CR>#include<space><stddef.h><CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
 	autocmd FileType c nnoremap <Leader>M o#include<space><stdio.h><CR>#include<space><string.h><CR>#include<space><stdlib.h><CR>#include<space><stddef.h><CR>int<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<space>{<CR>printf("NOT<space>ENOUGH<space>ARGS\n");<CR>return<space>1;<CR>}<CR>return<space>0;<CR>}<up><ESC>Oprintf();<left><left>
 
 " C++
-	autocmd FileType cpp noremap <silent> <F8> :w<CR>:!g++<space>-Wall<space>-Wextra<space>-Werror -O3 % <CR>
-	autocmd FileType cpp noremap <F9> :w<CR>:!g++ -Wall -Wextra -Werror -O3 %; ./a.out  ; echo "~>\n\n.vimrc 2.3.1-release Tilde Edition by Joe"; rm a.out<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
-	autocmd FileType cpp noremap <F10> :w<CR>:!g++ -Wall -Wextra -Werror -O3 %; ./a.out; echo "~>\n\n.vimrc 2.3.1-release Tilde Edition by Joe"; rm a.out<CR>
-	autocmd FileType cpp inoremap " ""<left>
-	autocmd FileType cpp inoremap ' ''<left>
-	autocmd FileType cpp inoremap ( ()<left>
-	autocmd FileType cpp inoremap [ []<left>
-	autocmd FileType cpp inoremap { {}<left>
-	autocmd FileType cpp inoremap < <><left>
-	autocmd FileType cpp inoremap {<CR> {<CR>}<ESC>O
-	autocmd FileType cpp inoremap {;<CR> {<CR>};<ESC>O
-	autocmd FileType cpp inoremap <<space> <<space>
-	autocmd FileType cpp inoremap << <<<space>
-	autocmd FileType cpp inoremap ><space> ><space>
-	autocmd FileType cpp inoremap >> >><space>
-	autocmd FileType cpp inoremap <= <=
 	autocmd FileType cpp nnoremap <Leader>m oint<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
 	autocmd FileType cpp nnoremap <Leader>M oint<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<CR>return<space>0;<CR>if<space>(argv[])<space>{}<CR>return<space>0;<CR>}<up><ESC>O
 	autocmd FileType cpp nnoremap <Leader>M oint<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<space>{<CR>cout<space><<<space>"NOT<space>ENOUGH<space>ARGS"<space><<<space>endl;<CR>return<space>1;<CR>}<CR>return<space>0;<CR>}<up><ESC>O
 
-" = Web =
-" HTML
-	autocmd FileType html inoremap " ""<left>
-	autocmd FileType html inoremap ' ''<left>
-	autocmd FileType html inoremap ( ()<left>
-	autocmd FileType html inoremap [ []<left>
-	autocmd FileType html inoremap { {}<left>
-	autocmd FileType html inoremap {<CR> {<CR>}<ESC>O
-	autocmd FileType html inoremap < <><left>
-
-" PHP
-	autocmd FileType php inoremap " ""<left>
-	autocmd FileType php inoremap ' ''<left>
-	autocmd FileType php inoremap ( ()<left>
-	autocmd FileType php inoremap [ []<left>
-	autocmd FileType php inoremap { {}<left>
-	autocmd FileType php inoremap {<CR> {<CR>}<ESC>O
-	autocmd FileType php inoremap < <><left>
-	autocmd FileType php inoremap <? <?php  ?><left><left><left>
-	autocmd FileType php inoremap <?<CR> <?php<CR>?><ESC>O
-
-" CSS
-	autocmd FileType css inoremap " ""<left>
-	autocmd FileType css inoremap ' ''<left>
-	autocmd FileType css inoremap ( ()<left>
-	autocmd FileType css inoremap [ []<left>
-	autocmd FileType css inoremap { {}<left>
-	autocmd FileType css inoremap {<CR> {<CR>}<ESC>O
-
-
-" Just in case
-	inoremap " ""<left>
-	inoremap ' ''<left>
-	inoremap ( ()<left>
-	inoremap [ []<left>
-	inoremap { {}<left>
-	inoremap "" ""
-	inoremap '' ''
-	inoremap () ()
-	inoremap [] []
-	inoremap {} {}
-	inoremap <> <>
-
-" .vimrc 2.4.1-release | Copyright Joe 2k19
+" .vimrc 3.0 by Joe
