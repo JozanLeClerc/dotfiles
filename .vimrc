@@ -134,7 +134,7 @@ let mapleader=","
 
 " Compile C file
 	autocmd FileType * noremap <F5> :w<CR> :!clear<CR> :!make -j5 ASAN=1<CR>
-	autocmd FileType * noremap <F6> :w<CR> :!clear<CR> :!./cub3d "map/map_one.cub"; ret=$?; echo "~>"; if [ $ret -ne 0 ]; then echo -n "$ret"; if [ $ret -eq 127 ]; then echo " - Missing a.out"; exit; elif [ $ret -eq 134 ]; then echo " - Abort\!"; elif [ $ret -eq 138 ]; then echo " - Bus error\!"; elif [ $ret -eq 139 ]; then echo " - Segmentation fault\!"; fi; fi; echo "\n\n.vimrc v3.0 Tilde Edition by Joe"<CR>
+	autocmd FileType * noremap <F6> :w<CR> :!clear<CR> :!./a.out; ret=$?; echo "~>"; if [ $ret -ne 0 ]; then echo -n "$ret"; if [ $ret -eq 127 ]; then echo " - Missing a.out"; exit; elif [ $ret -eq 134 ]; then echo " - Abort\!"; elif [ $ret -eq 138 ]; then echo " - Bus error\!"; elif [ $ret -eq 139 ]; then echo " - Segmentation fault\!"; fi; fi; echo "\n\n.vimrc v3.0 Tilde Edition by Joe"<CR>
 " === Comfy ===
 " C
 	autocmd FileType c nnoremap <Leader>m o#include<space><stdio.h><CR>#include<space><string.h><CR>#include<space><stdlib.h><CR>#include<space><stddef.h><CR>int<space>main(void)<space>{<CR>return<space>0;<CR>}<up><ESC>O
