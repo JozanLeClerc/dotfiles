@@ -1,5 +1,5 @@
-* My emacs config
-** For the Macintosh OS by Stevey J
+* My emacs school config
+** For the Macintosh OS by Stevey-J
 #+BEGIN_SRC emacs-lisp
 (setq mac-option-key-is-meta nil
 	  mac-command-key-is-meta t
@@ -11,6 +11,26 @@
 #+BEGIN_SRC emacs-lisp
 (setq x-alt-keysym 'meta)
 (set-keyboard-coding-system 'utf-8)
+
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+
+;; (add-hook 'prog-mode-hook 'linum-mode)
+;; (add-hook 'text-mode-hook 'linum-mode)
+;; (setq linum-format "%3d ")
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'text-mode-hook 'display-line-numbers-mode)
+
+(setq scroll-step 5)
+
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+	  backup-by-copying t
+	  version-control t
+	  delete-old-versions t
+	  kept-new-versions 20
+	  kept-old-versions 5)
 #+END_SRC
 
 ** MELPA
@@ -25,65 +45,11 @@
 (package-initialize)
 #+END_SRC
 
-** Emacs post configs
-#+BEGIN_SRC emacs-lisp
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-	("k84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "8d5f22f7dfd3b2e4fc2f2da46ee71065a9474d0ac726b98f647bc3c7e39f2819" "b6f06081b007b57be61b82fb53f27315e2cf38fa690be50d6d63d2b62a408636" "d8a7a7d2cffbc55ec5efbeb5d14a5477f588ee18c5cddd7560918f9674032727" "a11043406c7c4233bfd66498e83600f4109c83420714a2bd0cd131f81cbbacea" "67b11ee5d10f1b5f7638035d1a38f77bca5797b5f5b21d16a20b5f0452cbeb46" "4c8372c68b3eab14516b6ab8233de2f9e0ecac01aaa859e547f902d27310c0c3" "b8c5adfc0230bd8e8d73450c2cd4044ad7ba1d24458e37b6dec65607fc392980" "b5cff93c3c6ed12d09ce827231b0f5d4925cfda018c9dcf93a2517ce3739e7f1" "cdc2a7ba4ecf0910f13ba207cce7080b58d9ed2234032113b8846a4e44597e41" "72c530c9c8f3561b5ab3bf5cda948cd917de23f48d9825b7a781fe1c0d737f2f" "780c67d3b58b524aa485a146ad9e837051918b722fd32fd1b7e50ec36d413e70" "73a13a70fd111a6cd47f3d4be2260b1e4b717dbf635a9caee6442c949fad41cd" "da538070dddb68d64ef6743271a26efd47fbc17b52cc6526d932b9793f92b718" "9b1c580339183a8661a84f5864a6c363260c80136bd20ac9f00d7e1d662e936a" "1b27e3b3fce73b72725f3f7f040fd03081b576b1ce8bbdfcb0212920aec190ad" default)))
- '(inhibit-startup-screen t)
- '(package-selected-packages
-   (quote
-	(org-mime flyspell-correct pdf-tools el-get slack websocket request emojify-logos emojify oauth2 circe mu4e-alert web-mode doom-themes doom-modeline all-the-icons-dired all-the-icons-gnus all-the-icons html5-schema phps-mode org-babel-eval-in-repl rust-mode smart-mode-line-powerline-theme eshell-prompt-extras eshell-fixed-prompt pyenv-mode s realgud-lldb neotree ranger ## color-theme-modern auto-complete-c-headers command-log-mode auto-complete magit smart-tabs-mode airline-themes electric-spacing paredit autopair tabbar-ruler tabbar use-package-el-get color-theme-approximate diminish rainbow-delimiters color-identifiers-mode use-package helm evil-visual-mark-mode)))
- '(send-mail-function (quote smtpmail-send-it))
- '(tabbar-separator (quote (0.2))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(font-lock-function-name-face ((t (:foreground "color-27"))))
- '(helm-selection ((t (:background "color-177" :distant-foreground "black" :foreground "black" :weight semi-bold))))
- '(highlight ((t (:background "color-177" :foreground "black" :weight semi-bold))))
- '(magit-section-highlight ((t (:background "color-237"))))
- '(minibuffer-prompt ((t (:foreground "color-33"))))
- '(mu4e-highlight-face ((t (:weight bold))))
- '(neo-dir-link-face ((t (:foreground "Blue"))))
- '(neo-file-link-face ((t (:foreground "color-252"))))
- '(neo-vc-default-face ((t (:foreground "color-251"))))
- '(neo-vc-up-to-date-face ((t (:foreground "green"))))
- '(smerge-lower ((t (:background "yellow"))))
- '(smerge-markers ((t (:background "color-58"))))
- '(smerge-upper ((t (:background "brightcyan"))))
- '(tabbar-default ((t (:inherit variable-pitch :background "gray25" :foreground "gray50" :height 0.8)))))
-
-(menu-bar-mode -1)
-;; (tool-bar-mode -1)
-(add-hook 'prog-mode-hook 'display-line-numbners-mode)
-(add-hook 'text-mode-hook 'display-line-numbners-mode)
-(setq linum-format "%3d ")
-
-(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
-	  backup-by-copying t
-	  version-control t
-	  delete-old-versions t
-	  kept-new-versions 20
-	  kept-old-versions 5)
-#+END_SRC
 ** Core packages
-*** Origami mode
-#+BEGIN_SRC emacs-lisp
-(require 'origami)
-(origami-mode)
-#+END_SRC
-
 *** Evil mode
 #+BEGIN_SRC emacs-lisp
 (require 'evil)
+(require 'evil-magit)
 (evil-mode t)
 
 (setq evil-emacs-state-cursor '("red" box))
@@ -121,107 +87,29 @@
 (evil-leader/set-key "w" 'kill-buffer)
 #+END_SRC
 
-*** Tabbar
+*** Dashboard
 #+BEGIN_SRC emacs-lisp
-(use-package tabbar
-  :ensure t
-  :bind
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+(setq dashboard-set-init-info t)
+(setq dashboard-set-footer nil)
+#+END_SRC
 
-  :config
-  (set-face-attribute
-   'tabbar-button nil
-   :box '(:line-width 1 :color "gray19"))
+*** Origami mode
+#+BEGIN_SRC emacs-lisp
+(require 'origami)
+(origami-mode)
+#+END_SRC
 
-  (set-face-attribute
-   'tabbar-selected nil
-   :foreground "orange"
-   :background "gray19"
-   :box '(:line-width 1 :color "gray19"))
-
-  (set-face-attribute
-   'tabbar-unselected nil
-   :foreground "gray75"
-   :background "gray25"
-   :box '(:line-width 1 :color "gray19"))
-
-  (set-face-attribute
-   'tabbar-highlight nil
-   :foreground "black"
-   :background "orange"
-   :underline nil
-   :box '(:line-width 1 :color "gray19" :style nil))
-
-  (set-face-attribute
-   'tabbar-modified nil
-   :foreground "orange red"
-   :background "gray25"
-	  :box '(:line-width 1 :color "gray19"))
-  (set-face-attribute
-   'tabbar-selected-modified nil
-   :foreground "orange red"
-   :background "gray19"
-   :box '(:line-width 1 :color "gray19"))
-
-  (custom-set-variables
-   '(tabbar-separator (quote (0.2))))
-
-  ;; Change padding of the tabs
-  ;; we also need to set separator to avoid overlapping tabs by highlighted tabs
-  ;; (custom-set-variables
-  ;;  '(tabbar-separator (quote (1.0))))
-  (defun tabbar-buffer-tab-label (tab)
-		"Return a label for TAB.
-  That is, a string used to represent it on the tab bar."
-	(let ((label  (if tabbar--buffer-show-groups
-			  (format " [%s] " (tabbar-tab-tabset tab))
-			(format " %s " (tabbar-tab-value tab)))))
-	  ;; Unless the tab bar auto scrolls to keep the selected tab
-	  ;; visible, shorten the tab label to keep as many tabs as possible
-	  ;; in the visible area of the tab bar.
-	  (if tabbar-auto-scroll-flag
-		  label
-		(tabbar-shorten
-		 label (max 1 (/ (window-width)
-				 (length (tabbar-view
-					  (tabbar-current-tabset)))))))))
-
-  (defun px-tabbar-buffer-select-tab (event tab)
-	"On mouse EVENT, select TAB."
-	(let ((mouse-button (event-basic-type event))
-	  (buffer (tabbar-tab-value tab)))
-	  (cond
-	   ((eq mouse-button 'mouse-2) (with-current-buffer buffer (kill-buffer)))
-	   ((eq mouse-button 'mouse-3) (pop-to-buffer buffer t))
-	   (t (switch-to-buffer buffer)))
-	  (tabbar-buffer-show-groups nil)))
-
-  (defun px-tabbar-buffer-help-on-tab (tab)
-	"Return the help string shown when mouse is onto TAB."
-	(if tabbar--buffer-show-groups
-	(let* ((tabset (tabbar-tab-tabset tab))
-		   (tab (tabbar-selected-tab tabset)))
-	  (format "mouse-1: switch to buffer %S in group [%s]"
-		  (buffer-name (tabbar-tab-value tab)) tabset))
-			(format "\
-mouse-1: switch to %S\n\
-mouse-2: kill %S\n\
-mouse-3: Open %S in another window"
-			(buffer-name (tabbar-tab-value tab))
-			(buffer-name (tabbar-tab-value tab))
-			(buffer-name (tabbar-tab-value tab)))))
-
-  (defun px-tabbar-buffer-groups ()
-	"Sort tab groups."
-	(list (cond ((or
-		  (eq major-mode 'dired-mode)
-		  (string-equal "*" (substring (buffer-name) 0 1))) "emacs")
-		(t "user"))))
-  (setq tabbar-help-on-tab-function 'px-tabbar-buffer-help-on-tab
-	tabbar-select-tab-function 'px-tabbar-buffer-select-tab
-	tabbar-buffer-groups-function 'px-tabbar-buffer-groups)
-
-  :init
-	(tabbar-mode 1))
+*** Centaur tabs
+#+BEGIN_SRC emacs-lisp
+(require 'centaur-tabs)
+(centaur-tabs-mode t)
+(global-set-key (kbd "M-k")  'centaur-tabs-backward)
+(global-set-key (kbd "M-j") 'centaur-tabs-forward)
+(setq centaur-tabs-set-close-button nil)
+(setq centaur-tabs-set-modified-marker t)
+(setq centaur-tabs-modified-marker "[+]")
 #+END_SRC
 
 *** Helm
@@ -403,7 +291,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (let ((buffers (magit-mode-get-buffers)))
 	(magit-restore-window-configuration)
 	(mapc #'kill-buffer buffers)))
-(bind-key "q" #'mu-magit-kill-buffers magit-status-mode-map)
+(bind-key "Q" #'mu-magit-kill-buffers magit-status-mode-map)
 #+END_SRC
 
 *** Ranger
@@ -415,7 +303,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 *** Neotree
 #+BEGIN_SRC emacs-lisp
 (require 'neotree)
-(setq neo-smart-open t)
+;; (setq neo-smart-open t)
 (setq neo-vc-integration '(face))
 (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
 (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
@@ -426,7 +314,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
 (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
 (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
-(neotree-show)
+;; (neotree-show)
 #+END_SRC
 
 *** lldb
@@ -448,13 +336,6 @@ buffer in current window."
    (current-buffer)))
 
 (global-set-key (kbd "C-c t") 'my/toggle-window-dedicated)
-#+END_SRC
-
-*** sidebar.el
-#+BEGIN_SRC emacs-lisp
-;; (add-to-list 'load-path "~/.local/share/icons-in-terminal")
-;; (add-to-list 'load-path "~/.emacs.d/sidebar.el")
-;; (require 'sidebar)
 #+END_SRC
 
 *** evil nerd commenter
@@ -485,7 +366,7 @@ buffer in current window."
 (defun exec-f5 ()
   (interactive)
   (defvar make)
-  (setq make "make -j5")
+  (setq make "make -j5 ASAN=1")
   (save-buffer)
   (compile make)
   (compilation-finish-function)) 
@@ -493,49 +374,8 @@ buffer in current window."
 (defun exec-f6 ()
   (interactive)
   (defvar exec)
-  (setq exec "./a.out; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.0 Tilde Edition by Joe\"; rm -f a.out; rm -rf a.out.dSYM")
+  (setq exec "./a.out \"map/map_one.cub\"; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.0 Tilde Edition by Joe\"; rm -f a.out; rm -rf a.out.dSYM")
   (async-shell-command exec))
-
-(defun exec-f9 ()
-  (interactive)
-  (defvar comp)
-  (defvar exec)
-  (when (string= (file-name-extension buffer-file-name) "c")
-	(setq comp (concat "gcc -Wall -Wextra -Werror -g3 " (buffer-name))))
-  (when (string= (file-name-extension buffer-file-name) "cpp")
-	(setq comp (concat "g++ -Wall -Wextra -Werror -g3 " (buffer-name))))
-  (setq exec (concat "./a.out " (read-string "Enter args: ") "; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.0 Tilde Edition by Joe\"; rm -f a.out; rm -rf a.out.dSYM"))
-  (save-buffer)
-  (compile comp)
-  (async-shell-command exec))
-
-(defun exec-f10 ()
-  (interactive)
-  (defvar comp)
-  (defvar exec)
-  (when (string= (file-name-extension buffer-file-name) "c")
-	(setq comp (concat "gcc -Wall -Wextra -Werror -g3 " (buffer-name))))
-  (when (string= (file-name-extension buffer-file-name) "cpp")
-	(setq comp (concat "g++ -Wall -Wextra -Werror -g3 " (buffer-name))))
-  (when (string= (file-name-extension buffer-file-name) "rs")
-	(setq comp (concat "cargo run")))
-  (save-buffer)
-  (compile comp)
-  (when (string= (file-name-extension buffer-file-name) "c")
-	(exec-f6))
-  (when (string= (file-name-extension buffer-file-name) "cpp")
-	(exec-f6)))
-
-(defun exec-f12 ()
-  (interactive)
-  (defvar comp)
-  (when (string= (file-name-extension buffer-file-name) "c")
-	(setq comp (concat "gcc -Wall -Wextra -Werror -g3 " (buffer-name))))
-  (when (string= (file-name-extension buffer-file-name) "cpp")
-	(setq comp (concat "g++ -Wall -Wextra -Werror -g3 " (buffer-name))))
-  (save-buffer)
-  (compile comp)
-  (compilation-finish-function))
 #+END_SRC
 
 ** Open eshell function
@@ -554,7 +394,4 @@ buffer in current window."
 (global-set-key [f2]  'neotree-toggle)
 (global-set-key [f5]  'exec-f5)
 (global-set-key [f6]  'exec-f6)
-(global-set-key [f9]  'exec-f9)
-(global-set-key [f10] 'exec-f10)
-(global-set-key [f12] 'exec-f12)
 #+END_SRC
