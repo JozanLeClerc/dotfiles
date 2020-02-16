@@ -291,7 +291,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (let ((buffers (magit-mode-get-buffers)))
 	(magit-restore-window-configuration)
 	(mapc #'kill-buffer buffers)))
-(bind-key "Q" #'mu-magit-kill-buffers magit-status-mode-map)
+(bind-key "q" #'mu-magit-kill-buffers magit-status-mode-map)
 #+END_SRC
 
 *** Ranger
