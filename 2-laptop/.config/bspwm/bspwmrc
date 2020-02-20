@@ -119,7 +119,7 @@ if [ $dual -eq 0 ]; then
 	bspc desktop -f 04
 	st -e zsh -c 'clear; cowsay "Welcome back, partner!"; zsh -i' &
 	sleep 0.3s
-	st -e gotop -b &
+	st -e /home/jozan/.cargo/bin/ytop -s -b &
 	sleep 0.3s
 	bspc node -f west
 	st -e vifm &
@@ -129,7 +129,7 @@ if [ $dual -eq 0 ]; then
 	bspc node -f north
 else
 	bspc desktop -f 01
-	st -e gotop -b &
+	st -e /home/jozan/.cargo/bin/ytop -s -b &
 	sleep 0.3s
 	st -e zsh -c 'clear; cowsay "Welcome back, partner!"; zsh -i' &
 	sleep 0.3s
