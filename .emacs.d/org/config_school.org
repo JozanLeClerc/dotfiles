@@ -113,7 +113,7 @@
 (setq centaur-tabs-modified-marker "[+]")
 #+END_SRC
 
-*** Helm
+*** Helm, projectile
 #+BEGIN_SRC emacs-lisp
 (require 'helm-config)
 (require 'helm-misc)
@@ -125,6 +125,7 @@
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
+(global-set-key (kbd "M-p") #'helm-projectile-switch-project)
 
 ;; (setq scroll-margin 5
 ;;       scroll-conservatively 9999
@@ -142,8 +143,9 @@
 			   "*helm-my-buffers*")))
 
 (helm-mode 1)
+(projectile-mode +1)
 #+END_SRC
-
+ 
 *** doom-modeline
 #+BEGIN_SRC emacs-lisp
 (setq display-time-string-forms
@@ -400,6 +402,7 @@ buffer in current window."
 #+BEGIN_SRC emacs-lisp
 (global-set-key [f1]  'my/go-full-shell)
 (global-set-key [f2]  'neotree-toggle)
+(global-set-key [f4]  'helm-make-projectile)
 (global-set-key [f5]  'exec-f5)
 (global-set-key [f6]  'exec-f6)
 #+END_SRC
