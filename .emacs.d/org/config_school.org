@@ -15,7 +15,7 @@
 ;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (menu-bar-mode -1)
-(tool-bar-mode -1)
+;; (tool-bar-mode -1)
 
 ;; (add-hook 'prog-mode-hook 'linum-mode)
 ;; (add-hook 'text-mode-hook 'linum-mode)
@@ -50,6 +50,7 @@
 #+BEGIN_SRC emacs-lisp
 (require 'evil)
 (require 'evil-magit)
+(require 'evil-org)
 (evil-mode t)
 
 (setq evil-emacs-state-cursor '("red" box))
@@ -123,6 +124,7 @@
 (setq helm-buffers-fuzzy-matching t)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") #'helm-find-files)
 
 ;; (setq scroll-margin 5
 ;;       scroll-conservatively 9999
@@ -138,6 +140,8 @@
 			 helm-c-source-recentf
 			 helm-c-source-locate)
 			   "*helm-my-buffers*")))
+
+(helm-mode 1)
 #+END_SRC
 
 *** doom-modeline
@@ -317,6 +321,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (neotree-show)
 #+END_SRC
 
+*** workgroups2
+#+BEGIN_SRC emacs-lisp
+(require 'workgroups2)
+#+END_SRC
 *** lldb
 #+BEGIN_SRC emacs-lisp
 (require 'realgud-lldb)
@@ -374,7 +382,7 @@ buffer in current window."
 (defun exec-f6 ()
   (interactive)
   (defvar exec)
-  (setq exec "./a.out \"map/map_one.cub\"; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.0 Tilde Edition by Joe\"; rm -f a.out; rm -rf a.out.dSYM")
+  (setq exec "./cub3d \"map/map_one.cub\"; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.0 Tilde Edition by Joe\"; rm -f a.out; rm -rf a.out.dSYM")
   (async-shell-command exec))
 #+END_SRC
 
