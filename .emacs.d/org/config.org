@@ -304,7 +304,7 @@
 (setq centaur-tabs-modified-marker "[+]")
 #+END_SRC
 
-*** Helm
+*** Helm, projectile
 #+BEGIN_SRC emacs-lisp
 (require 'helm-config)
 (require 'helm-misc)
@@ -315,6 +315,8 @@
 (setq helm-buffers-fuzzy-matching t)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") #'helm-find-files)
+(global-set-key (kbd "M-p") #'helm-projectile-switch-project)
 
 ;; (setq scroll-margin 5
 ;;       scroll-conservatively 9999
@@ -330,6 +332,9 @@
 			 helm-c-source-recentf
 			 helm-c-source-locate)
 			   "*helm-my-buffers*")))
+
+(helm-mode 1)
+(projectile-mode +1)
 #+END_SRC
 
 *** doom-modeline
@@ -567,7 +572,7 @@ buffer in current window."
 (defun exec-f6 ()
   (interactive)
   (defvar exec)
-  (setq exec "./a.out \"map/map_one.cub\"; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.0 Tilde Edition by Joe\"; rm -f a.out; rm -rf a.out.dSYM")
+  (setq exec "./a.out \"map/map_one.cub\"; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.5 Tilde Edition by Joe\"")
   (async-shell-command exec))
 #+END_SRC
 
@@ -585,6 +590,7 @@ buffer in current window."
 #+BEGIN_SRC emacs-lisp
 (global-set-key [f1]  'my/go-full-shell)
 (global-set-key [f2]  'neotree-toggle)
+(global-set-key [f4]  'helm-make-projectile)
 (global-set-key [f5]  'exec-f5)
 (global-set-key [f6]  'exec-f6)
 #+END_SRC

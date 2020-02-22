@@ -384,7 +384,7 @@ buffer in current window."
 (defun exec-f6 ()
   (interactive)
   (defvar exec)
-  (setq exec "./cub3d \"map/map_one.cub\"; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.0 Tilde Edition by Joe\"; rm -f a.out; rm -rf a.out.dSYM")
+  (setq exec "./cub3d \"map/map_one.cub\"; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.5 Tilde Edition by Joe\"")
   (async-shell-command exec))
 #+END_SRC
 
