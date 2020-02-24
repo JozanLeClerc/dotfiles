@@ -1,7 +1,3 @@
-export PATH="${HOME}/.local/bin:/usr/lib/llvm/9/bin:${PATH}"
-export ZSH="/home/jozan/.oh-my-zsh"
-export EDITOR="emacs"
-
 PS1='%B%{$fg[magenta]%}%M %{$fg[blue]%}%c%{$fg[magenta]%}%%%{$reset_color%} '
 RPS1="${RPS1}"'%{$fg_bold[red]%}%(?..%?)%{$reset_color%}'
 
