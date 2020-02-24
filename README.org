@@ -67,15 +67,7 @@ Uses ~xrandr~ to switch screen setup from built-in laptop screen (LVDS1) only to
 
 ~todo-git-updater.sh~
 
-Daemon to adds, commits and pushs my todo list every three hours.
-
-~autostart.sh~
-
-My dwm autostart script that runs once the window manager is initialized. It launches some programs. Check my dwm build [[https://github.com/JozanLeClerc/dwm][here]].
-
-~.vim/~
-
-Used in ~vim~ to config compile C and C++ code of various manner. See [[#about-vim][About vim]] for more informations.
+Daemon to add, commit and push my todo list every three hours.
 
 ** bspwm controls
 My ~bspwm~ and ~sxhkd~ configs are in here. In this list *"window"* is being called *"tile"*.  
