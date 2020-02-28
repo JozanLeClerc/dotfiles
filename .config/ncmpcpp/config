@@ -263,7 +263,7 @@ current_item_inactive_column_suffix = $/r$(end)
 ## Note: Custom command that will be executed each time song changes. Useful for
 ## notifications etc.
 ##
-#execute_on_song_change = ""
+execute_on_song_change = "mpdnotify"
 #
 ##
 ## Note: Custom command that will be executed each time player state
@@ -310,7 +310,7 @@ browser_display_mode = columns
 ## Note: You can specify third character which will be used to build 'empty'
 ## part of progressbar.
 ##
-progressbar_look = ->
+progressbar_look = =>
 #
 ## Available values: database, playlist.
 ##
