@@ -68,16 +68,16 @@ else
 fi
 xset r rate 200 100 > /dev/null 2>&1
 run dunst > /dev/null 2>&1 &
-run mpd > /dev/null 2>&1 &
+# run mpd > /dev/null 2>&1 &
 run todo-git-updater.sh > /dev/null 2>&1 &
 run lowbat > /dev/null 2>&1 &
-#mopidy 2>&1 &
+# mopidy 2>&1 &
 
 sleep 5s
 
-#bspc desktop -f 09
-#st -e neomutt &
-#sleep 1s
+# bspc desktop -f 09
+# st -e neomutt &
+# sleep 1s
 
 if [ $dual -eq 0 ]; then
 	bspc desktop -f 08
