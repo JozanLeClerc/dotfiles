@@ -1,9 +1,9 @@
-#! /bin/sh
+#! /bin/dash
 
-function run {
-	if ! pgrep $1 ;
+run() {
+	if ! pgrep "$1" ;
 	then
-		$@&
+		"$@"
 	fi
 }
 
@@ -14,7 +14,6 @@ killall compton
 killall st
 killall pavucontrol
 killall dusnt
-killall mpd
 
 bspc monitor -d I II III IV V VI VII VIII IX X
 
@@ -29,7 +28,7 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 bspc config history_aware_focus  true
 
-bspc rule -a firefox desktop='^3' follow=on
+bspc rule -a Firefox desktop='^3' follow=on
 bspc rule -a qutebrowser desktop='^3' state=maximised follow=on
 bspc rule -a Lutris desktop='^4' follow=on
 bspc rule -a Steam desktop='^4' follow=on
@@ -48,38 +47,35 @@ bspc rule -a Dunst layer=above
 # START
 sxhkd > /dev/null 2>&1 &
 run compton > /dev/null 2>&1 &
-run feh --bg-fill /home/jozan/Images/wallpaper.jpg > /dev/null 2>&1 &
+run feh --bg-fill /home/jozan/Pictures/wallpaper.jpg > /dev/null 2>&1 &
 setxkbmap -layout us,fr -option grp:alt_shift_toggle
 xset r rate 200 80 > /dev/null 2>&1 &
 numlockx on > /dev/null 2>&1
 run dunst > /dev/null 2>&1 &
-run mpd > /dev/null 2>&1 &
+# run mpd &
 #mopidy &
-sleep 1s
-#bspc desktop -f '^9'
-#st -e neomutt &
-#sleep 0.3s
-bspc desktop -f '^8'
-st -e ncmpcpp &
-sleep 0.3s
-#bspc desktop -f '^7'
-#st -e calcurse &
-#sleep 0.3s
+#sleep 1
+#bspc desktop -f '^8'
+#st -e ncmpcpp &
+sleep 0.3
 bspc desktop -f '^5'
 st -e ncpamixer &
-sleep 0.3s
+sleep 0.3
+bspc desktop -f '^2'
+st -e zsh -c 'TERM=xterm-256color; emacs -nw' &
+sleep 0.3
 bspc desktop -f '^1'
-st -e gotop &
-sleep 0.1s
+st -e /home/jozan/.cargo/bin/ytop -s &
+sleep 0.1
 st &
-sleep 0.1s
+sleep 0.1
 st -e vifm &
-sleep 0.1s
+sleep 0.1
 bspc node -f west
 bspc node -z right -200 0
-sleep 0.1s
+sleep 0.1
 bspc node -f east
 bspc node -z top 0 120
-sleep 0.1s
+sleep 0.1
 bspc node -f north
-run discord &
+#run discord &
