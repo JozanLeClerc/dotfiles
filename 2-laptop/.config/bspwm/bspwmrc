@@ -87,8 +87,8 @@ if [ $dual -eq 0 ]; then
 	sleep 0.3s
 	st -e ncpamixer &
 	sleep 0.3s
-	st -e calcurse &
-	sleep 0.3s
+	# st -e calcurse &
+	# sleep 0.3s
 	bspc node -f west
 	bspc node -f west
 	bspc node -z right -200 0
@@ -100,9 +100,9 @@ else
 	bspc desktop -f 08
 	st -e ncmpcpp &
 	sleep 1s
-	bspc desktop -f 07
-	st -e calcurse &
-	sleep 1s
+	# bspc desktop -f 07
+	# st -e calcurse &
+	# sleep 1s
 	bspc desktop -f 06
 	st -e newsboat &
 	sleep 1s
