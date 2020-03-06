@@ -7,13 +7,13 @@ run() {
 	fi
 }
 
-export SXHKD_SHELL=/bin/zsh
+export SXHKD_SHELL=/bin/dash
 # KILL
 killall sxhkd
 killall compton
 killall st
 killall pavucontrol
-killall dusnt
+killall dunst
 
 bspc monitor -d I II III IV V VI VII VIII IX X
 
@@ -78,4 +78,7 @@ bspc node -f east
 bspc node -z top 0 120
 sleep 0.1
 bspc node -f north
-#run discord &
+
+if wget -q --spider https://gentoo.org/; then
+	/usr/bin/discord --no-sandbox &
+fi
