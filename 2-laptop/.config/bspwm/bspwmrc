@@ -1,6 +1,6 @@
 #!/bin/dash
 
-export SXHKD_SHELL=/bin/zsh
+export SXHKD_SHELL=/bin/dash
 export XDG_CONFIG_HOME="${HOME}/.config"
 export EDITOR="nvim"
 export PATH="${HOME}/.local/bin:${PATH}"
