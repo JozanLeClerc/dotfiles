@@ -137,22 +137,6 @@ super + control + {Left,Down,Up,Right}
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
-# Sound and brightness
-{XF86AudioRaiseVolume}
-	amixer -q set Master 5+
-
-{XF86AudioLowerVolume}
-	amixer -q set Master 5-
-
-{XF86AudioMute}
-	$(amixer get Master | grep off > /dev/null && amixer -q set Master unmute) || amixer -q set Master mute
-
-{XF86MonBrightnessUp}
-	xbacklight -inc 10
-
-{XF86MonBrightnessDown}
-	xbacklight -dec 10
-
 #
 # some quick start apps
 #
@@ -162,3 +146,25 @@ super + 2
 	st
 super + 3
 	firefox
+
+#
+# XF86Keys
+#
+{XF86AudioRaiseVolume}
+	pulsemixer --change-volume +5
+
+{XF86AudioLowerVolume}
+	pulsemixer --change-volume -5
+
+{XF86AudioMute}
+	pulsemixer --toggle-mute
+# $(amixer get Master | grep off > /dev/null && amixer -q set Master unmute) || amixer -q set Master mute
+
+{XF86MonBrightnessUp}
+	xbacklight -inc 10
+
+{XF86MonBrightnessDown}
+	xbacklight -dec 10
+
+{XF86Sleep}
+	/home/jozan/.local/bin/gotosleep
