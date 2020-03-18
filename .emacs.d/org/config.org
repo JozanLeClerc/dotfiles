@@ -541,6 +541,19 @@ buffer in current window."
 (require 'evil-nerd-commenter)
 (evilnc-default-hotkeys)
 #+END_SRC
+*** cargo
+#+BEGIN_SRC emacs-lisp
+(require 'cargo)
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
+#+END_SRC
+*** yasnippet
+#+BEGIN_SRC emacs-lisp
+(require 'yasnippet)
+(require 'yasnippet-snippets)
+(require 'yasnippet-classic-snippets)
+(yas-reload-all)
+(add-hook 'prog-mode-hook #'yas-minor-mode)
+#+END_SRC
 ** Compilation
 *** Close window after errorless compilation
 #+BEGIN_SRC emacs-lisp
@@ -557,11 +570,20 @@ buffer in current window."
 
 *** Compilation functions
 #+BEGIN_SRC emacs-lisp
-(defun promptargs ()
-  (interactive)
-  (message "Args are %s" (read-string "Enter args: ")))
+;; (defvar my/cargo-f5-minor-mode-map
+;; 	(let ((map (make-sparse-keymap)))
+;; 		(define-key map [f5] 'cargo-process-run)
+;; 		map)
+;; 		"my/cargo-f5-minor-mode keymap")
 
-(defun exec-f5 ()
+;; (define-minor-mode my/cargo-f5-minor-mode
+;; 	"A minor mode to execute cargo run with F5 in rust-mode only"
+;; 	:init-value t
+;; 	:lighter " my/cargo")
+	
+;; (my/cargo-f5-minor-mode 0)
+
+(defun my/exec-f5 ()
   (interactive)
   (defvar make)
   (setq make "make -j5 ASAN=1")
@@ -569,11 +591,12 @@ buffer in current window."
   (compile make)
   (compilation-finish-function)) 
 
-(defun exec-f6 ()
+(defun my/exec-f6 ()
   (interactive)
   (defvar exec)
-  (setq exec "./a.out \"map/map_one.cub\"; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.5 Tilde Edition by Joe\"")
+  (setq exec "./a.out; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.5 Tilde Edition by Joe\"")
   (async-shell-command exec))
+  
 #+END_SRC
 
 ** Open eshell function
@@ -588,9 +611,10 @@ buffer in current window."
 
 ** Other key bindings
 #+BEGIN_SRC emacs-lisp
-(global-set-key [f1]  'my/go-full-shell)
-(global-set-key [f2]  'neotree-toggle)
-(global-set-key [f4]  'helm-make-projectile)
-(global-set-key [f5]  'exec-f5)
-(global-set-key [f6]  'exec-f6)
+(global-set-key [f1] 'my/go-full-shell)
+(global-set-key [f2] 'neotree-toggle)
+(global-set-key [f4] 'helm-make-projectile)
+(global-set-key [f5] 'my/exec-f5)
+(global-set-key [f6] 'my/exec-f6)
+;; (add-hook 'rust-mode-hook 'my/cargo-f5-minor-mode)
 #+END_SRC
