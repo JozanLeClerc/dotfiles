@@ -1,0 +1,11 @@
+#!/bin/dash
+
+[ -f "$1" ] && cp "$1" ~/Pictures/wallpaper.jpg
+
+[ -d "$1" ] && cp "$(find "$1" -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -type f | shuf -n 1)" ~/Pictures/wallpaper.jpg
+
+wal -c >/dev/null 2>&1
+wal -e -s -n -b 101010 --backend wal -i ~/Pictures/wallpaper.jpg >/dev/null 2>&1 && cp ~/.cache/wal/colors.Xresources ~/.Xresources
+xrdb ~/.Xresources
+
+xwallpaper --zoom ~/Pictures/wallpaper.jpg >/dev/null 2>&1
