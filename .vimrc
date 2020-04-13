@@ -1,4 +1,4 @@
-" .vimrc 3.0 by Joe
+" .vimrc 3.1 by Joe
 
 " Plugins
 call plug#begin('~/.vim/plugged')
@@ -6,7 +6,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jreybert/vimagit'
 Plug 'preservim/nerdtree'
-Plug 'jaxbot/semantic-highlight.vim'
 Plug 'mbbill/undotree'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
@@ -45,10 +44,6 @@ let mapleader=","
 " Some quick bindings
 	noremap <C-x>g :G<CR>
 	noremap <A-;> :call NERDComment(0,"toggle")<CR>
-	noremap <A-[> :resize -2<CR>
-	noremap <A-]> :resize +2<CR>
-	noremap <C-[> :vertical resize -2<CR>
-	noremap <C-]> :vertical resize +2<CR>
 	noremap <silent> <A-k> :bprevious<CR>
 	noremap <silent> <A-j> :bnext<CR>
 	noremap <C-h> <C-w>h
@@ -60,7 +55,6 @@ let mapleader=","
 	noremap <C-x><C-f> :e<space>
 	noremap <silent> <leader>w :w <BAR> :bp <BAR> :bd #<CR>
 	noremap <silent> <C-x>k :w <BAR> :bp <BAR> :bd #<CR>
-	noremap :<CR> q:<up><CR>
 
 " Airline
 	let g:airline#extensions#tabline#enabled = 1
@@ -69,16 +63,12 @@ let mapleader=","
 	let g:airline_detect_paste = 1
 	let g:airline_detect_crypt = 1
 	let g:airline_theme = 'term'
-	"let g:airline_powerline_fonts = 1
+	let g:airline_powerline_fonts = 1
 	let g:airline_symbols_ascii = 1
 	let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 
 " Rainbow
 	let g:rainbow_active = 1
-
-" Variables colors
-	let g:semanticTermColors = [28,1,2,3,4,5,6,7,25,9,10,34,12,13,14,15,16,125,124,19]
-	autocmd FileType c,cpp,php,java,html,rust,lisp,go,javascript,sh SemanticHighlightToggle
 
 " NERD Commenter
 	let g:NERDSpaceDelims = 1
@@ -145,4 +135,4 @@ let mapleader=","
 	autocmd FileType cpp nnoremap <Leader>M oint<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<CR>return<space>0;<CR>if<space>(argv[])<space>{}<CR>return<space>0;<CR>}<up><ESC>O
 	autocmd FileType cpp nnoremap <Leader>M oint<space>main(int<space>argc,<space>char<space>*argv[])<space>{<CR>if<space>(argc<space>!=<space>1)<space>{<CR>cout<space><<<space>"NOT<space>ENOUGH<space>ARGS"<space><<<space>endl;<CR>return<space>1;<CR>}<CR>return<space>0;<CR>}<up><ESC>O
 
-" .vimrc 3.0 by Joe
+" .vimrc 3.1 by Joe
