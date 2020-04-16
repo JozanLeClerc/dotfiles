@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/usr/local/bin/dash
 
 slock &
-sudo pm-suspend
+sudo acpiconf -s 3

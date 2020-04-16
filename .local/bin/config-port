@@ -1,0 +1,20 @@
+#!/usr/local/bin/dash
+
+[ $# -eq 0 ] && printf "Failed! No port specified.\n" && exit 1
+[ ! -d "/usr/ports/$1" ] && printf "Failed! Port /usr/ports/%s doesn't exist\n" "$1" && exit 2
+
+prt_n=$(echo "$1" | awk -F '/' '{print $2}')
+
+printf "Port %s found\n" "$1"
+cd "/usr/ports/$1" || exit 3
+if sudo make config-recursive \
+	&& sudo make config-recursive \
+	&& sudo make config-recursive; then
+	notify-send "Configuration success!" "Ports config - $1 - configured successfully"
+	espeak "Success: $prt_n configured successfully" &
+else
+	notify-send "Configuration failure!" "Ports config - $1 - failed to configure"
+	espeak "Failure: failed to configure $prt_n" &
+fi
+
+exit 0

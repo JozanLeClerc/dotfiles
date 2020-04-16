@@ -1,0 +1,17 @@
+#!/usr/local/bin/dash
+
+[ $# -eq 0 ] && printf "Failed! No port specified.\n" && exit 1
+[ ! -d "/usr/ports/$1" ] && printf "Failed! Port /usr/ports/%s doesn't exist\n" "$1" && exit 2
+
+prt_n=$(echo "$1" | awk -F '/' '{print $2}')
+
+cd "/usr/ports/$1" || exit 3
+if sudo make install clean; then
+	notify-send "Compilation success!" "Ports - $1 - compiled successfully"
+	espeak "Success: $prt_n compiled successfully" &
+else
+	notify-send "Compilation failure!" "Ports - $1 - failed to compile"
+	espeak "Failure: failed to compile $prt_n" &
+fi
+
+exit 0

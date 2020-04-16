@@ -1,6 +1,6 @@
-#!/bin/dash
+#!/usr/local/bin/dash
 
-export SXHKD_SHELL=/bin/dash
+export SXHKD_SHELL=/usr/local/bin/dash
 export XDG_CONFIG_HOME="${HOME}/.config"
 export EDITOR="nvim"
 export PATH="${HOME}/.local/bin:${PATH}"
@@ -13,23 +13,27 @@ run() {
 }
 
 # KILL
-rm /home/jozan/.calcurse/.calcurse.pid
-killall st
+pkill st
+pkill compton
+pkill xcompmgr
 
 
-dualscreen
+/home/jozan/.local/bin/dualscreen
 dual=$?
-sleep 1s
+sleep 1
 
 if [ $dual -eq 0 ]; then
 	bspc monitor LVDS1 -d 04 05 06 07 08 09 10
 	bspc monitor VGA1 -d 01 02 03
+	# bspc monitor VGA1 -d 01 02 03 04 05 06 07 08 09 10
 else
 	bspc monitor LVDS1 -d 01 02 03 04 05 06 07 08 09 10
 fi
 
 bspc config border_width		1
 bspc config window_gap			0
+
+bspc config focused_border_color	\#b92121
 
 bspc config split_ratio			0.50
 bspc config borderless_monocle	true
@@ -56,99 +60,119 @@ else
 	bspc rule -a Dunst layer=above
 fi
 bspc rule -a Main state=floating
+bspc rule -a qTox desktop=09
 
 # START
-run sxhkd > /dev/null 2>&1 &
-run compton > /dev/null 2>&1 &
+# run sxhkd > /dev/null 2>&1 &
+# run compton > /dev/null 2>&1 &
+run xcompmgr >/dev/null 2>&1 &
 setxkbmap -layout us,fr -option grp:alt_shift_toggle
 if [ $dual -eq 0 ]; then
-	feh --bg-fill /home/jozan/Pictures/wallpaper.png --bg-fill /home/jozan/Pictures/wallpaper.png > /dev/null 2>&1
+	feh --bg-fill /home/jozan/Pictures/wallpaper.jpg --bg-fill /home/jozan/Pictures/wallpaper.jpg > /dev/null 2>&1
 else
-	feh --bg-fill /home/jozan/Pictures/wallpaper.png > /dev/null 2>&1
+	feh --bg-fill /home/jozan/Pictures/wallpaper.jpg > /dev/null 2>&1
 fi
 xset r rate 200 100 > /dev/null 2>&1
 run dunst > /dev/null 2>&1 &
 # run mpd > /dev/null 2>&1 &
-run todo-git-updater.sh > /dev/null 2>&1 &
+run ~/.local/bin/todo-git-updater.sh > /dev/null 2>&1 &
 run lowbat > /dev/null 2>&1 &
 # mopidy 2>&1 &
 
-sleep 5s
+sleep 5
 
 # bspc desktop -f 09
 # st -e neomutt &
-# sleep 1s
+# sleep 1
 
 if [ $dual -eq 0 ]; then
-	bspc desktop -f 08
-	st -e ncmpcpp &
-	sleep 0.3s
-	st -e newsboat &
-	sleep 0.3s
-	st -e ncpamixer &
-	sleep 0.3s
+	bspc desktop -f 07
+	# st -e ncmpcpp &
+	# sleep 0.3
+	# st -e newsboat &
+	# sleep 0.3
+	st -e mixertui &
+	sleep 0.3
 	# st -e calcurse &
-	# sleep 0.3s
-	bspc node -f west
-	bspc node -f west
-	bspc node -z right -200 0
-	bspc node -f east
-	bspc node -z right -100 0
-	bspc node -z top 0 -50
-	bspc desktop -f 01
+	# sleep 0.3
+	# bspc node -f west
+	# bspc node -f west
+	# bspc node -z right -200 0
+	# bspc node -f east
+	# bspc node -z right -100 0
+	# bspc node -z top 0 -50
+	# bspc desktop -f 01
 else
-	bspc desktop -f 08
-	st -e ncmpcpp &
-	sleep 1s
+	# bspc desktop -f 08
+	# st -e ncmpcpp &
+	# sleep 1
 	# bspc desktop -f 07
 	# st -e calcurse &
-	# sleep 1s
-	bspc desktop -f 06
-	st -e newsboat &
-	sleep 1s
+	# sleep 1
+	# bspc desktop -f 06
+	# st -e newsboat &
+	# sleep 1
 	bspc desktop -f 05
-	st -e ncpamixer &
-	sleep 1s
+	st -e mixertui &
+	sleep 1
 	bspc desktop -f 02
 fi
 
 st -e zsh -c 'TERM=xterm-256color; emacs -nw' &
-sleep 1s
+sleep 1
 
 if [ $dual -eq 0 ]; then
 	bspc desktop -f 04
 	st -e zsh -c 'clear; cowsay "Welcome back, partner!"; zsh -i' &
-	sleep 0.3s
-	st -e /home/jozan/.cargo/bin/ytop -s -b &
-	sleep 0.3s
+	sleep 0.3
+	st -e gotop &
+	sleep 0.3
 	bspc node -f west
 	st -e vifm &
-	sleep 0.3s
+	sleep 0.3
 	bspc node -z right 180 0
 	bspc node -z top 0 70
 	bspc node -f north
 else
 	bspc desktop -f 01
-	st -e /home/jozan/.cargo/bin/ytop -s -b &
-	sleep 0.3s
 	st -e zsh -c 'clear; cowsay "Welcome back, partner!"; zsh -i' &
-	sleep 0.3s
+	sleep 0.3
+	bspc node -p west
+	st -e htop &
+	sleep 0.3
+	st -e gotop &
+	sleep 0.3
+	bspc node -p south
+	st -e /usr/home/jozan/.local/bin/greptemp.sh &
+	sleep 0.3
+	bspc node -f east
 	st -e vifm &
-	sleep 0.3s
+	sleep 0.3
 	bspc node -f west
-	bspc node -z right -200 0
-	sleep 0.3s
+	bspc node -f north
+	bspc node -z top 0 -280
+	bspc node -z bottom 0 100
+	bspc node -z right -220 0
+	sleep 0.3
 	bspc node -f east
 	bspc node -z top 0 70
-	sleep 0.3s
+	sleep 0.3
 	bspc node -f north
 fi
-sleep 0.3s
+sleep 0.3
 
-if [ $dual -eq 0 ]; then
-	bspc desktop -f 01
-fi
-
-if wget -q --spider https://gentoo.org/; then
-	run slack &
+if curl https://www.freebsd.org/ >/dev/null 2>&1; then
+	bspc desktop -f 10
+	st -e slack-term &
+	# run slack &
+	sleep 1
+	bspc desktop -f 09
+	run qtox &
+	sleep 1.5
+	if [ $dual -eq 0 ]; then
+		bspc desktop -f 04
+		bspc desktop -f 01
+	else
+		bspc desktop -f 04
+	fi
 fi

@@ -8,7 +8,7 @@ super + Return
 
 # program launcher
 super + p
-	dmenu_run -m 1 -fn "monospace:size=10" -nb "#222222" -nf "#bbbbbb" -sb "#005577" -sf "#eeeeee"
+	dmenu_run -m 1 -fn "monospace:size=10" -nb "#222222" -nf "#bbbbbb" -sb "#b92121" -sf "#eeeeee"
 
 # make sxhkd reload its configuration files:
 super + control + r
@@ -126,11 +126,11 @@ super + ctrl + shift + space
 #
 
 # expand a window by moving one of its side outward
-control + alt + {Left,Down,Up,Right}
+ctrl + alt + {Left,Down,Up,Right}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
-super + control + {Left,Down,Up,Right}
+super + ctrl + {Left,Down,Up,Right}
 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window
@@ -145,26 +145,28 @@ super + 1
 super + 2
 	st
 super + 3
-	firefox
+	firefox --kiosk https://start.duckduckgo.com/
+super + 4
+	st -e w3m https://start.duckduckgo.com/
 
 #
 # XF86Keys
 #
 {XF86AudioRaiseVolume}
-	pulsemixer --change-volume +5
+	mixer vol +5 >/dev/null 2>&1 && notify-send -u low -t 700 "Volume raised - $(mixer vol -s | awk -F ':' '{print $2}')%"
 
 {XF86AudioLowerVolume}
-	pulsemixer --change-volume -5
+	mixer vol -5 >/dev/null 2>&1 && notify-send -u low -t 700 "Volume lowered - $(mixer vol -s | awk -F ':' '{print $2}')%"
 
 {XF86AudioMute}
-	pulsemixer --toggle-mute
+	/home/jozan/.local/bin/mixer-toggle >/dev/null 2>&1
 # $(amixer get Master | grep off > /dev/null && amixer -q set Master unmute) || amixer -q set Master mute
 
 {XF86MonBrightnessUp}
-	xbacklight -inc 10
+	xbacklight -inc 4
 
 {XF86MonBrightnessDown}
-	xbacklight -dec 10
+	xbacklight -dec 4
 
 {XF86Sleep}
 	/home/jozan/.local/bin/gotosleep
