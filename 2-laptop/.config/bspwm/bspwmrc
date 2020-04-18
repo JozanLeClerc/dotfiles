@@ -1,9 +1,6 @@
 #!/usr/local/bin/dash
 
-export SXHKD_SHELL=/usr/local/bin/dash
-export XDG_CONFIG_HOME="${HOME}/.config"
-export EDITOR="nvim"
-export PATH="${HOME}/.local/bin:${PATH}"
+source /home/jozan/.profile
 
 run() {
 	if ! pgrep "$1";
@@ -44,21 +41,13 @@ if [ $dual -eq 0 ]; then
 	bspc rule -a qutebrowser desktop=05 follow=true
 	bspc rule -a Firefox desktop=05 follow=true
 	bspc rule -a Wine desktop=06 state=floating
-	bspc rule -a Slack desktop=10 follow=false
-	bspc rule -a Zathura state=tiled
-	bspc rule -a discord desktop=10
-	bspc rule -a mplayer2 state=floating
-	bspc rule -a Dunst layer=above
 else
 	bspc rule -a qutebrowser desktop=03 follow=on
 	bspc rule -a Firefox desktop=03 follow=on
 	bspc rule -a Wine desktop=04 state=floating
-	bspc rule -a discord desktop=10
-	bspc rule -a Slack desktop=10
-	bspc rule -a Zathura state=tiled
-	bspc rule -a mplayer2 state=floating
-	bspc rule -a Dunst layer=above
 fi
+bspc rule -a Dunst layer=above
+bspc rule -a Zathura state=tiled
 bspc rule -a Main state=floating
 bspc rule -a qTox desktop=09
 
@@ -67,11 +56,9 @@ bspc rule -a qTox desktop=09
 # run compton > /dev/null 2>&1 &
 run xcompmgr >/dev/null 2>&1 &
 setxkbmap -layout us,fr -option grp:alt_shift_toggle
-if [ $dual -eq 0 ]; then
-	feh --bg-fill /home/jozan/Pictures/wallpaper.jpg --bg-fill /home/jozan/Pictures/wallpaper.jpg > /dev/null 2>&1
-else
+[ $dual -eq 0 ] && \
+	feh --bg-fill /home/jozan/Pictures/wallpaper.jpg --bg-fill /home/jozan/Pictures/wallpaper.jpg > /dev/null 2>&1 || \
 	feh --bg-fill /home/jozan/Pictures/wallpaper.jpg > /dev/null 2>&1
-fi
 xset r rate 200 100 > /dev/null 2>&1
 run dunst > /dev/null 2>&1 &
 # run mpd > /dev/null 2>&1 &
@@ -101,7 +88,7 @@ if [ $dual -eq 0 ]; then
 	# bspc node -f east
 	# bspc node -z right -100 0
 	# bspc node -z top 0 -50
-	# bspc desktop -f 01
+	bspc desktop -f 01
 else
 	# bspc desktop -f 08
 	# st -e ncmpcpp &
@@ -125,14 +112,22 @@ if [ $dual -eq 0 ]; then
 	bspc desktop -f 04
 	st -e zsh -c 'clear; cowsay "Welcome back, partner!"; zsh -i' &
 	sleep 0.3
+	st -e htop &
+	sleep 0.3
 	st -e gotop &
+	sleep 0.3
+	bspc node -p south
+	st -e /usr/home/jozan/.local/bin/greptemp.sh &
 	sleep 0.3
 	bspc node -f west
 	st -e vifm &
 	sleep 0.3
 	bspc node -z right 180 0
 	bspc node -z top 0 70
+	bspc node -f east
 	bspc node -f north
+	bspc node -z bottom 0 100
+	bspc node -z top 0 -280
 else
 	bspc desktop -f 01
 	st -e zsh -c 'clear; cowsay "Welcome back, partner!"; zsh -i' &
@@ -171,8 +166,7 @@ if curl https://www.freebsd.org/ >/dev/null 2>&1; then
 	sleep 1.5
 	if [ $dual -eq 0 ]; then
 		bspc desktop -f 04
-		bspc desktop -f 01
 	else
-		bspc desktop -f 04
+		bspc desktop -f 01
 	fi
 fi
