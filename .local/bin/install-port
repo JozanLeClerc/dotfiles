@@ -1,17 +1,59 @@
 #!/usr/local/bin/dash
 
-[ $# -eq 0 ] && printf "Failed! No port specified.\n" && exit 1
+upgrdports() {
+	sudo pkg update
+	sudo portsnap fetch update
+	printf "%s\nPackages to be updated:\n" "-------------------"
+	pkg version -l "<"
+	printf "Upgrade these ports? [y/N]\n"
+	printf "~> "
+	if [ "$2" != "-y" ]; then
+		read -r answer
+		[ "$answer" != "y" ] || [ "$answer" != "Y" ] && exit 0
+	fi
+	notify-send "Initiating upgrade" "Ports upgrade has started"
+	espeak "Initiating ports upgrade" &
+	if sudo portupgrade -a; then
+		notify-send "Upgrade complete!" "Ports upgrade installed successfully"
+		espeak "Success: ports upgrade installed successfully" &
+	else
+		notify-send "Upgrade failed!" "Ports upgrade failed to compile"
+		espeak "Failure: failed to compile ports upgrades" &
+	fi
+	exit 0
+}
+
+configport() {
+	if sudo make config-recursive \
+			&& sudo make config-recursive \
+			&& sudo make config-recursive; then
+		notify-send "Configuration success!" "Ports config - $1 - configured successfully"
+		espeak "Success: $prt_n configured successfully. Initiating compilation." &
+	else
+		notify-send "Configuration failure!" "Ports config - $1 - failed to configure"
+		espeak "Failure: failed to configure $prt_n" &
+	fi
+}
+
+installport() {
+	if sudo make install clean; then
+		notify-send "Compilation success!" "Ports - $1 - compiled successfully"
+		espeak "Success: $prt_n compiled successfully" &
+	else
+		notify-send "Compilation failure!" "Ports - $1 - failed to compile"
+		espeak "Failure: failed to compile $prt_n" &
+	fi
+}
+
+[ $# -eq 0 ] && printf "Failed! No port or argument specified.\n" && exit 1
+[ "$1" = "upgrade" ] && upgrdports "$@"
 [ ! -d "/usr/ports/$1" ] && printf "Failed! Port /usr/ports/%s doesn't exist\n" "$1" && exit 2
 
 prt_n=$(echo "$1" | awk -F '/' '{print $2}')
 
+printf "Port %s found\n" "$1"
 cd "/usr/ports/$1" || exit 3
-if sudo make install clean; then
-	notify-send "Compilation success!" "Ports - $1 - compiled successfully"
-	espeak "Success: $prt_n compiled successfully" &
-else
-	notify-send "Compilation failure!" "Ports - $1 - failed to compile"
-	espeak "Failure: failed to compile $prt_n" &
-fi
+
+configport "$@" && installport "$@"
 
 exit 0
