@@ -26,8 +26,8 @@ upgrdports() {
 	else
 		failednbr=$(pkg version -l "<" | wc -l | awk '{print $1}')
 		diffnbr=$((upnbr - failednbr))
-		notify-send -u critical "Upgrade failed!" "Some ports failed to compile\nTotal: $diffnbr installed - $failednbr failed"
-		espeak "Failure: not all ports were upgraded - $diffnbr succeeded - $failednbr failed" &
+		notify-send -u critical -t 10000 "Upgrade failed!" "Some ports failed to compile\nTotal: $diffnbr installed - $failednbr failed"
+		espeak "Failure: not all ports were upgraded - $diffnbr installed - $failednbr failed" &
 	fi
 	exit 0
 }
@@ -39,7 +39,7 @@ configport() {
 		notify-send "Configuration success!" "Ports config - $1 - configured successfully"
 		espeak "Success: $prt_n configured successfully. Initiating compilation." &
 	else
-		notify-send -u critical "Configuration failure!" "Ports config - $1 - failed to configure"
+		notify-send -u critical -t 10000 "Configuration failure!" "Ports config - $1 - failed to configure"
 		espeak "Failure: failed to configure $prt_n" &
 	fi
 }
@@ -49,7 +49,7 @@ installport() {
 		notify-send "Compilation success!" "Ports - $1 - compiled successfully"
 		espeak "Success: $prt_n compiled successfully" &
 	else
-		notify-send -u critical "Compilation failure!" "Ports - $1 - failed to compile"
+		notify-send -u critical -t 10000 "Compilation failure!" "Ports - $1 - failed to compile"
 		espeak "Failure: failed to compile $prt_n" &
 	fi
 }
