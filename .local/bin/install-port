@@ -5,20 +5,29 @@ upgrdports() {
 	sudo portsnap fetch update
 	printf "%s\nPackages to be updated:\n" "-------------------"
 	pkg version -l "<"
-	printf "Upgrade these ports? [y/N]\n"
-	printf "~> "
+	upnbr=$(pkg version -l "<" | wc -l | awk '{print $1}')
 	if [ "$2" != "-y" ]; then
+		printf "Upgrade these ports? [y/N]\n"
+		printf "~> "
 		read -r answer
 		[ "$answer" != "y" ] || [ "$answer" != "Y" ] && exit 0
 	fi
-	notify-send "Initiating upgrade" "Ports upgrade has started"
-	espeak "Initiating ports upgrade" &
-	if sudo portupgrade -a; then
-		notify-send "Upgrade complete!" "Ports upgrade installed successfully"
-		espeak "Success: ports upgrade installed successfully" &
+	notify-send "Initiating upgrade" "Ports upgrade has started\nTotal: $upnbr to be updated"
+	if [ "$upnbr" -eq 1 ]; then
+		espeak "Initiating $upnbr port upgrade" &
 	else
-		notify-send "Upgrade failed!" "Ports upgrade failed to compile"
-		espeak "Failure: failed to compile ports upgrades" &
+		espeak "Initiating $upnbr ports upgrade" &
+	fi
+	if sudo portupgrade -a; then
+		failednbr=$(pkg version -l "<" | wc -l | awk '{print $1}')
+		diffnbr=$((upnbr - failednbr))
+		notify-send "Upgrade complete!" "Ports upgrade installed successfully\nTotal: $diffnbr installed - $failednbr failed"
+		espeak "Success: $upnbr ports upgrade installed successfully" &
+	else
+		failednbr=$(pkg version -l "<" | wc -l | awk '{print $1}')
+		diffnbr=$((upnbr - failednbr))
+		notify-send -u critical "Upgrade failed!" "Some ports failed to compile\nTotal: $diffnbr installed - $failednbr failed"
+		espeak "Failure: not all ports were upgraded - $diffnbr succeeded - $failednbr failed" &
 	fi
 	exit 0
 }
@@ -30,7 +39,7 @@ configport() {
 		notify-send "Configuration success!" "Ports config - $1 - configured successfully"
 		espeak "Success: $prt_n configured successfully. Initiating compilation." &
 	else
-		notify-send "Configuration failure!" "Ports config - $1 - failed to configure"
+		notify-send -u critical "Configuration failure!" "Ports config - $1 - failed to configure"
 		espeak "Failure: failed to configure $prt_n" &
 	fi
 }
@@ -40,7 +49,7 @@ installport() {
 		notify-send "Compilation success!" "Ports - $1 - compiled successfully"
 		espeak "Success: $prt_n compiled successfully" &
 	else
-		notify-send "Compilation failure!" "Ports - $1 - failed to compile"
+		notify-send -u critical "Compilation failure!" "Ports - $1 - failed to compile"
 		espeak "Failure: failed to compile $prt_n" &
 	fi
 }
