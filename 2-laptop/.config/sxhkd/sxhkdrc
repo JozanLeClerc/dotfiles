@@ -153,14 +153,13 @@ super + 4
 # XF86Keys
 #
 {XF86AudioRaiseVolume}
-	mixer vol +5 >/dev/null 2>&1 && notify-send -u low -t 700 "Volume raised - $(mixer vol -s | awk -F ':' '{print $2}')%"
+	/home/jozan/.local/bin/mixer-set raise >/dev/null 2>&1
 
 {XF86AudioLowerVolume}
-	mixer vol -5 >/dev/null 2>&1 && notify-send -u low -t 700 "Volume lowered - $(mixer vol -s | awk -F ':' '{print $2}')%"
+	/home/jozan/.local/bin/mixer-set lower >/dev/null 2>&1
 
 {XF86AudioMute}
-	/home/jozan/.local/bin/mixer-toggle >/dev/null 2>&1
-# $(amixer get Master | grep off > /dev/null && amixer -q set Master unmute) || amixer -q set Master mute
+	/home/jozan/.local/bin/mixer-set toggle >/dev/null 2>&1
 
 {XF86MonBrightnessUp}
 	xbacklight -inc 4

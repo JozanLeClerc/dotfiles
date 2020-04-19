@@ -1,0 +1,30 @@
+#!/usr/local/bin/dash
+
+[ $# -eq 0 ] && printf "Argument needed\n" && exit 1
+[ $# -gt 1 ] && printf "Too many arguments\n" && exit 2
+
+if [ "$1" = "lower" ]; then
+	mixer vol -5 >/dev/null 2>&1
+	curr_vol=$(mixer vol | awk -F ':' '{print $2}')
+	notify-send -u low -t 700 "Volume lowered - $curr_vol%"
+elif [ "$1" = "raise" ]; then
+	mixer vol +5 >/dev/null 2>&1
+	curr_vol=$(mixer vol | awk -F ':' '{print $2}')
+	notify-send -u low -t 700 "Volume raised - $curr_vol%"
+elif [ "$1" = "toggle" ]; then
+	curr_vol=$(mixer vol | awk -F ':' '{print $2}')
+	if [ "$curr_vol" -gt 0 ]; then
+		echo "$curr_vol" > /tmp/mixervol
+		mixer vol 0 >/dev/null 2>&1
+		notify-send -u low -t 1750 "Volume muted"
+	else
+		rvol=$(cat /tmp/mixervol)
+		mixer vol "$rvol" >/dev/null 2>&1
+		notify-send -u low -t 1750 "Volume restored - $rvol%"
+	fi
+else
+	printf "Unrecognized argument: %s\n" "$1"
+	exit 3
+fi
+
+exit 0

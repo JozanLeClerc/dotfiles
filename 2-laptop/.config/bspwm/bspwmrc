@@ -48,7 +48,6 @@ else
 fi
 bspc rule -a Dunst layer=above
 bspc rule -a Zathura state=tiled
-bspc rule -a Main state=floating
 bspc rule -a qTox desktop=09
 
 # START
@@ -63,7 +62,7 @@ xset r rate 200 100 > /dev/null 2>&1
 run dunst > /dev/null 2>&1 &
 # run mpd > /dev/null 2>&1 &
 run ~/.local/bin/todo-git-updater.sh > /dev/null 2>&1 &
-run lowbat > /dev/null 2>&1 &
+run lowbat --say "beep beep - low battery" > /dev/null 2>&1 &
 # mopidy 2>&1 &
 
 sleep 5
