@@ -1,0 +1,7 @@
+alias ls='ls -G'
+alias c='clear'
+alias bc='clear; bc'
+alias emacs='emacs -nw'
+alias mkf='gmake fclean'
+alias mk='gmake -j5'
+alias web='w3m https://duckduckgo.com/'
