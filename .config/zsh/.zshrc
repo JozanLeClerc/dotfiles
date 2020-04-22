@@ -1,10 +1,5 @@
-# oh-my-zsh
-# source $ZSH/oh-my-zsh.sh
-
 # prompt
 autoload -U colors && colors
-PS1="%B%{$fg[red]%}%M %{$fg[blue]%}%c%{$fg[red]%}%%%{$reset_color%} "
-RPS1="${RPS1}""%{$fg_bold[red]%}%(?..%?)%{$reset_color%}"
 
 # history
 HISTSIZE=1000
@@ -44,3 +39,6 @@ bindkey "^e" edit-command-line
 # alias and plugins
 [ -f "$XDG_CONFIG_HOME/zsh/alias.zsh" ]		&& source $ZDOTDIR/alias.zsh
 [ -f "$XDG_CONFIG_HOME/zsh/plugins.zsh" ]	&& source $ZDOTDIR/plugins.zsh
+
+PROMPT="%B%{$fg[red]%}%M %{$fg[blue]%}%c%{$fg[red]%}%%%{$reset_color%} "
+RPROMPT="${RPROMPT}"'%{$fg_bold[red]%}%(?..%?)%{$reset_color%} $(gitprompt)'
