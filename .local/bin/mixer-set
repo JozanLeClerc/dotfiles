@@ -6,11 +6,11 @@
 if [ "$1" = "lower" ]; then
 	mixer vol -5 >/dev/null 2>&1
 	curr_vol=$(mixer vol | awk -F ':' '{print $2}')
-	notify-send -u low -t 700 "Volume lowered - $curr_vol%"
+	notify-send -u low -t 350 "Volume lowered - $curr_vol%"
 elif [ "$1" = "raise" ]; then
 	mixer vol +5 >/dev/null 2>&1
 	curr_vol=$(mixer vol | awk -F ':' '{print $2}')
-	notify-send -u low -t 700 "Volume raised - $curr_vol%"
+	notify-send -u low -t 350 "Volume raised - $curr_vol%"
 elif [ "$1" = "toggle" ]; then
 	curr_vol=$(mixer vol | awk -F ':' '{print $2}')
 	if [ "$curr_vol" -gt 0 ]; then

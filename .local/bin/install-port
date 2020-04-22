@@ -3,14 +3,16 @@
 upgrdports() {
 	sudo pkg update
 	sudo portsnap fetch update
-	printf "%s\nPackages to be updated:\n" "-------------------"
+	printf "\033[1;31m%s\033[0m\nPackages to be updated:\n" "-----------------------"
 	pkg version -l "<"
 	upnbr=$(pkg version -l "<" | wc -l | awk '{print $1}')
 	if [ "$2" != "-y" ]; then
 		printf "Upgrade these ports? [y/N]\n"
 		printf "~> "
 		read -r answer
-		[ "$answer" != "y" ] || [ "$answer" != "Y" ] && exit 0
+		if [ "$answer" != "y" ] && [ "$answer" != "Y" ]; then
+			exit 0
+		fi
 	fi
 	notify-send "Initiating upgrade" "Ports upgrade has started\nTotal: $upnbr to be updated"
 	if [ "$upnbr" -eq 1 ]; then
