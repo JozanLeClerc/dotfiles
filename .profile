@@ -21,7 +21,6 @@ PAGER=less;  	export PAGER
 # set ENV to a file invoked each time sh is started for interactive use.
 ENV=$HOME/.shrc; export ENV
 
-# by Joe
 # Path
 export PATH="${HOME}/.local/bin:${HOME}/.cargo/bin:/usr/local/llvm10/bin:${PATH}"
 
