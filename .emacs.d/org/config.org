@@ -16,7 +16,10 @@
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
+(blink-cursor-mode 0)
 
+(set-frame-font "DejaVuSansMono Nerd Font 11")
 ;; (add-hook 'prog-mode-hook 'linum-mode)
 ;; (add-hook 'text-mode-hook 'linum-mode)
 ;; (setq linum-format "%3d ")
@@ -33,7 +36,7 @@
 	  kept-old-versions 5)
 #+END_SRC
 
-** MELPA
+** MELPA and non-MELPA
 #+BEGIN_SRC emacs-lisp
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
@@ -42,6 +45,13 @@
 
 (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 (autoload 'mu4e "mu4e" "Launch mu4e and show the main window" t)
+(add-to-list 'load-path "/home/jozan/.emacs.d/sunrise-commander/")
+(autoload 'sunrise "sunrise.el" "qweqwe" t)
+(add-to-list 'load-path "/home/jozan/.emacs.d/font-lock+")
+(add-to-list 'load-path "/home/jozan/.emacs.d/all-the-icons/")
+(add-to-list 'load-path "/home/jozan/.emacs.d/icons-in-terminal.el/")
+(add-to-list 'load-path "/home/jozan/.emacs.d/gas-mode/")
+(autoload 'gas-mode "gas-mode" "AT&T syntax for assembly code" t)
 
 (setq package-enable-at-startup nil)
 (setq package-check-signature nil)
@@ -102,17 +112,21 @@
 ** Core packages
 *** Evil mode
 #+BEGIN_SRC emacs-lisp
+(setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+(setq evil-want-keybinding nil)
 (require 'evil)
 (require 'evil-magit)
 (require 'evil-mu4e)
+(require 'evil-collection)
 (evil-mode t)
+;; (evil-collection-init)
 
-(setq evil-emacs-state-cursor '("red" box))
-(setq evil-normal-state-cursor '("yellow" box))
-(setq evil-visual-state-cursor '("magenta" box))
-(setq evil-insert-state-cursor '("yellow" bar))
-(setq evil-replace-state-cursor '("red" hollow))
-(setq evil-operator-state-cursor '("red" hollow))
+(setq evil-emacs-state-cursor '("#b16286" box))
+(setq evil-normal-state-cursor '("#d79921" box))
+(setq evil-visual-state-cursor '("#b16286" box))
+(setq evil-insert-state-cursor '("#d79921" bar))
+(setq evil-replace-state-cursor '("#cc241d" hbar))
+(setq evil-operator-state-cursor '("#d79921" hbar))
 
 (require 'tabbar)
 (global-set-key (kbd "M-k") nil)
@@ -156,9 +170,9 @@
 (require 'mu4e)
 (require 'cl)
 
-(setq mu4e-maildir (expand-file-name "~/Maildir"))
+(setq mu4e-maildir (expand-file-name "/home/jozan/Maildir"))
 
-(setq mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a"
+(setq mu4e-get-mail-command "mbsync -c /home/jozan/.emacs.d/mu4e/.mbsyncrc -a"
 	  mu4e-view-prefer-html nil
 	  mu4e-update-interval 180
 	  mu4e-index-update-in-background t
@@ -223,7 +237,7 @@
 (setq smtpmail-queue-mail nil)  ;; start in normal mode
 
 ;;from the info manual
-(setq mu4e-attachment-dir  "~/Downloads")
+(setq mu4e-attachment-dir  "/home/jozan/Downloads")
 
 (setq message-kill-buffer-on-exit t)
 (setq mu4e-compose-dont-reply-to-self t)
@@ -313,6 +327,8 @@
 (setq helm-quick-update t)
 (setq helm-bookmark-show-location t)
 (setq helm-buffers-fuzzy-matching t)
+(setq helm-make-executable "/usr/local/bin/gmake")
+(setq helm-make-nproc 5)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
@@ -554,6 +570,17 @@ buffer in current window."
 (yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
 #+END_SRC
+*** all the icons
+#+BEGIN_SRC emacs-lisp
+(require 'font-lock)
+(require 'font-lock+)
+(require 'all-the-icons)
+#+END_SRC
+*** icons-in-terminal
+#+BEGIN_SRC emacs-lisp
+(require 'icons-in-terminal)
+#+END_SRC
+
 ** Compilation
 *** Close window after errorless compilation
 #+BEGIN_SRC emacs-lisp
