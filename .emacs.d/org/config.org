@@ -49,6 +49,7 @@
 (autoload 'sunrise "sunrise.el" "qweqwe" t)
 (add-to-list 'load-path "/home/jozan/.emacs.d/font-lock+")
 (add-to-list 'load-path "/home/jozan/.emacs.d/all-the-icons/")
+(add-to-list 'load-path "/home/jozan/.emacs.d/all-the-icons-dired/")
 (add-to-list 'load-path "/home/jozan/.emacs.d/icons-in-terminal.el/")
 (add-to-list 'load-path "/home/jozan/.emacs.d/gas-mode/")
 (autoload 'gas-mode "gas-mode" "AT&T syntax for assembly code" t)
@@ -172,14 +173,14 @@
 
 (setq mu4e-maildir (expand-file-name "/home/jozan/Maildir"))
 
-(setq mu4e-get-mail-command "mbsync -c /home/jozan/.emacs.d/mu4e/.mbsyncrc -a"
-	  mu4e-view-prefer-html nil
-	  mu4e-update-interval 180
-	  mu4e-index-update-in-background t
-	  mu4e-headers-auto-update t
-	  mu4e-index-update-error-warning t
-	  mu4e-compose-signature-auto-include nil
-	  mu4e-compose-format-flowed t)
+(setq mu4e-get-mail-command "mbsync -c /home/jozan/.emacs.d/mu4e/.mbsyncrc -a")
+(setq mu4e-view-prefer-html nil)
+(setq mu4e-update-interval 300)
+(setq mu4e-index-update-in-background t)
+(setq mu4e-headers-auto-update t)
+(setq mu4e-index-update-error-warning t)
+(setq mu4e-compose-signature-auto-include nil)
+(setq mu4e-compose-format-flowed t)
 (add-to-list 'mu4e-view-actions
 			 '("ViewInBrowser" . mu4e-action-view-in-browser) t)
 
@@ -241,6 +242,7 @@
 
 (setq message-kill-buffer-on-exit t)
 (setq mu4e-compose-dont-reply-to-self t)
+(setq mu4e-completing-read-function 'completing-read)
 
 ;; (require 'org-mu4e)
 
@@ -305,6 +307,26 @@
 (origami-mode)
 #+END_SRC
 
+*** Neotree
+#+BEGIN_SRC emacs-lisp
+(require 'neotree)
+;; (setq neo-smart-open t)
+(setq neo-vc-integration '(face))
+(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+(evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
+(evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
+(evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
+(evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
+(evil-define-key 'normal neotree-mode-map (kbd "|") 'neotree-enter-vertical-split)
+(evil-define-key 'normal neotree-mode-map (kbd "S") 'neotree-enter-vertical-split)
+(evil-define-key 'normal neotree-mode-map (kbd "/") 'neotree-enter-horizontal-split)
+(evil-define-key 'normal neotree-mode-map (kbd "s") 'neotree-enter-horizontal-split)
+#+END_SRC
+
 *** Centaur tabs
 #+BEGIN_SRC emacs-lisp
 (require 'centaur-tabs)
@@ -353,13 +375,14 @@
 (projectile-mode +1)
 #+END_SRC
 
-*** doom-modeline
+*** DOOM Modeline
 #+BEGIN_SRC emacs-lisp
 (setq display-time-string-forms
 	   '((propertize (concat " " 24-hours ":" minutes " "))))
 
 (require 'doom-modeline)
 (doom-modeline-mode 1)
+(setq doom-modeline-height 1)
 (setq doom-modeline-project-detection 'projectile)
 (setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
 (setq doom-modeline-icon (display-graphic-p))
@@ -380,6 +403,7 @@
 (setq doom-modeline-github-interval (* 30 60))
 (setq doom-modeline-modal-icon t)
 (setq doom-modeline-mu4e t)
+(setq doom-modeline-gnus nil)
 (setq doom-modeline-irc t)
 (setq doom-modeline-irc-stylize 'identity)
 (setq doom-modeline-env-version t)
@@ -514,23 +538,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (ranger-override-dired-mode t)
 #+END_SRC
 
-*** Neotree
-#+BEGIN_SRC emacs-lisp
-(require 'neotree)
-;; (setq neo-smart-open t)
-(setq neo-vc-integration '(face))
-(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
-(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
-(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-(evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-(evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
-(evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
-(evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
-(evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
-;; (neotree-show)
-#+END_SRC
-
 *** lldb
 #+BEGIN_SRC emacs-lisp
 (require 'realgud-lldb)
@@ -575,12 +582,19 @@ buffer in current window."
 (require 'font-lock)
 (require 'font-lock+)
 (require 'all-the-icons)
+(load "all-the-icons-dired.el")
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 #+END_SRC
 *** icons-in-terminal
 #+BEGIN_SRC emacs-lisp
 (require 'icons-in-terminal)
 #+END_SRC
 
+*** speebar
+#+BEGIN_SRC emacs-lisp
+(require 'speedbar)
+(require 'sr-speedbar)
+#+END_SRC
 ** Compilation
 *** Close window after errorless compilation
 #+BEGIN_SRC emacs-lisp
@@ -613,7 +627,7 @@ buffer in current window."
 (defun my/exec-f5 ()
   (interactive)
   (defvar make)
-  (setq make "make -j5 ASAN=1")
+  (setq make "gmake -j5 asan")
   (save-buffer)
   (compile make)
   (compilation-finish-function)) 
@@ -623,23 +637,22 @@ buffer in current window."
   (defvar exec)
   (setq exec "./a.out; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.5 Tilde Edition by Joe\"")
   (async-shell-command exec))
-  
 #+END_SRC
 
-** Open eshell function
+** Other key bindings
 #+BEGIN_SRC emacs-lisp
 (defun my/go-full-shell ()
   (interactive)
   (split-window-below)
   (windmove-down)
   (shrink-window 6)
-  (eshell))
-#+END_SRC
-
-** Other key bindings
-#+BEGIN_SRC emacs-lisp
+  (ansi-term "/usr/local/bin/zsh"))
+(defun my/speedbar-open ()
+(sr-speedbar-toggle)
+(windmove-right))
 (global-set-key [f1] 'my/go-full-shell)
 (global-set-key [f2] 'neotree-toggle)
+(global-set-key [f3] 'sr-speedbar-toggle)
 (global-set-key [f4] 'helm-make-projectile)
 (global-set-key [f5] 'my/exec-f5)
 (global-set-key [f6] 'my/exec-f6)
