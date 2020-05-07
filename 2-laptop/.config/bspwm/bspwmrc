@@ -70,13 +70,13 @@ sleep 5
 # sleep 1
 
 if [ $dual -eq 0 ]; then
-	bspc desktop -f 07
+	# bspc desktop -f 07
 	# st -e ncmpcpp &
 	# sleep 0.3
 	# st -e newsboat &
 	# sleep 0.3
-	st -e mixertui &
-	sleep 0.3
+	# st -e mixertui &
+	# sleep 0.3
 	# st -e calcurse &
 	# sleep 0.3
 	# bspc node -f west
@@ -96,14 +96,14 @@ else
 	# bspc desktop -f 06
 	# st -e newsboat &
 	# sleep 1
-	bspc desktop -f 05
-	st -e mixertui &
-	sleep 1
+	# bspc desktop -f 05
+	# st -e mixertui &
+	# sleep 1
 	bspc desktop -f 02
 fi
 
 # st -e zsh -c 'emacs -nw' &
-emacs &
+run emacs &
 
 sleep 1
 

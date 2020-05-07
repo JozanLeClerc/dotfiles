@@ -2,8 +2,8 @@
 autoload -U colors && colors
 
 # history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=5000
+SAVEHIST=5000
 HISTFILE=$XDG_CONFIG_HOME/zsh/history
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
@@ -25,8 +25,8 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -v "^?" backward-delete-char
-bindkey -v "A-k" history-beginning-search-backward
-bindkey -v "A-j" history-beginning-search-forward
+bindkey -v "C-k" history-beginning-search-backward
+bindkey -v "C-j" history-beginning-search-forward
 bindkey -v "^[[A" history-beginning-search-backward
 bindkey -v "^[[B" history-beginning-search-forward
 bindkey -M vicmd "k" history-beginning-search-backward
