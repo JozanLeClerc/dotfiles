@@ -19,11 +19,11 @@ dual=$?
 sleep 1
 
 if [ $dual -eq 0 ]; then
-	bspc monitor LVDS1 -d 04 05 06 07 08 09 10
-	bspc monitor VGA1 -d 01 02 03
+	bspc monitor LVDS-1 -d 04 05 06 07 08 09 10
+	bspc monitor VGA-1 -d 01 02 03
 	# bspc monitor VGA1 -d 01 02 03 04 05 06 07 08 09 10
 else
-	bspc monitor LVDS1 -d 01 02 03 04 05 06 07 08 09 10
+	bspc monitor LVDS-1 -d 01 02 03 04 05 06 07 08 09 10
 fi
 
 bspc config border_width		1
