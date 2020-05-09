@@ -1,4 +1,4 @@
-* My emacs school config
+* My emacs config
 ** For the Macintosh OS by Stevey-J
 #+BEGIN_SRC emacs-lisp
 (setq mac-option-key-is-meta nil
@@ -15,8 +15,11 @@
 ;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (menu-bar-mode -1)
-;; (tool-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(blink-cursor-mode 0)
 
+(set-frame-font "DejaVuSansMono:pixelsize=14" nil t)
 ;; (add-hook 'prog-mode-hook 'linum-mode)
 ;; (add-hook 'text-mode-hook 'linum-mode)
 ;; (setq linum-format "%3d ")
@@ -33,12 +36,19 @@
 	  kept-old-versions 5)
 #+END_SRC
 
-** MELPA
+** MELPA and non-MELPA
 #+BEGIN_SRC emacs-lisp
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/1"))
+
+(add-to-list 'load-path "/home/user42/.emacs.d/font-lock+")
+(add-to-list 'load-path "/home/user42/.emacs.d/all-the-icons/")
+(add-to-list 'load-path "/home/user42/.emacs.d/all-the-icons-dired/")
+(add-to-list 'load-path "/home/user42/.emacs.d/icons-in-terminal.el/")
+(add-to-list 'load-path "/home/user42/.emacs.d/gas-mode/")
+(autoload 'gas-mode "gas-mode" "AT&T syntax for assembly code" t)
 
 (setq package-enable-at-startup nil)
 (setq package-check-signature nil)
@@ -48,23 +58,24 @@
 ** Core packages
 *** Evil mode
 #+BEGIN_SRC emacs-lisp
+(setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+(setq evil-want-keybinding nil)
 (require 'evil)
 (require 'evil-magit)
-(require 'evil-org)
 (evil-mode t)
 
-(setq evil-emacs-state-cursor '("red" box))
-(setq evil-normal-state-cursor '("yellow" box))
-(setq evil-visual-state-cursor '("magenta" box))
-(setq evil-insert-state-cursor '("yellow" bar))
-(setq evil-replace-state-cursor '("red" hollow))
-(setq evil-operator-state-cursor '("red" hollow))
+(setq evil-emacs-state-cursor '("#b16286" box))
+(setq evil-normal-state-cursor '("#d79921" box))
+(setq evil-visual-state-cursor '("#b16286" box))
+(setq evil-insert-state-cursor '("#d79921" bar))
+(setq evil-replace-state-cursor '("#cc241d" hbar))
+(setq evil-operator-state-cursor '("#d79921" hbar))
 
-(require 'tabbar)
-(global-set-key (kbd "M-k") nil)
-(global-set-key (kbd "M-j") nil)
-(global-set-key (kbd "M-k") 'tabbar-backward)
-(global-set-key (kbd "M-j") 'tabbar-forward)
+;; (require 'tabbar)
+;; (global-set-key (kbd "M-k") nil)
+;; (global-set-key (kbd "M-j") nil)
+;; (global-set-key (kbd "M-k") 'tabbar-backward)
+;; (global-set-key (kbd "M-j") 'tabbar-forward)
 
 (evil-define-key 'insert global-map (kbd "C-o") 'delete-other-windows)
 (evil-define-key 'insert global-map (kbd "C-k") 'windmove-up)
@@ -102,12 +113,34 @@
 (origami-mode)
 #+END_SRC
 
+*** Neotree
+#+BEGIN_SRC emacs-lisp
+(require 'neotree)
+;; (setq neo-smart-open t)
+(setq neo-vc-integration '(face))
+(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+(evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
+(evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
+(evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
+(evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
+(evil-define-key 'normal neotree-mode-map (kbd "|") 'neotree-enter-vertical-split)
+(evil-define-key 'normal neotree-mode-map (kbd "S") 'neotree-enter-vertical-split)
+(evil-define-key 'normal neotree-mode-map (kbd "/") 'neotree-enter-horizontal-split)
+(evil-define-key 'normal neotree-mode-map (kbd "s") 'neotree-enter-horizontal-split)
+#+END_SRC
+
 *** Centaur tabs
 #+BEGIN_SRC emacs-lisp
 (require 'centaur-tabs)
 (centaur-tabs-mode t)
 (global-set-key (kbd "M-k")  'centaur-tabs-backward)
 (global-set-key (kbd "M-j") 'centaur-tabs-forward)
+(setq centaur-tabs-set-icons t)
+(setq centaur-tabs-gray-out-icons 'buffer)
 (setq centaur-tabs-set-close-button nil)
 (setq centaur-tabs-set-modified-marker t)
 (setq centaur-tabs-modified-marker "[+]")
@@ -122,6 +155,8 @@
 (setq helm-quick-update t)
 (setq helm-bookmark-show-location t)
 (setq helm-buffers-fuzzy-matching t)
+(setq helm-make-executable "/usr/local/bin/gmake")
+(setq helm-make-nproc 5)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
@@ -145,14 +180,15 @@
 (helm-mode 1)
 (projectile-mode +1)
 #+END_SRC
- 
-*** doom-modeline
+
+*** DOOM Modeline
 #+BEGIN_SRC emacs-lisp
 (setq display-time-string-forms
 	   '((propertize (concat " " 24-hours ":" minutes " "))))
 
 (require 'doom-modeline)
 (doom-modeline-mode 1)
+(setq doom-modeline-height 1)
 (setq doom-modeline-project-detection 'projectile)
 (setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
 (setq doom-modeline-icon (display-graphic-p))
@@ -173,6 +209,7 @@
 (setq doom-modeline-github-interval (* 30 60))
 (setq doom-modeline-modal-icon t)
 (setq doom-modeline-mu4e t)
+(setq doom-modeline-gnus nil)
 (setq doom-modeline-irc t)
 (setq doom-modeline-irc-stylize 'identity)
 (setq doom-modeline-env-version t)
@@ -306,27 +343,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (ranger-override-dired-mode t)
 #+END_SRC
 
-*** Neotree
-#+BEGIN_SRC emacs-lisp
-(require 'neotree)
-;; (setq neo-smart-open t)
-(setq neo-vc-integration '(face))
-(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
-(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
-(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-(evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-(evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
-(evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
-(evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
-(evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
-;; (neotree-show)
-#+END_SRC
-
-*** workgroups2
-#+BEGIN_SRC emacs-lisp
-(require 'workgroups2)
-#+END_SRC
 *** lldb
 #+BEGIN_SRC emacs-lisp
 (require 'realgud-lldb)
@@ -353,6 +369,32 @@ buffer in current window."
 (require 'evil-nerd-commenter)
 (evilnc-default-hotkeys)
 #+END_SRC
+*** cargo
+#+BEGIN_SRC emacs-lisp
+(require 'cargo)
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
+#+END_SRC
+*** yasnippet
+#+BEGIN_SRC emacs-lisp
+(require 'yasnippet)
+(require 'yasnippet-snippets)
+(require 'yasnippet-classic-snippets)
+(yas-reload-all)
+(add-hook 'prog-mode-hook #'yas-minor-mode)
+#+END_SRC
+*** all the icons
+#+BEGIN_SRC emacs-lisp
+(require 'font-lock)
+(require 'font-lock+)
+(require 'all-the-icons)
+(load "all-the-icons-dired.el")
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+#+END_SRC
+*** speebar
+#+BEGIN_SRC emacs-lisp
+(require 'speedbar)
+(require 'sr-speedbar)
+#+END_SRC
 ** Compilation
 *** Close window after errorless compilation
 #+BEGIN_SRC emacs-lisp
@@ -369,40 +411,50 @@ buffer in current window."
 
 *** Compilation functions
 #+BEGIN_SRC emacs-lisp
-(defun promptargs ()
-  (interactive)
-  (message "Args are %s" (read-string "Enter args: ")))
+;; (defvar my/cargo-f5-minor-mode-map
+;; 	(let ((map (make-sparse-keymap)))
+;; 		(define-key map [f5] 'cargo-process-run)
+;; 		map)
+;; 		"my/cargo-f5-minor-mode keymap")
 
-(defun exec-f5 ()
+;; (define-minor-mode my/cargo-f5-minor-mode
+;; 	"A minor mode to execute cargo run with F5 in rust-mode only"
+;; 	:init-value t
+;; 	:lighter " my/cargo")
+	
+;; (my/cargo-f5-minor-mode 0)
+
+(defun my/exec-f5 ()
   (interactive)
   (defvar make)
-  (setq make "make -j5 ASAN=1")
+  (setq make "gmake -j5 asan")
   (save-buffer)
   (compile make)
   (compilation-finish-function)) 
 
-(defun exec-f6 ()
+(defun my/exec-f6 ()
   (interactive)
   (defvar exec)
-  (setq exec "./cub3d \"map/map_one.cub\"; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.5 Tilde Edition by Joe\"")
+  (setq exec "./a.out; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.5 Tilde Edition by Joe\"")
   (async-shell-command exec))
 #+END_SRC
 
-** Open eshell function
+** Other key bindings
 #+BEGIN_SRC emacs-lisp
 (defun my/go-full-shell ()
   (interactive)
   (split-window-below)
   (windmove-down)
   (shrink-window 6)
-  (eshell))
-#+END_SRC
-
-** Other key bindings
-#+BEGIN_SRC emacs-lisp
-(global-set-key [f1]  'my/go-full-shell)
-(global-set-key [f2]  'neotree-toggle)
-(global-set-key [f4]  'helm-make-projectile)
-(global-set-key [f5]  'exec-f5)
-(global-set-key [f6]  'exec-f6)
+  (ansi-term "/usr/local/bin/zsh"))
+(defun my/speedbar-open ()
+(sr-speedbar-toggle)
+(windmove-right))
+(global-set-key [f1] 'my/go-full-shell)
+(global-set-key [f2] 'neotree-toggle)
+(global-set-key [f3] 'sr-speedbar-toggle)
+(global-set-key [f4] 'helm-make-projectile)
+(global-set-key [f5] 'my/exec-f5)
+(global-set-key [f6] 'my/exec-f6)
+;; (add-hook 'rust-mode-hook 'my/cargo-f5-minor-mode)
 #+END_SRC
