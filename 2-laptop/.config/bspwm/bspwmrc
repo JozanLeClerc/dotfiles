@@ -19,11 +19,10 @@ dual=$?
 sleep 1
 
 if [ $dual -eq 0 ]; then
-	bspc monitor LVDS-1 -d 04 05 06 07 08 09 10
-	bspc monitor VGA-1 -d 01 02 03
-	# bspc monitor VGA1 -d 01 02 03 04 05 06 07 08 09 10
+	bspc monitor LVDS1 -d 04 05 06 07 08 09 10
+	bspc monitor VGA1 -d 01 02 03
 else
-	bspc monitor LVDS-1 -d 01 02 03 04 05 06 07 08 09 10
+	bspc monitor LVDS1 -d 01 02 03 04 05 06 07 08 09 10
 fi
 
 bspc config border_width		1
@@ -49,60 +48,24 @@ bspc rule -a qTox desktop=09
 bspc rule -a DergodsRealmII desktop=4 state=floating
 
 # START
-# run sxhkd > /dev/null 2>&1 &
 run compton >/dev/null 2>&1 &
-# run xcompmgr >/dev/null 2>&1 &
 setxkbmap -layout us,fr -option grp:alt_shift_toggle
 [ $dual -eq 0 ] && \
 	feh --bg-fill /home/jozan/Pictures/wallpaper.jpg --bg-fill /home/jozan/Pictures/wallpaper.jpg > /dev/null 2>&1 || \
 	feh --bg-fill /home/jozan/Pictures/wallpaper.jpg > /dev/null 2>&1
 xset r rate 150 100 > /dev/null 2>&1
 run dunst > /dev/null 2>&1 &
-# run mpd > /dev/null 2>&1 &
 run ~/.local/bin/todo-git-updater.sh > /dev/null 2>&1 &
 run lowbat --say "You're low, partner" > /dev/null 2>&1 &
-# mopidy 2>&1 &
 
 sleep 5
 
-# bspc desktop -f 09
-# st -e neomutt &
-# sleep 1
-
 if [ $dual -eq 0 ]; then
-	# bspc desktop -f 07
-	# st -e ncmpcpp &
-	# sleep 0.3
-	# st -e newsboat &
-	# sleep 0.3
-	# st -e mixertui &
-	# sleep 0.3
-	# st -e calcurse &
-	# sleep 0.3
-	# bspc node -f west
-	# bspc node -f west
-	# bspc node -z right -200 0
-	# bspc node -f east
-	# bspc node -z right -100 0
-	# bspc node -z top 0 -50
 	bspc desktop -f 01
 else
-	# bspc desktop -f 08
-	# st -e ncmpcpp &
-	# sleep 1
-	# bspc desktop -f 07
-	# st -e calcurse &
-	# sleep 1
-	# bspc desktop -f 06
-	# st -e newsboat &
-	# sleep 1
-	# bspc desktop -f 05
-	# st -e mixertui &
-	# sleep 1
 	bspc desktop -f 02
 fi
 
-# st -e zsh -c 'emacs -nw' &
 run emacs &
 
 sleep 1
@@ -114,9 +77,6 @@ if [ $dual -eq 0 ]; then
 	st -e htop &
 	sleep 0.3
 	st -e gotop &
-	sleep 0.3
-	bspc node -p south
-	st -e /usr/home/jozan/.local/bin/greptemp.sh &
 	sleep 0.3
 	bspc node -f west
 	st -e vifm &
@@ -138,9 +98,6 @@ else
 	sleep 0.3
 	st -e gotop &
 	sleep 0.3
-	bspc node -p south
-	st -e /usr/home/jozan/.local/bin/greptemp.sh &
-	sleep 0.3
 	bspc node -f east
 	st -e vifm &
 	sleep 0.3
@@ -156,12 +113,9 @@ fi
 
 sleep 0.3
 
-espeak "Welcome home" &
-
 if curl https://www.freebsd.org/ >/dev/null 2>&1; then
 	bspc desktop -f 10
 	st -e slack-term &
-	# run slack &
 	sleep 1
 	bspc desktop -f 09
 	run qtox &
