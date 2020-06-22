@@ -1,0 +1,36 @@
+* All                     :elfeed:
+** News
+** Haiku                  :news:
+*** https://www.haiku-os.org/index.xml
+** Luke Smith             :news:
+*** https://lukesmith.xyz/rss.xml
+** Pragmatic Emacs        :news:
+*** http://pragmaticemacs.com/feed/
+** The Lunduke Show       :news:
+*** http://vault.lunduke.com/LundukeShowMP3.xml
+** YouTube                :youtube:
+*** Tech                  :tech:
+**** Luke Smith
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA
+**** DistroTube
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg
+**** LGR
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCLx053rWZxCiYWsBETgdKrQ
+**** RoboNuggie
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCxwcmRAmBRzZMNS37dCgmHA
+*** Gaming                :gaming:
+**** Grubby
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCCF6pCTGMKdo9r_kFQS-H3Q
+**** PiG
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC9OluGthYmZo0vsF9IjicFg
+**** Artosis
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCuOqvRRt9GqyIUVTwSB4Ucg
+**** LowkoTV
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCZNTsLA6t6bRoj-5QRmqt_w
+*** Normies               :normies:
+**** Sylvqin
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCseGV3amBLISlIOMQodPfVQ
+**** Kurzgesagt - In a Nutshell
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCsXVk37bltHxD1rDPwtNM8Q
+**** h3h3Productions
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCDWIvJwLJsE4LG1Atne2blQ
