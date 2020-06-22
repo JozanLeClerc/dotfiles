@@ -27,6 +27,8 @@
 (add-hook 'text-mode-hook 'display-line-numbers-mode)
 
 (setq scroll-step 5)
+(setq scroll-margin 3)
+(setq echo-keystrokes 0.1)
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
 	  backup-by-copying t
@@ -53,6 +55,8 @@
 (add-to-list 'load-path "/home/jozan/.emacs.d/icons-in-terminal.el/")
 (add-to-list 'load-path "/home/jozan/.emacs.d/gas-mode/")
 (autoload 'gas-mode "gas-mode" "AT&T syntax for assembly code" t)
+(add-to-list 'load-path "/home/jozan/.emacs.d/monk-8/")
+(autoload 'monk "monk" "Cool CD player" t)
 
 (setq package-enable-at-startup nil)
 (setq package-check-signature nil)
@@ -113,48 +117,50 @@
 ** Core packages
 *** Evil mode
 #+BEGIN_SRC emacs-lisp
-(setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-(setq evil-want-keybinding nil)
-(require 'evil)
-(require 'evil-magit)
-(require 'evil-mu4e)
-(require 'evil-collection)
-(evil-mode t)
-;; (evil-collection-init)
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (require 'evil)
+  (require 'evil-magit)
+  (require 'evil-mu4e)
+  (require 'evil-collection)
+  (evil-mode t)
+  ;; (evil-collection-init)
 
-(setq evil-emacs-state-cursor '("#b16286" box))
-(setq evil-normal-state-cursor '("#d79921" box))
-(setq evil-visual-state-cursor '("#b16286" box))
-(setq evil-insert-state-cursor '("#d79921" bar))
-(setq evil-replace-state-cursor '("#cc241d" hbar))
-(setq evil-operator-state-cursor '("#d79921" hbar))
 
-(require 'tabbar)
-(global-set-key (kbd "M-k") nil)
-(global-set-key (kbd "M-j") nil)
-(global-set-key (kbd "M-k") 'tabbar-backward)
-(global-set-key (kbd "M-j") 'tabbar-forward)
+  (setq evil-emacs-state-cursor '("#b16286" box))
+  (setq evil-normal-state-cursor '("#d79921" box))
+  (setq evil-visual-state-cursor '("#b16286" box))
+  (setq evil-insert-state-cursor '("#d79921" bar))
+  (setq evil-replace-state-cursor '("#cc241d" hbar))
+  (setq evil-operator-state-cursor '("#d79921" hbar))
 
-(evil-define-key 'insert global-map (kbd "C-o") 'delete-other-windows)
-(evil-define-key 'insert global-map (kbd "C-k") 'windmove-up)
-(evil-define-key 'insert global-map (kbd "C-j") 'windmove-down)
-(evil-define-key 'insert global-map (kbd "C-h") 'windmove-left)
-(evil-define-key 'insert global-map (kbd "C-l") 'windmove-right)
-(evil-define-key 'normal global-map (kbd "C-o") 'delete-other-windows)
-(evil-define-key 'normal global-map (kbd "C-k") 'windmove-up)
-(evil-define-key 'normal global-map (kbd "C-j") 'windmove-down)
-(evil-define-key 'normal global-map (kbd "C-h") 'windmove-left)
-(evil-define-key 'normal global-map (kbd "C-l") 'windmove-right)
+  ;; (require 'tabbar)
+  ;; (global-set-key (kbd "M-k") nil)
+  ;; (global-set-key (kbd "M-j") nil)
+  ;; (global-set-key (kbd "M-k") 'tabbar-backward)
+  ;; (global-set-key (kbd "M-j") 'tabbar-forward)
 
-(global-evil-leader-mode)
-(evil-leader/set-leader ",")
-(setq evil-leader/in-all-states 1)
+  (evil-define-key 'insert global-map (kbd "C-o") 'delete-other-windows)
+  (evil-define-key 'insert global-map (kbd "C-k") 'windmove-up)
+  (evil-define-key 'insert global-map (kbd "C-j") 'windmove-down)
+  (evil-define-key 'insert global-map (kbd "C-h") 'windmove-left)
+  (evil-define-key 'insert global-map (kbd "C-l") 'windmove-right)
+  (evil-define-key 'normal global-map (kbd "C-o") 'delete-other-windows)
+  (evil-define-key 'normal global-map (kbd "C-k") 'windmove-up)
+  (evil-define-key 'normal global-map (kbd "C-j") 'windmove-down)
+  (evil-define-key 'normal global-map (kbd "C-h") 'windmove-left)
+  (evil-define-key 'normal global-map (kbd "C-l") 'windmove-right)
 
-(require 'evil-search-highlight-persist)
-(global-evil-search-highlight-persist 1)
+  (global-evil-leader-mode)
+  (evil-leader/set-leader ",")
+  (setq evil-leader/in-all-states 1)
 
-(evil-leader/set-key "SPC" 'evil-search-highlight-persist-remove-all)
-(evil-leader/set-key "w" 'kill-buffer)
+  (require 'evil-search-highlight-persist)
+  (global-evil-search-highlight-persist 1)
+
+  (evil-leader/set-key "SPC" 'evil-search-highlight-persist-remove-all)
+  (evil-leader/set-key "w" 'kill-buffer)
 #+END_SRC
 
 *** Dashboard
@@ -165,6 +171,11 @@
 (setq dashboard-set-footer nil)
 #+END_SRC
 
+*** Golden ratio
+#+BEGIN_SRC emacs-lisp
+(require 'golden-ratio)
+(golden-ratio-mode 1)
+#+END_SRC
 *** mu4e
 #+BEGIN_SRC emacs-lisp
 (require 'org-mime)
@@ -304,7 +315,7 @@
 *** Origami mode
 #+BEGIN_SRC emacs-lisp
 (require 'origami)
-(origami-mode)
+(add-hook 'prog-mode-hook 'origami-mode)
 #+END_SRC
 
 *** Neotree
@@ -536,6 +547,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 #+BEGIN_SRC emacs-lisp
 (require 'ranger)
 (ranger-override-dired-mode t)
+(add-hook 'dired-mode-hook 'auto-revert-mode)
 #+END_SRC
 
 *** lldb
@@ -574,6 +586,7 @@ buffer in current window."
 (require 'yasnippet)
 (require 'yasnippet-snippets)
 (require 'yasnippet-classic-snippets)
+(require 'helm-c-yasnippet)
 (yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
 #+END_SRC
@@ -590,10 +603,114 @@ buffer in current window."
 (require 'icons-in-terminal)
 #+END_SRC
 
-*** speebar
+*** elfeed
 #+BEGIN_SRC emacs-lisp
-(require 'speedbar)
-(require 'sr-speedbar)
+(require 'url)
+(require 'elfeed)
+(require 'elfeed-org)
+(elfeed-org)
+(setq rmh-elfeed-org-files (list "~/.emacs.d/org/elfeed/elfeed.org"))
+
+(defun my/elfeed-show-all ()
+	(interactive)
+	(bookmark-maybe-load-default-file)
+	(bookmark-jump "elfeed-all"))
+
+(defun my/elfeed-show-news ()
+	(interactive)
+	(bookmark-maybe-load-default-file)
+	(bookmark-jump "elfeed-news"))
+
+(defun my/elfeed-show-youtube ()
+	(interactive)
+	(bookmark-maybe-load-default-file)
+	(bookmark-jump "elfeed-youtube"))
+
+(defun my/elfeed-load-db-and-open ()
+	(interactive)
+	(elfeed-db-load)
+	(elfeed)
+	(elfeed-search-update--force))
+
+(defun my/elfeed-save-db-and-bury ()
+	(interactive)
+	(elfeed-db-save)
+	(kill-buffer "*elfeed-log*")
+	(kill-buffer "*elfeed-search*")
+	(kill-buffer "elfeed.org"))
+
+(defun my/elfeed-v-mpv (url)
+	"Watch a video from URL in MPV"
+	(async-shell-command (format "mpv \"%s\"" url)))
+
+(defun my/elfeed-view-mpv (&optional use-generic-p)
+	"Youtube-feed link"
+	(interactive "P")
+	(let ((entries (elfeed-search-selected)))
+		(cl-loop for entry in entries
+			do (elfeed-untag entry 'unread)
+			when (elfeed-entry-link entry)
+			do (my/elfeed-v-mpv it))
+			(mapc #'elfeed-search-update-entry entries)
+			(unless (use-region-p) (forward-line))))
+			
+(defun my/elfeed-d-download (url)
+	"Download media links"
+	(async-shell-command (format "cd ~/Downloads && curl -O \"%s\"" url)))
+
+(defun my/elfeed-download-link (&optional use-generic-p)
+	"Download media links"
+	(interactive "P")
+	(let ((entries (elfeed-search-selected)))
+		(cl-loop for entry in entries
+			do (elfeed-untag entry 'unread)
+			when (elfeed-entry-link entry)
+			do (my/elfeed-d-download it))
+			(mapc #'elfeed-search-update-entry entries)
+			(unless (use-region-p) (forward-line))))
+
+(define-key elfeed-search-mode-map (kbd "q") 'my/elfeed-save-db-and-bury)
+(define-key elfeed-search-mode-map (kbd "A") 'my/elfeed-show-all)
+(define-key elfeed-search-mode-map (kbd "N") 'my/elfeed-show-news)
+(define-key elfeed-search-mode-map (kbd "Y") 'my/elfeed-show-youtube)
+(define-key elfeed-search-mode-map (kbd "v") 'my/elfeed-view-mpv)
+(define-key elfeed-search-mode-map (kbd "d") 'my/elfeed-download-link)
+(define-key elfeed-search-mode-map (kbd "h") 'backward-char)
+(define-key elfeed-search-mode-map (kbd "j") 'forward-line)
+(define-key elfeed-search-mode-map (kbd "k") 'previous-line)
+(define-key elfeed-search-mode-map (kbd "l") 'forward-char)
+
+(add-to-list 'evil-emacs-state-modes 'elfeed-search-mode)
+(add-to-list 'evil-emacs-state-modes 'elfeed-show-mode)
+#+END_SRC
+*** which-key
+#+BEGIN_SRC emacs-lisp
+(require 'which-key)
+(which-key-mode)
+#+END_SRC
+*** wttrin
+#+BEGIN_SRC emacs-lisp
+(require 'wttrin)
+(setq wttrin-default-cities '("Lyon"))
+(defun my/wttrin ()
+	(interactive)
+	(window-configuration-to-register :pre-wttrin)
+	(delete-other-windows)
+	(set-frame-width (selected-frame) 130)
+	(set-frame-height (selected-frame) 48)
+	(wttrin-query (car wttrin-default-cities)))
+#+END_SRC
+*** shell-pop
+#+BEGIN_SRC emacs-lisp
+(require 'shell-pop)
+(setq my/shell-pop-shell-type
+	(quote
+	("ansi-term" "*ansi-term*"
+	(lambda nil
+	(ansi-term shell-pop-term-shell)))))
+
+(setq shell-pop-term-shell "/usr/local/bin/zsh")
+
 #+END_SRC
 ** Compilation
 *** Close window after errorless compilation
@@ -624,6 +741,20 @@ buffer in current window."
 	
 ;; (my/cargo-f5-minor-mode 0)
 
+;; (defun my/roff-comp ()
+;; 	;; (interactive)
+;; 	(defvar name)
+;; 	(defvar ext)
+;; 	(defvar exec)
+;; 	(setq name (file-name-sans-extension buffer-file-name))
+;; 	(setq ext (file-name-extension buffer-file-name))
+;; 	(if (string-match "ms" ext)
+;; 	(setq exec (format "%s%s%s%s%s%s%s" "nroff -ms " name "." ext " -Tpdf -Kutf8 -Wall > " name ".pdf")))
+;; 	(if (string-match "ms" ext)
+;; 	(shell-command exec)))
+
+;; (add-hook 'after-save-hook 'my/roff-comp)
+
 (defun my/exec-f5 ()
   (interactive)
   (defvar make)
@@ -647,14 +778,20 @@ buffer in current window."
   (windmove-down)
   (shrink-window 6)
   (ansi-term "/usr/local/bin/zsh"))
+
 (defun my/speedbar-open ()
 (sr-speedbar-toggle)
 (windmove-right))
-(global-set-key [f1] 'my/go-full-shell)
+;; (global-set-key [f1] 'my/go-full-shell)
+(global-set-key [f1] 'shell-pop)
 (global-set-key [f2] 'neotree-toggle)
 (global-set-key [f3] 'sr-speedbar-toggle)
 (global-set-key [f4] 'helm-make-projectile)
 (global-set-key [f5] 'my/exec-f5)
 (global-set-key [f6] 'my/exec-f6)
+(global-set-key (kbd "C-x d") 'ranger)
+(global-set-key (kbd "M-1") 'ranger)
 ;; (add-hook 'rust-mode-hook 'my/cargo-f5-minor-mode)
+
+(shell-pop--set-shell-type 'my/shell-pop-shell-type my/shell-pop-shell-type)
 #+END_SRC
