@@ -1,0 +1,586 @@
+* My emacs config
+** For the Macintosh OS by Stevey-J
+#+BEGIN_SRC emacs-lisp
+(setq mac-option-key-is-meta nil
+	  mac-command-key-is-meta t
+	  mac-command-modifier 'meta
+	  mac-option-modifier 'none)
+#+END_SRC
+
+** Basic configs
+#+BEGIN_SRC emacs-lisp
+(setq x-alt-keysym 'meta)
+(set-keyboard-coding-system 'utf-8)
+
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(blink-cursor-mode 0)
+
+(set-frame-font "DejaVuSansMono:pixelsize=14" nil t)
+;; (add-hook 'prog-mode-hook 'linum-mode)
+;; (add-hook 'text-mode-hook 'linum-mode)
+;; (setq linum-format "%3d ")
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'text-mode-hook 'display-line-numbers-mode)
+
+(setq scroll-step 5)
+(setq scroll-margin 3)
+(setq echo-keystrokes 0.1)
+
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+	  backup-by-copying t
+	  version-control t
+	  delete-old-versions t
+	  kept-new-versions 20
+	  kept-old-versions 5)
+#+END_SRC
+
+** MELPA and non-MELPA
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/1"))
+
+(add-to-list 'load-path "/home/jozan/.emacs.d/sunrise-commander/")
+(autoload 'sunrise "sunrise.el" "qweqwe" t)
+(add-to-list 'load-path "/home/jozan/.emacs.d/font-lock+")
+(add-to-list 'load-path "/home/jozan/.emacs.d/all-the-icons/")
+(add-to-list 'load-path "/home/jozan/.emacs.d/all-the-icons-dired/")
+(add-to-list 'load-path "/home/jozan/.emacs.d/gas-mode/")
+(autoload 'gas-mode "gas-mode" "AT&T syntax for assembly code" t)
+(add-to-list 'load-path "/home/jozan/.emacs.d/monk-8/")
+(autoload 'monk "monk" "Cool CD player" t)
+
+(setq package-enable-at-startup nil)
+(setq package-check-signature nil)
+(package-initialize)
+#+END_SRC
+
+** Core packages
+*** Evil mode
+#+BEGIN_SRC emacs-lisp
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (require 'evil)
+  (require 'evil-magit)
+  (require 'evil-collection)
+  (evil-mode t)
+  ;; (evil-collection-init)
+
+
+  (setq evil-emacs-state-cursor '("#b16286" box))
+  (setq evil-normal-state-cursor '("#d79921" box))
+  (setq evil-visual-state-cursor '("#b16286" box))
+  (setq evil-insert-state-cursor '("#d79921" bar))
+  (setq evil-replace-state-cursor '("#cc241d" hbar))
+  (setq evil-operator-state-cursor '("#d79921" hbar))
+
+  ;; (require 'tabbar)
+  ;; (global-set-key (kbd "M-k") nil)
+  ;; (global-set-key (kbd "M-j") nil)
+  ;; (global-set-key (kbd "M-k") 'tabbar-backward)
+  ;; (global-set-key (kbd "M-j") 'tabbar-forward)
+
+  (evil-define-key 'insert global-map (kbd "C-o") 'delete-other-windows)
+  (evil-define-key 'insert global-map (kbd "C-k") 'windmove-up)
+  (evil-define-key 'insert global-map (kbd "C-j") 'windmove-down)
+  (evil-define-key 'insert global-map (kbd "C-h") 'windmove-left)
+  (evil-define-key 'insert global-map (kbd "C-l") 'windmove-right)
+  (evil-define-key 'normal global-map (kbd "C-o") 'delete-other-windows)
+  (evil-define-key 'normal global-map (kbd "C-k") 'windmove-up)
+  (evil-define-key 'normal global-map (kbd "C-j") 'windmove-down)
+  (evil-define-key 'normal global-map (kbd "C-h") 'windmove-left)
+  (evil-define-key 'normal global-map (kbd "C-l") 'windmove-right)
+
+  (global-evil-leader-mode)
+  (evil-leader/set-leader ",")
+  (setq evil-leader/in-all-states 1)
+
+  (require 'evil-search-highlight-persist)
+  (global-evil-search-highlight-persist 1)
+
+  (evil-leader/set-key "SPC" 'evil-search-highlight-persist-remove-all)
+  (evil-leader/set-key "w" 'kill-buffer)
+#+END_SRC
+
+*** Dashboard
+#+BEGIN_SRC emacs-lisp
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+(setq dashboard-set-init-info t)
+(setq dashboard-set-footer nil)
+#+END_SRC
+
+*** Golden ratio
+#+BEGIN_SRC emacs-lisp
+(require 'golden-ratio)
+(golden-ratio-mode 1)
+#+END_SRC
+
+*** Centaur tabs
+#+BEGIN_SRC emacs-lisp
+(require 'centaur-tabs)
+(centaur-tabs-mode t)
+(global-set-key (kbd "M-k")  'centaur-tabs-backward)
+(global-set-key (kbd "M-j") 'centaur-tabs-forward)
+(setq centaur-tabs-set-icons t)
+(setq centaur-tabs-gray-out-icons 'buffer)
+(setq centaur-tabs-set-close-button nil)
+(setq centaur-tabs-set-modified-marker t)
+(setq centaur-tabs-modified-marker "[+]")
+#+END_SRC
+
+*** Helm, projectile
+#+BEGIN_SRC emacs-lisp
+(require 'helm-config)
+(require 'helm-misc)
+(require 'helm-projectile)
+(require 'helm-locate)
+(setq helm-quick-update t)
+(setq helm-bookmark-show-location t)
+(setq helm-buffers-fuzzy-matching t)
+(setq helm-make-executable "/usr/local/bin/gmake")
+(setq helm-make-nproc 5)
+
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") #'helm-find-files)
+(global-set-key (kbd "M-p") #'helm-projectile-switch-project)
+
+;; (setq scroll-margin 5
+;;       scroll-conservatively 9999
+;;       scroll-step 1)
+
+(defun helm-my-buffers ()
+  (interactive)
+  (let ((helm-ff-transformer-show-only-basename nil))
+	(helm-other-buffer '(helm-c-source-buffers-list
+			 helm-c-source-elscreen
+			 helm-c-source-projectile-files-list
+			 helm-c-source-ctags
+			 helm-c-source-recentf
+			 helm-c-source-locate)
+			   "*helm-my-buffers*")))
+
+(helm-mode 1)
+(projectile-mode +1)
+#+END_SRC
+
+*** DOOM Modeline
+#+BEGIN_SRC emacs-lisp
+(setq display-time-string-forms
+	   '((propertize (concat " " 24-hours ":" minutes " "))))
+
+(require 'doom-modeline)
+(doom-modeline-mode 1)
+(setq doom-modeline-height 1)
+(setq doom-modeline-project-detection 'projectile)
+(setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
+(setq doom-modeline-icon (display-graphic-p))
+(setq doom-modeline-major-mode-icon t)
+(setq doom-modeline-major-mode-color-icon t)
+(setq doom-modeline-buffer-state-icon t)
+(setq doom-modeline-buffer-modification-icon t)
+(setq doom-modeline-unicode-fallback t)
+(setq doom-modeline-enable-word-count nil)
+(setq doom-modeline-buffer-encoding nil)
+(setq doom-modeline-indent-info nil)
+(setq doom-modeline-checker-simple-format t)
+(setq doom-modeline-number-limit 99)
+(setq doom-modeline-vcs-max-length 12)
+(setq doom-modeline-persp-name t)
+(setq doom-modeline-lsp t)
+(setq doom-modeline-github nil)
+(setq doom-modeline-github-interval (* 30 60))
+(setq doom-modeline-modal-icon t)
+(setq doom-modeline-mu4e t)
+(setq doom-modeline-gnus nil)
+(setq doom-modeline-irc t)
+(setq doom-modeline-irc-stylize 'identity)
+(setq doom-modeline-env-version t)
+(setq doom-modeline-env-python-executable "python-shell-interpreter")
+(setq doom-modeline-env-ruby-executable "ruby")
+(setq doom-modeline-env-perl-executable "perl")
+(setq doom-modeline-env-go-executable "go")
+(setq doom-modeline-env-elixir-executable "iex")
+(setq doom-modeline-env-rust-executable "rustc")
+(setq doom-modeline-env-load-string "...")
+(setq doom-modeline-before-update-env-hook nil)
+(setq doom-modeline-after-update-env-hook nil)
+(display-battery-mode)
+(column-number-mode)
+(display-time)
+(doom-themes-neotree-config)
+#+END_SRC
+
+*** Colors and rainbows
+#+BEGIN_SRC emacs-lisp
+(require 'color-identifiers-mode)
+(global-color-identifiers-mode)
+
+(require 'rainbow-delimiters)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+#+END_SRC
+
+*** Auto-complete
+#+BEGIN_SRC emacs-lisp
+(require 'auto-complete)
+
+(require 'auto-complete-config)
+(ac-config-default)
+#+END_SRC
+
+*** Tabs and stuff
+#+BEGIN_SRC emacs-lisp
+(defun minibuffer-keyboard-quit ()
+  "Abort recursive edit.
+In Delete Selection mode, if the mark is active, just deactivate it;
+then it takes a second \\[keyboard-quit] to abort the minibuffer."
+  (interactive)
+  (if (and delete-selection-mode transient-mark-mode mark-active)
+	  (setq deactivate-mark  t)
+	(when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+	(abort-recursive-edit)))
+(define-key evil-normal-state-map [escape] 'keyboard-quit)
+(define-key evil-visual-state-map [escape] 'keyboard-quit)
+(define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+(global-set-key [escape] 'evil-exit-emacs-state)
+
+(defun my-insert-tab-char ()
+  "Insert a tab char. (ASCII 9, \t)"
+  (interactive)
+  (insert "\t"))
+
+(global-set-key (kbd "TAB") 'my-insert-tab-char) ; same as Ctrl+i
+(setq-default indent-tabs-mode t)
+(setq tab-always-indent 'complete)
+(setq-default tab-width 4)
+(setq tab-width 4)
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
+#+END_SRC
+
+*** C default style
+#+BEGIN_SRC emacs-lisp
+(setq c-default-style "bsd")
+#+END_SRC
+
+*** Autopair
+#+BEGIN_SRC emacs-lisp
+(require 'autopair)
+(autopair-global-mode)
+#+END_SRC
+
+*** Paredit
+#+BEGIN_SRC emacs-lisp
+(require 'paredit)
+(defadvice paredit-mode (around disable-autopairs-around (arg))
+  ad-do-it
+  (if (null ad-return-value)
+	(autopair-mode 1)
+  (autopair-mode 0)
+))
+(ad-activate 'paredit-mode)
+#+END_SRC
+
+*** Magit
+#+BEGIN_SRC emacs-lisp
+(require 'magit)
+(defun mu-magit-kill-buffers (param)
+  "Restore window configuration and kill all Magit buffers."
+  (let ((buffers (magit-mode-get-buffers)))
+	(magit-restore-window-configuration)
+	(mapc #'kill-buffer buffers)))
+(defcustom magit-bury-buffer-function 'magit-restore-window-configuration
+  "The function used to bury or kill the current Magit buffer."
+  :package-version '(magit . "2.3.0")
+  :group 'magit-buffers
+  :type '(radio (function-item quit-window)
+				(function-item magit-mode-quit-window)
+				(function-item magit-restore-window-configuration)
+				(function :tag "Function")))
+(defun magit-restore-window-configuration (&optional kill-buffer)
+  "Bury or kill the current buffer and restore previous window configuration."
+  (let ((winconf magit-previous-window-configuration)
+		(buffer (current-buffer))
+		(frame (selected-frame)))
+	(quit-window kill-buffer (selected-window))
+	(when (and winconf (equal frame (window-configuration-frame winconf)))
+	  (set-window-configuration winconf)
+	  (when (buffer-live-p buffer)
+		(with-current-buffer buffer
+		  (setq magit-previous-window-configuration nil))))))
+(defun mu-magit-kill-buffers ()
+  "Restore window configuration and kill all Magit buffers."
+  (interactive)
+  (let ((buffers (magit-mode-get-buffers)))
+	(magit-restore-window-configuration)
+	(mapc #'kill-buffer buffers)))
+(bind-key "q" #'mu-magit-kill-buffers magit-status-mode-map)
+#+END_SRC
+
+*** Ranger
+#+BEGIN_SRC emacs-lisp
+(require 'ranger)
+(ranger-override-dired-mode t)
+(add-hook 'dired-mode-hook 'auto-revert-mode)
+#+END_SRC
+
+*** lldb
+#+BEGIN_SRC emacs-lisp
+(require 'realgud-lldb)
+#+END_SRC
+
+*** Lock windows
+#+BEGIN_SRC emacs-lisp
+(defun my/toggle-window-dedicated ()
+  "Control whether or not Emacs is allowed to display another
+buffer in current window."
+  (interactive)
+  (message
+   (if (let (window (get-buffer-window (current-buffer)))
+		 (set-window-dedicated-p window (not (window-dedicated-p window))))
+	   "%s: locked"
+	 "%s is up for grabs")
+   (current-buffer)))
+
+(global-set-key (kbd "C-c t") 'my/toggle-window-dedicated)
+#+END_SRC
+
+*** evil nerd commenter
+#+BEGIN_SRC emacs-lisp
+(require 'evil-nerd-commenter)
+(evilnc-default-hotkeys)
+#+END_SRC
+*** cargo
+#+BEGIN_SRC emacs-lisp
+(require 'cargo)
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
+#+END_SRC
+*** yasnippet
+#+BEGIN_SRC emacs-lisp
+(require 'yasnippet)
+(require 'yasnippet-snippets)
+(require 'yasnippet-classic-snippets)
+(require 'helm-c-yasnippet)
+(yas-reload-all)
+(add-hook 'prog-mode-hook #'yas-minor-mode)
+#+END_SRC
+*** all the icons
+#+BEGIN_SRC emacs-lisp
+(require 'font-lock)
+(require 'font-lock+)
+(require 'all-the-icons)
+(load "all-the-icons-dired.el")
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+#+END_SRC
+
+*** minugs
+#+BEGIN_SRC emacs-lisp
+(require 'mingus)
+(add-to-list 'evil-emacs-state-modes 'mingus-help-mode)
+(add-to-list 'evil-emacs-state-modes 'mingus-playlist-mode)
+(add-to-list 'evil-emacs-state-modes 'mingus-browse-mode)
+#+END_SRC
+*** elfeed
+#+BEGIN_SRC emacs-lisp
+(require 'url)
+(require 'elfeed)
+(require 'elfeed-org)
+(elfeed-org)
+(setq rmh-elfeed-org-files (list "~/.emacs.d/org/elfeed/elfeed.org"))
+
+(defun my/elfeed-show-all ()
+	(interactive)
+	(bookmark-maybe-load-default-file)
+	(bookmark-jump "elfeed-all"))
+
+(defun my/elfeed-show-news ()
+	(interactive)
+	(bookmark-maybe-load-default-file)
+	(bookmark-jump "elfeed-news"))
+
+(defun my/elfeed-show-youtube ()
+	(interactive)
+	(bookmark-maybe-load-default-file)
+	(bookmark-jump "elfeed-youtube"))
+
+(defun my/elfeed-load-db-and-open ()
+	(interactive)
+	(elfeed-db-load)
+	(elfeed)
+	(elfeed-search-update--force))
+
+(defun my/elfeed-save-db-and-bury ()
+	(interactive)
+	(elfeed-db-save)
+	(kill-buffer "*elfeed-log*")
+	(kill-buffer "*elfeed-search*")
+	(kill-buffer "elfeed.org"))
+
+(defun my/elfeed-v-mpv (url)
+	"Watch a video from URL in MPV"
+	(setq quality (completing-read "Max height resolution (0 for unlimited): " '("0" "360" "480" "720" "1080")))
+	(setq fmt (if (= 0 (string-to-number quality)) "" (format "--ytdl-format=bestvideo[height<=?%s]+bestaudio/best" quality)))
+	(async-shell-command (format "mpv \"%s\" \"%s\"" fmt url)))
+
+(defun my/elfeed-view-mpv (&optional use-generic-p)
+	"Youtube-feed link"
+	(interactive "P")
+	(let ((entries (elfeed-search-selected)))
+		(cl-loop for entry in entries
+			do (elfeed-untag entry 'unread)
+			when (elfeed-entry-link entry)
+			do (my/elfeed-v-mpv it))
+			(mapc #'elfeed-search-update-entry entries)
+			(unless (use-region-p) (forward-line))))
+			
+(defun my/elfeed-d-download (url)
+	"Download media links"
+	(async-shell-command (format "cd ~/Downloads && curl -O \"%s\"" url)))
+
+(defun my/elfeed-download-link (&optional use-generic-p)
+	"Download media links"
+	(interactive "P")
+	(let ((entries (elfeed-search-selected)))
+		(cl-loop for entry in entries
+			do (elfeed-untag entry 'unread)
+			when (elfeed-entry-link entry)
+			do (my/elfeed-d-download it))
+			(mapc #'elfeed-search-update-entry entries)
+			(unless (use-region-p) (forward-line))))
+
+(define-key elfeed-search-mode-map (kbd "q") 'my/elfeed-save-db-and-bury)
+(define-key elfeed-search-mode-map (kbd "A") 'my/elfeed-show-all)
+(define-key elfeed-search-mode-map (kbd "N") 'my/elfeed-show-news)
+(define-key elfeed-search-mode-map (kbd "Y") 'my/elfeed-show-youtube)
+(define-key elfeed-search-mode-map (kbd "v") 'my/elfeed-view-mpv)
+(define-key elfeed-search-mode-map (kbd "d") 'my/elfeed-download-link)
+(define-key elfeed-search-mode-map (kbd "h") 'backward-char)
+(define-key elfeed-search-mode-map (kbd "j") 'forward-line)
+(define-key elfeed-search-mode-map (kbd "k") 'previous-line)
+(define-key elfeed-search-mode-map (kbd "l") 'forward-char)
+
+(add-to-list 'evil-emacs-state-modes 'elfeed-search-mode)
+(add-to-list 'evil-emacs-state-modes 'elfeed-show-mode)
+#+END_SRC
+*** which-key
+#+BEGIN_SRC emacs-lisp
+(require 'which-key)
+(which-key-mode)
+#+END_SRC
+*** wttrin
+#+BEGIN_SRC emacs-lisp
+(require 'wttrin)
+(setq wttrin-default-cities '("Lyon"))
+(defun my/wttrin ()
+	(interactive)
+	(window-configuration-to-register :pre-wttrin)
+	(delete-other-windows)
+	(set-frame-width (selected-frame) 130)
+	(set-frame-height (selected-frame) 48)
+	(wttrin-query (car wttrin-default-cities)))
+#+END_SRC
+*** shell-pop
+#+BEGIN_SRC emacs-lisp
+(require 'shell-pop)
+(setq my/shell-pop-shell-type
+	(quote
+	("ansi-term" "*ansi-term*"
+	(lambda nil
+	(ansi-term shell-pop-term-shell)))))
+
+(setq shell-pop-term-shell "/usr/local/bin/zsh")
+
+#+END_SRC
+** Compilation
+*** Close window after errorless compilation
+#+BEGIN_SRC emacs-lisp
+(setq compilation-finish-function
+(lambda (buf str)
+	(if (null (string-match ".*exited abnormally.*" str))
+		;;no errors, make the compilation window go away in a few seconds
+		(progn
+		  (run-at-time
+		   "0.5 sec" nil 'delete-windows-on
+		   (get-buffer-create "*compilation*"))
+		  (message "")))))
+#+END_SRC
+
+*** Compilation functions
+#+BEGIN_SRC emacs-lisp
+;; (defvar my/cargo-f5-minor-mode-map
+;; 	(let ((map (make-sparse-keymap)))
+;; 		(define-key map [f5] 'cargo-process-run)
+;; 		map)
+;; 		"my/cargo-f5-minor-mode keymap")
+
+;; (define-minor-mode my/cargo-f5-minor-mode
+;; 	"A minor mode to execute cargo run with F5 in rust-mode only"
+;; 	:init-value t
+;; 	:lighter " my/cargo")
+	
+;; (my/cargo-f5-minor-mode 0)
+
+;; (defun my/roff-comp ()
+;; 	;; (interactive)
+;; 	(defvar name)
+;; 	(defvar ext)
+;; 	(defvar exec)
+;; 	(setq name (file-name-sans-extension buffer-file-name))
+;; 	(setq ext (file-name-extension buffer-file-name))
+;; 	(if (string-match "ms" ext)
+;; 	(setq exec (format "%s%s%s%s%s%s%s" "nroff -ms " name "." ext " -Tpdf -Kutf8 -Wall > " name ".pdf")))
+;; 	(if (string-match "ms" ext)
+;; 	(shell-command exec)))
+
+;; (add-hook 'after-save-hook 'my/roff-comp)
+
+(defun my/exec-f5 ()
+  (interactive)
+  (defvar make)
+  (setq make "gmake -j5 asan")
+  (save-buffer)
+  (compile make)
+  (compilation-finish-function)) 
+
+(defun my/exec-f6 ()
+  (interactive)
+  (defvar exec)
+  (setq exec "./a.out; ret=$?; echo \"\e[1;35m~>\"; if [ $ret -ne 0 ]; then echo -n \"\e[1;31m$ret\"; if [ $ret -eq 127 ]; then echo \" - Missing a.out, comipler error! \"; exit; elif [ $ret -eq 134 ]; then echo \" - Abort! \"; elif [ $ret -eq 138 ]; then echo \" - Bus error! \"; elif [ $ret -eq 139 ]; then echo \" - Segmentation fault! \"; fi; fi; echo \"\e[1;35m\n\n.emacs v1.5 Tilde Edition by Joe\"")
+  (async-shell-command exec))
+#+END_SRC
+
+** Other key bindings
+#+BEGIN_SRC emacs-lisp
+(defun my/go-full-shell ()
+  (interactive)
+  (split-window-below)
+  (windmove-down)
+  (shrink-window 6)
+  (ansi-term "/bin/zsh"))
+
+(defun my/speedbar-open ()
+(sr-speedbar-toggle)
+(windmove-right))
+;; (global-set-key [f1] 'my/go-full-shell)
+(global-set-key [f1] 'shell-pop)
+(global-set-key [f2] 'neotree-toggle)
+(global-set-key [f3] 'sr-speedbar-toggle)
+(global-set-key [f4] 'helm-make-projectile)
+(global-set-key [f5] 'my/exec-f5)
+(global-set-key [f6] 'my/exec-f6)
+(global-set-key (kbd "C-x d") 'ranger)
+(global-set-key (kbd "M-1") 'ranger)
+;; (add-hook 'rust-mode-hook 'my/cargo-f5-minor-mode)
+
+(shell-pop--set-shell-type 'my/shell-pop-shell-type my/shell-pop-shell-type)
+#+END_SRC
