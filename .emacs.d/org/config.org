@@ -1,18 +1,8 @@
 * My emacs config
-** For the Macintosh OS by Stevey-J
-#+BEGIN_SRC emacs-lisp
-(setq mac-option-key-is-meta nil
-	  mac-command-key-is-meta t
-	  mac-command-modifier 'meta
-	  mac-option-modifier 'none)
-#+END_SRC
-
 ** Basic configs
 #+BEGIN_SRC emacs-lisp
 (setq x-alt-keysym 'meta)
 (set-keyboard-coding-system 'utf-8)
-
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -20,22 +10,21 @@
 (blink-cursor-mode 0)
 
 (set-frame-font "DejaVuSansMono Nerd Font:pixelsize=14" nil t)
-;; (add-hook 'prog-mode-hook 'linum-mode)
-;; (add-hook 'text-mode-hook 'linum-mode)
-;; (setq linum-format "%3d ")
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'display-line-numbers-mode)
 
 (setq scroll-step 5)
 (setq scroll-margin 3)
 (setq echo-keystrokes 0.1)
+(setq initial-scratch-message nil)
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
-	  backup-by-copying t
-	  version-control t
-	  delete-old-versions t
-	  kept-new-versions 20
-	  kept-old-versions 5)
+		backup-by-copying t
+		version-control t
+		delete-old-versions t
+		kept-new-versions 20
+		kept-old-versions 5)
 #+END_SRC
 
 ** MELPA and non-MELPA
@@ -66,6 +55,7 @@
 ** Some org
 #+BEGIN_SRC emacs-lisp
 ;; set key for agenda
+(require 'org)
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 ;;file to save todo items
@@ -112,70 +102,125 @@
 	(todo priority-down category-keep)
 	(tags priority-down category-keep)
 	(search category-keep))))
+
+(org-babel-do-load-languages
+	'org-babel-load-languages '((C . t )))
+(org-babel-do-load-languages
+	'org-babel-load-languages '((lisp . t)))
 #+END_SRC
 
 ** Core packages
 *** Evil mode
 #+BEGIN_SRC emacs-lisp
-  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (require 'evil)
-  (require 'evil-magit)
-  (require 'evil-mu4e)
-  (require 'evil-collection)
-  (evil-mode t)
-  ;; (evil-collection-init)
+(setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+(setq evil-want-keybinding nil)
+(setq evil-want-C-u-scroll t)
+(require 'evil)
+(require 'evil-magit)
+(require 'evil-mu4e)
+;; (require 'evil-collection)
+(evil-mode t)
+;; (evil-collection-init)
 
 
-  (setq evil-emacs-state-cursor '("#b16286" box))
-  (setq evil-normal-state-cursor '("#d79921" box))
-  (setq evil-visual-state-cursor '("#b16286" box))
-  (setq evil-insert-state-cursor '("#d79921" bar))
-  (setq evil-replace-state-cursor '("#cc241d" hbar))
-  (setq evil-operator-state-cursor '("#d79921" hbar))
+(setq evil-emacs-state-cursor '("#b16286" box))
+(setq evil-normal-state-cursor '("#d79921" box))
+(setq evil-visual-state-cursor '("#b16286" box))
+(setq evil-insert-state-cursor '("#d79921" bar))
+(setq evil-replace-state-cursor '("#cc241d" hbar))
+(setq evil-operator-state-cursor '("#d79921" hbar))
 
-  ;; (require 'tabbar)
-  ;; (global-set-key (kbd "M-k") nil)
-  ;; (global-set-key (kbd "M-j") nil)
-  ;; (global-set-key (kbd "M-k") 'tabbar-backward)
-  ;; (global-set-key (kbd "M-j") 'tabbar-forward)
 
-  (evil-define-key 'insert global-map (kbd "C-o") 'delete-other-windows)
-  (evil-define-key 'insert global-map (kbd "C-k") 'windmove-up)
-  (evil-define-key 'insert global-map (kbd "C-j") 'windmove-down)
-  (evil-define-key 'insert global-map (kbd "C-h") 'windmove-left)
-  (evil-define-key 'insert global-map (kbd "C-l") 'windmove-right)
-  (evil-define-key 'normal global-map (kbd "C-o") 'delete-other-windows)
-  (evil-define-key 'normal global-map (kbd "C-k") 'windmove-up)
-  (evil-define-key 'normal global-map (kbd "C-j") 'windmove-down)
-  (evil-define-key 'normal global-map (kbd "C-h") 'windmove-left)
-  (evil-define-key 'normal global-map (kbd "C-l") 'windmove-right)
+(evil-define-key 'insert global-map (kbd "C-o") 'delete-other-windows)
+(evil-define-key 'insert global-map (kbd "C-k") 'windmove-up)
+(evil-define-key 'insert global-map (kbd "C-j") 'windmove-down)
+(evil-define-key 'insert global-map (kbd "C-h") 'windmove-left)
+(evil-define-key 'insert global-map (kbd "C-l") 'windmove-right)
+(evil-define-key 'normal global-map (kbd "C-o") 'delete-other-windows)
+(evil-define-key 'normal global-map (kbd "C-k") 'windmove-up)
+(evil-define-key 'normal global-map (kbd "C-j") 'windmove-down)
+(evil-define-key 'normal global-map (kbd "C-h") 'windmove-left)
+(evil-define-key 'normal global-map (kbd "C-l") 'windmove-right)
 
-  (global-evil-leader-mode)
-  (evil-leader/set-leader ",")
-  (setq evil-leader/in-all-states 1)
+(global-evil-leader-mode)
+(evil-leader/set-leader ",")
+(setq evil-leader/in-all-states 1)
 
-  (require 'evil-search-highlight-persist)
-  (global-evil-search-highlight-persist 1)
+(require 'evil-search-highlight-persist)
+(global-evil-search-highlight-persist 1)
 
-  (evil-leader/set-key "SPC" 'evil-search-highlight-persist-remove-all)
-  (evil-leader/set-key "w" 'kill-buffer)
+(evil-leader/set-key "SPC" 'evil-search-highlight-persist-remove-all)
+#+END_SRC
+
+*** Centaur tabs
+#+BEGIN_SRC emacs-lisp
+(require 'centaur-tabs)
+(centaur-tabs-mode t)
+(centaur-tabs-group-by-projectile-project)
+
+(evil-define-key 'insert global-map (kbd "M-k") 'centaur-tabs-backward)
+(evil-define-key 'insert global-map (kbd "M-j") 'centaur-tabs-forward)
+(evil-define-key 'normal global-map (kbd "M-k") 'centaur-tabs-backward)
+(evil-define-key 'normal global-map (kbd "M-j") 'centaur-tabs-forward)
+(global-set-key (kbd "M-k") 'centaur-tabs-backward)
+(global-set-key (kbd "M-j") 'centaur-tabs-forward)
+
+(setq centaur-tabs-set-icons			t
+	  centaur-tabs-gray-out-icons		'buffer
+	  centaur-tabs-set-close-button		nil
+	  centaur-tabs-set-modified-marker	t
+	  centaur-tabs-modified-marker		"[+]"
+	  centaur-tabs-height				26
+	  centaur-tabs-style				"bar"
+	  centaur-tabs-set-bar				'over)
+
+(defun centaur-tabs-hide-tab (x)
+	(let ((name (format "%s" x)))
+		(or
+			(string-prefix-p "*epc" name)
+			(string-prefix-p "*helm" name)
+			(string-prefix-p "*Helm" name)
+			(string-prefix-p "*Compile-Log*" name)
+			(string-prefix-p "*lsp" name)
+			(string-prefix-p "*elfeed-log*" name)
+			(string-prefix-p "*scratch*" name)
+			(string-prefix-p "*Messages*" name)
+			(string-prefix-p "todo.org" name)
+			(and (string-prefix-p "magit" name)
+				(not (file-name-extension name))))))
 #+END_SRC
 
 *** Dashboard
 #+BEGIN_SRC emacs-lisp
 (require 'dashboard)
 (dashboard-setup-startup-hook)
-(setq dashboard-set-init-info t)
-(setq dashboard-set-footer nil)
+
+(setq dashboard-banner-logo-title	"Welcome back to Emacs, partner!"
+	  dashboard-startup-banner		'official
+	  dashboard-set-init-info		nil
+	  dashboard-set-footer			nil
+	  dashboard-center-content		t
+	  dashboard-show-shortcuts		nil
+	  dashboard-set-heading-icons	t
+	  dashboard-set-file-icons		nil
+	  dashboard-set-navigator		t
+	  show-week-agenda-p			t)
+	  
+(setq dashboard-items '((projects . 10)
+						(recents . 15)
+						(agenda . 5)))
+
+(add-to-list 'evil-emacs-state-modes 'dashboard-mode)
 #+END_SRC
 
 *** Golden ratio
 #+BEGIN_SRC emacs-lisp
 (require 'golden-ratio)
 (golden-ratio-mode 1)
+(setq golden-ratio-adjust-factor		.8
+	  golden-ratio-wide-adjust-factor	.8)
 #+END_SRC
+
 *** mu4e
 #+BEGIN_SRC emacs-lisp
 (require 'org-mime)
@@ -312,6 +357,12 @@
 (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
 #+END_SRC
 
+*** w3m
+#+BEGIN_SRC emacs-lisp
+(require 'w3m-load)
+(setq w3m-home-page "https://start.duckduckgo.com/")
+(setq w3m-default-display-inline-images t)
+#+END_SRC
 *** Origami mode
 #+BEGIN_SRC emacs-lisp
 (require 'origami)
@@ -321,7 +372,6 @@
 *** Neotree
 #+BEGIN_SRC emacs-lisp
 (require 'neotree)
-;; (setq neo-smart-open t)
 (setq neo-vc-integration '(face))
 (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
 (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
@@ -338,38 +388,28 @@
 (evil-define-key 'normal neotree-mode-map (kbd "s") 'neotree-enter-horizontal-split)
 #+END_SRC
 
-*** Centaur tabs
-#+BEGIN_SRC emacs-lisp
-(require 'centaur-tabs)
-(centaur-tabs-mode t)
-(global-set-key (kbd "M-k")  'centaur-tabs-backward)
-(global-set-key (kbd "M-j") 'centaur-tabs-forward)
-(setq centaur-tabs-set-icons t)
-(setq centaur-tabs-gray-out-icons 'buffer)
-(setq centaur-tabs-set-close-button nil)
-(setq centaur-tabs-set-modified-marker t)
-(setq centaur-tabs-modified-marker "[+]")
-#+END_SRC
-
 *** Helm, projectile
 #+BEGIN_SRC emacs-lisp
 (require 'helm-config)
 (require 'helm-misc)
 (require 'helm-projectile)
 (require 'helm-locate)
-(setq helm-quick-update t)
-(setq helm-bookmark-show-location t)
-(setq helm-buffers-fuzzy-matching t)
-(setq helm-make-executable "/usr/local/bin/gmake")
-(setq helm-make-nproc 5)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
 (global-set-key (kbd "M-p") #'helm-projectile-switch-project)
+(global-set-key (kbd "C-x C-b") #'helm-buffers-list)
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-z") 'helm-select-action)
 
-;; (setq scroll-margin 5
-;;       scroll-conservatively 9999
-;;       scroll-step 1)
+(setq helm-quick-update					t
+	  helm-bookmark-show-location		t
+	  helm-buffers-fuzzy-matching		t
+	  helm-make-executable				"/usr/local/bin/gmake"
+	  helm-make-nproc					5
+	  helm-split-window-in-side-p		t
+	  helm-move-to-line-cycle-in-source	t)
 
 (defun helm-my-buffers ()
   (interactive)
@@ -523,6 +563,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 				(function-item magit-mode-quit-window)
 				(function-item magit-restore-window-configuration)
 				(function :tag "Function")))
+
 (defun magit-restore-window-configuration (&optional kill-buffer)
   "Bury or kill the current buffer and restore previous window configuration."
   (let ((winconf magit-previous-window-configuration)
@@ -534,6 +575,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 	  (when (buffer-live-p buffer)
 		(with-current-buffer buffer
 		  (setq magit-previous-window-configuration nil))))))
+
 (defun mu-magit-kill-buffers ()
   "Restore window configuration and kill all Magit buffers."
   (interactive)
@@ -598,9 +640,13 @@ buffer in current window."
 (load "all-the-icons-dired.el")
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 #+END_SRC
-*** icons-in-terminal
+
+*** minugs
 #+BEGIN_SRC emacs-lisp
-(require 'icons-in-terminal)
+(require 'mingus)
+(add-to-list 'evil-emacs-state-modes 'mingus-help-mode)
+(add-to-list 'evil-emacs-state-modes 'mingus-playlist-mode)
+(add-to-list 'evil-emacs-state-modes 'mingus-browse-mode)
 #+END_SRC
 
 *** elfeed
@@ -641,7 +687,10 @@ buffer in current window."
 
 (defun my/elfeed-v-mpv (url)
 	"Watch a video from URL in MPV"
-	(async-shell-command (format "mpv \"%s\"" url)))
+	(setq quality (completing-read "Max height resolution (0 for unlimited): " '("0" "360" "480" "720" "1080")))
+	(setq fmt (if (= 0 (string-to-number quality)) "" (format "--ytdl-format=bestvideo[height<=?%s]+bestaudio/best" quality)))
+	(async-shell-command (format "mpv \"%s\" \"%s\"" fmt url)))
+
 
 (defun my/elfeed-view-mpv (&optional use-generic-p)
 	"Youtube-feed link"
@@ -688,18 +737,7 @@ buffer in current window."
 (require 'which-key)
 (which-key-mode)
 #+END_SRC
-*** wttrin
-#+BEGIN_SRC emacs-lisp
-(require 'wttrin)
-(setq wttrin-default-cities '("Lyon"))
-(defun my/wttrin ()
-	(interactive)
-	(window-configuration-to-register :pre-wttrin)
-	(delete-other-windows)
-	(set-frame-width (selected-frame) 130)
-	(set-frame-height (selected-frame) 48)
-	(wttrin-query (car wttrin-default-cities)))
-#+END_SRC
+
 *** shell-pop
 #+BEGIN_SRC emacs-lisp
 (require 'shell-pop)
@@ -710,8 +748,8 @@ buffer in current window."
 	(ansi-term shell-pop-term-shell)))))
 
 (setq shell-pop-term-shell "/usr/local/bin/zsh")
-
 #+END_SRC
+
 ** Compilation
 *** Close window after errorless compilation
 #+BEGIN_SRC emacs-lisp
@@ -772,20 +810,8 @@ buffer in current window."
 
 ** Other key bindings
 #+BEGIN_SRC emacs-lisp
-(defun my/go-full-shell ()
-  (interactive)
-  (split-window-below)
-  (windmove-down)
-  (shrink-window 6)
-  (ansi-term "/usr/local/bin/zsh"))
-
-(defun my/speedbar-open ()
-(sr-speedbar-toggle)
-(windmove-right))
-;; (global-set-key [f1] 'my/go-full-shell)
 (global-set-key [f1] 'shell-pop)
 (global-set-key [f2] 'neotree-toggle)
-(global-set-key [f3] 'sr-speedbar-toggle)
 (global-set-key [f4] 'helm-make-projectile)
 (global-set-key [f5] 'my/exec-f5)
 (global-set-key [f6] 'my/exec-f6)

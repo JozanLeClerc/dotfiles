@@ -1,4 +1,4 @@
-* All                     :elfeed:
+* All                                                                 :elfeed:
 ** News
 *** Gentoo                                                            :news:
 **** https://www.gentoo.org/feeds/news.xml
@@ -34,6 +34,10 @@
 **** LowkoTV
 ***** https://www.youtube.com/feeds/videos.xml?channel_id=UCZNTsLA6t6bRoj-5QRmqt_w
 *** Normies                                                        :normies:
+**** Valek
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCYdyGYM1aoLpAuCxsP86O1g
+**** Le Raptor
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC_i-uMpN1lEyuoUGDq-dajQ
 **** Sylvqin
 ***** https://www.youtube.com/feeds/videos.xml?channel_id=UCseGV3amBLISlIOMQodPfVQ
 **** Kurzgesagt - In a Nutshell
