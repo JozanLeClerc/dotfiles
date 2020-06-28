@@ -103,8 +103,7 @@ Obviously, ~make~ and ~gcc~ appear as dependencies for these functions.
 I use a decent amount of packages in my configuration, like *Evil mode*, *Rainbow mode*, *neotree* etc... You will have to install them all manually on the first use or the config will not load entirely. For this open *Emacs*, it will notify you about a missing package. To install it execute ~M-x~ and enter *the following connands*:
 
 #+BEGIN_SRC emacs-lisp
-package-install
-missing-package
+M-x package-install RET missing-package
 #+END_SRC
 
 Close *Emacs* and do it again until no prompt appears anymore. This is not ideal but I haven't found a better way yet.
