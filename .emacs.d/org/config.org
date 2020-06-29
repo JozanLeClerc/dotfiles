@@ -186,7 +186,7 @@
 			(string-prefix-p "*scratch*" name)
 			(string-prefix-p "*Messages*" name)
 			(string-prefix-p "todo.org" name)
-			(and (string-prefix-p "magit*" name)
+			(and (string-prefix-p "magit" name)
 				(not (file-name-extension name))))))
 #+END_SRC
 
@@ -551,11 +551,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 #+BEGIN_SRC emacs-lisp
 (require 'magit)
 (defun my/magit-kill-buffers ()
-  "Restore window configuration and kill all Magit buffers.
+	"Restore window configuration and kill all Magit buffers.
 Attribution: URL `https://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/'"
-  (let ((buffers (magit-mode-get-buffers)))
-    (magit-restore-window-configuration)
-    (mapc #'kill-buffer buffers)))
+	(interactive)
+	(let ((buffers (magit-mode-get-buffers)))
+		(magit-restore-window-configuration)
+	    (mapc #'kill-buffer buffers)))
+
 (bind-key "q" #'my/magit-kill-buffers magit-status-mode-map)
 (evil-define-key 'insert magit-status-mode-map (kbd "q") #'my/magit-kill-buffers)
 (evil-define-key 'normal magit-status-mode-map (kbd "q") #'my/magit-kill-buffers)
