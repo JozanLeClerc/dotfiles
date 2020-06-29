@@ -172,7 +172,7 @@
 	  centaur-tabs-modified-marker		"[+]"
 	  centaur-tabs-height				26
 	  centaur-tabs-style				"bar"
-	  centaur-tabs-set-bar				'over)
+	  centaur-tabs-set-bar				'left)
 
 (defun centaur-tabs-hide-tab (x)
 	(let ((name (format "%s" x)))
@@ -188,6 +188,13 @@
 			(string-prefix-p "todo.org" name)
 			(and (string-prefix-p "magit" name)
 				(not (file-name-extension name))))))
+
+(add-hook 'dashboard-mode-hook #'centaur-tabs-local-mode)
+(add-hook 'neotree-mode-hook #'centaur-tabs-local-mode)
+(add-hook 'calendar-mode-hook #'centaur-tabs-local-mode)
+(add-hook 'org-agenda-mode-hook #'centaur-tabs-local-mode)
+(add-hook 'helpful-mode-hook #'centaur-tabs-local-mode)
+(add-hook 'term-mode-hook #'centaur-tabs-local-mode)
 #+END_SRC
 
 *** Dashboard
@@ -217,8 +224,8 @@
 #+BEGIN_SRC emacs-lisp
 (require 'golden-ratio)
 (golden-ratio-mode 1)
-(setq golden-ratio-adjust-factor		.8
-	  golden-ratio-wide-adjust-factor	.8)
+(setq golden-ratio-adjust-factor		.9
+	  golden-ratio-wide-adjust-factor	.9)
 #+END_SRC
 
 *** mu4e
@@ -550,6 +557,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 *** Magit
 #+BEGIN_SRC emacs-lisp
 (require 'magit)
+
 (defun my/magit-kill-buffers ()
 	"Restore window configuration and kill all Magit buffers.
 Attribution: URL `https://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/'"
