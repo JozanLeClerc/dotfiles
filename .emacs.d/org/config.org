@@ -186,7 +186,7 @@
 			(string-prefix-p "*scratch*" name)
 			(string-prefix-p "*Messages*" name)
 			(string-prefix-p "todo.org" name)
-			(and (string-prefix-p "magit" name)
+			(and (string-prefix-p "magit*" name)
 				(not (file-name-extension name))))))
 #+END_SRC
 
@@ -369,7 +369,7 @@
 (add-hook 'prog-mode-hook 'origami-mode)
 #+END_SRC
 
-*** Neotree
+*** NeoTree
 #+BEGIN_SRC emacs-lisp
 (require 'neotree)
 (setq neo-vc-integration '(face))
@@ -467,7 +467,7 @@
 (setq doom-modeline-env-load-string "...")
 (setq doom-modeline-before-update-env-hook nil)
 (setq doom-modeline-after-update-env-hook nil)
-(display-battery-mode)
+;; (display-battery-mode)
 (column-number-mode)
 (display-time)
 (doom-themes-neotree-config)
@@ -550,39 +550,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 *** Magit
 #+BEGIN_SRC emacs-lisp
 (require 'magit)
-(defun mu-magit-kill-buffers (param)
-  "Restore window configuration and kill all Magit buffers."
+(defun my/magit-kill-buffers ()
+  "Restore window configuration and kill all Magit buffers.
+Attribution: URL `https://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/'"
   (let ((buffers (magit-mode-get-buffers)))
-	(magit-restore-window-configuration)
-	(mapc #'kill-buffer buffers)))
-(defcustom magit-bury-buffer-function 'magit-restore-window-configuration
-  "The function used to bury or kill the current Magit buffer."
-  :package-version '(magit . "2.3.0")
-  :group 'magit-buffers
-  :type '(radio (function-item quit-window)
-				(function-item magit-mode-quit-window)
-				(function-item magit-restore-window-configuration)
-				(function :tag "Function")))
-
-(defun magit-restore-window-configuration (&optional kill-buffer)
-  "Bury or kill the current buffer and restore previous window configuration."
-  (let ((winconf magit-previous-window-configuration)
-		(buffer (current-buffer))
-		(frame (selected-frame)))
-	(quit-window kill-buffer (selected-window))
-	(when (and winconf (equal frame (window-configuration-frame winconf)))
-	  (set-window-configuration winconf)
-	  (when (buffer-live-p buffer)
-		(with-current-buffer buffer
-		  (setq magit-previous-window-configuration nil))))))
-
-(defun mu-magit-kill-buffers ()
-  "Restore window configuration and kill all Magit buffers."
-  (interactive)
-  (let ((buffers (magit-mode-get-buffers)))
-	(magit-restore-window-configuration)
-	(mapc #'kill-buffer buffers)))
-(bind-key "q" #'mu-magit-kill-buffers magit-status-mode-map)
+    (magit-restore-window-configuration)
+    (mapc #'kill-buffer buffers)))
+(bind-key "q" #'my/magit-kill-buffers magit-status-mode-map)
+(evil-define-key 'insert magit-status-mode-map (kbd "q") #'my/magit-kill-buffers)
+(evil-define-key 'normal magit-status-mode-map (kbd "q") #'my/magit-kill-buffers)
 #+END_SRC
 
 *** Ranger
