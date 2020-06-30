@@ -12,41 +12,45 @@ pkill st
 pkill compton
 
 screens=1
-if xrandr | grep DP1 | grep " connected"; then
+if xrandr | grep VGA1 | grep " connected"; then
 	screens=3
-elif xrandr | grep VGA1 | grep " connected"; then
+	/usr/home/jozan/.local/bin/triplescreen
+elif xrandr | grep DP1 | grep " connected"; then
 	screens=2
 	/usr/home/jozan/.local/bin/dualscreen
 fi
 sleep 1
 
 
-if [ $screens -eq 2 ]; then
-	bspc monitor LVDS1 -d 04 05 06 07 08 09 10 11 12
-	bspc monitor VGA1 -d 01 02 03
-elif [ $screens -eq 3 ]; then
+if [ $screens -eq 3 ]; then
+	bspc monitor VGA1 -d 01 02 03 04 09 10 11 12
+	bspc monitor DP1 -d 05 06 07 08
+elif [ $screens -eq 2 ]; then
 	bspc monitor DP1 -d 01 02 03 04
-	bspc monitor VGA1 -d 05 06 07 08
-	bspc monitor LVDS1 -d 09 10 11 12
+	bspc monitor LVDS1 -d 05 06 07 08 09 10 11 12
 else
 	bspc monitor LVDS1 -d 01 02 03 04 05 06 07 08 09 10 11 12
 fi
 
-bspc config border_width		1
-bspc config window_gap			0
+bspc config border_width			1
+bspc config window_gap				0
 
 bspc config focused_border_color	\#b92121
 
-bspc config split_ratio			0.50
-bspc config borderless_monocle	true
-bspc config gapless_monocle		true
-bspc config single_monocle		true
+bspc config split_ratio				0.50
+bspc config borderless_monocle		true
+bspc config gapless_monocle			true
+bspc config single_monocle			true
 
-if [ $screens -eq 2 ]; then
+if [ $screens -eq 3 ]; then
+	bspc rule -a Emacs desktop=05 follow=true
+	bspc rule -a Firefox desktop=03 follow=true
+	bspc rule -a Wine desktop=06 state=floating
+elif [ $screens -eq 2 ]; then
 	bspc rule -a Emacs desktop=01 follow=true
 	bspc rule -a Firefox desktop=05 follow=true
 	bspc rule -a Wine desktop=06 state=floating
-else
+elif [ $screens -eq 1 ]; then
 	bspc rule -a Emacs desktop=02 follow=true
 	bspc rule -a Firefox desktop=03 follow=true
 	bspc rule -a Wine desktop=04 state=floating
@@ -58,7 +62,9 @@ bspc rule -a DergodsRealmII desktop=4 state=floating
 
 # START
 run compton >/dev/null 2>&1 &
-if [ $screens -eq 2 ]; then
+if [ $screens -eq 3 ]; then
+	feh --bg-fill /usr/home/jozan/Pictures/wallpaper.jpg --bg-fill /usr/home/jozan/Pictures/wallpaper.jpg >/dev/null 2>&1
+elif [ $screens -eq 2 ]; then
 	feh --bg-fill /usr/home/jozan/Pictures/wallpaper.jpg --bg-fill /usr/home/jozan/Pictures/wallpaper.jpg >/dev/null 2>&1
 else
 	feh --bg-fill /usr/home/jozan/Pictures/wallpaper.jpg >/dev/null 2>&1
@@ -70,18 +76,32 @@ run lowbat --say "You're low, partner" >/dev/null 2>&1 &
 
 sleep 5
 
-if [ $screens -eq 2 ]; then
-	bspc desktop -f 01
-else
-	bspc desktop -f 02
-fi
-
 run emacs &
 
 sleep 4
 
-if [ $screens -eq 2 ]; then
-	bspc desktop -f 04
+if [ $screens -eq 3 ]; then
+	bspc desktop -f 01
+	st -e dash -c 'clear; cowsay "Welcome back, partner! And remember to try glest!"; zsh -i' &
+	sleep 0.3
+	bspc node -p west
+	st -e htop &
+	sleep 0.3
+	st -e gotop &
+	sleep 0.3
+	bspc node -f east
+	st -e vifm &
+	sleep 0.3
+	bspc node -f west
+	bspc node -f north
+	bspc node -z top 0 -200
+	bspc node -z bottom 0 100
+	bspc node -z right -220 0
+	bspc node -f east
+	bspc node -z top 0 70
+	bspc node -f north
+elif [ $screens -eq 2 ]; then
+	bspc desktop -f 05
 	st -e dash -c 'clear; cowsay "Welcome back, partner! And remember to try glest!"; zsh -i' &
 	sleep 0.3
 	st -e htop &
@@ -131,8 +151,10 @@ if curl https://www.freebsd.org/ >/dev/null 2>&1; then
 	# bspc desktop -f 09
 	run qtox &
 	# sleep 1.5
-	if [ $screens -eq 2 ]; then
-		bspc desktop -f 04
+	if [ $screens -eq 3 ]; then
+		bspc desktop -f 01
+	elif [ $screens -eq 2 ]; then
+		bspc desktop -f 05
 	elif [ $screens -eq 1 ]; then
 		bspc desktop -f 01
 	fi
