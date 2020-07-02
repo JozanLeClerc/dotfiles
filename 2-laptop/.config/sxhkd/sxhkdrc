@@ -8,7 +8,7 @@ super + Return
 
 # program launcher
 super + p
-	dmenu_run -m 1 -fn "monospace:size=10" -nb "#222222" -nf "#bbbbbb" -sb "#b92121" -sf "#eeeeee"
+	dmenu_run -c -l 5 -m 0 -fn "UbuntuMono:size=13" -nb "#222222" -nf "#bbbbbb" -sb "#b92121" -sf "#eeeeee"
 
 # make sxhkd reload its configuration files:
 super + control + r
@@ -101,6 +101,10 @@ super + {_,shift + }{F9}
 	bspc {desktop -f,node -d} 09
 super + {_,shift + }{F10}
 	bspc {desktop -f,node -d} 10
+super + {_,shift + }{F11}
+	bspc {desktop -f,node -d} 11
+super + {_,shift + }{F12}
+	bspc {desktop -f,node -d} 12
 #
 # preselect
 #
