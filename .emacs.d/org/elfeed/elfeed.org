@@ -38,6 +38,8 @@
 ***** https://www.youtube.com/feeds/videos.xml?channel_id=UCYdyGYM1aoLpAuCxsP86O1g
 **** Le Raptor
 ***** https://www.youtube.com/feeds/videos.xml?channel_id=UC_i-uMpN1lEyuoUGDq-dajQ
+**** MisterJDay
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC2uPHgyyLv2rnkm4CfIgWcw
 **** Sylvqin
 ***** https://www.youtube.com/feeds/videos.xml?channel_id=UCseGV3amBLISlIOMQodPfVQ
 **** Kurzgesagt - In a Nutshell
