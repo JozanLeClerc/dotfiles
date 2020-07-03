@@ -4,34 +4,26 @@ use strict;
 use warnings;
 use Term::ANSIColor;
 
-sub cleanexit {
-	my $tmp_dir = $_[0];
-	rmdir $tmp_dir;
-	exit;
-}
-
 sub upgrdports {
-	my $tmp_dir = $_[0];
-	my $upgrd_list_file = $tmp_dir . 'upgrdlist';
-	my $upgrd_nbr_cmd = "pkg version -l '<' | tee " . $upgrd_list_file . " | wc -l | awk '{print \$1}'";
-	my $post_nbr_cmd = "pkg version -l '<' | wc -l | awk '{print \$1}'";
+	my $upgrd_nbr_cmd = "/usr/sbin/pkg version -l '<' | /usr/bin/wc -l | /usr/bin/awk '{print \$1}'";
 	if (system('sudo pkg update') != 0) {
 		exit;
 	}
-	if (system('sudo portsnap fetch update') != 0) {
+	if (system('/usr/local/bin/sudo /usr/sbin/portsnap fetch update') != 0) {
 		exit;
 	}
 	print colored("\nPorts to be updated: ", 'bold');
 	my $upgrd_nbr = `$upgrd_nbr_cmd`;
-	substr($upgrd_nbr, -1) = "";
+	chomp $upgrd_nbr;
 	print colored($upgrd_nbr, 'bold green') . "\n";
-	open(my $fh, '<:encoding(UTF-8)', $upgrd_list_file);
-	print <$fh>;
-	close($fh);
-	unlink $upgrd_list_file;
+	open(PS, "/usr/sbin/pkg version -l '<' |");
+	while (<PS>) {
+		print
+	}
+	close(PS);
 	if ($upgrd_nbr == 0) {
 		print colored("No ports to be updated.\n", 'bold green');
-		cleanexit($tmp_dir);
+		exit;
 	}
 	print colored("\nUpgrade these ports? ", 'bold yellow')
 		. colored('[', 'bold green')
@@ -40,10 +32,10 @@ sub upgrdports {
 		. colored("]\n", 'bold green')
 		. colored("~> ", 'yellow');
 	my $answer = <STDIN>;
-	substr($answer, -1) = "";
+	chomp $answer;
 	if ($answer ne "y" && $answer ne "Y") {
 		print "Exiting...\n";
-		cleanexit($tmp_dir);
+		exit;
 	}
 	system('notify-send "Initiating upgrade" "Ports upgrade has started\nTotal: ' . $upgrd_nbr . ' to be updated" >/dev/null 2>&1');
 	if ($upgrd_nbr == 1) {
@@ -53,20 +45,20 @@ sub upgrdports {
 		system('espeak "Initiating ' . $upgrd_nbr . ' ports upgrade" & >/dev/null 2>&1');
 	}
 	if (system("sudo portupgrade -a -B 'make config-recursive'") == 0) {
-		my $failed_nbr = `$post_nbr_cmd`;
-		substr($failed_nbr, -1) = "";
+		my $failed_nbr = `$upgrd_nbr_cmd`;
+		chomp $failed_nbr;
 		my $diff_nbr = $upgrd_nbr - $failed_nbr;
 		system('notify-send "Upgrade complete!" "Ports upgrade installed successfully\nTotal: ' . $diff_nbr . ' installed" >/dev/null 2>&1');
 		system('espeak "Success: $upnbr ports upgrade installed successfully" & >/dev/null 2>&1');
 	}
 	else {
-		my $failed_nbr = `$post_nbr_cmd`;
+		my $failed_nbr = `$upgrd_nbr_cmd`;
 		substr($failed_nbr, -1) = "";
 		my $diff_nbr = $upgrd_nbr - $failed_nbr;
 		system('notify-send -u critical -t 10000 "Upgrade failed!" "Some ports failed to compile\nTotal: ' . $diff_nbr . ' installed - ' . $failed_nbr . ' failed" >/dev/null 2>&1');
 		system('espeak "Failure: not all ports were upgraded - $diffnbr installed - $failednbr failed" & >/dev/null 2>&1');
 	}
-	cleanexit($tmp_dir);
+	exit;
 }
 
 sub configport {
@@ -102,11 +94,9 @@ sub main {
 			. "No port or argument specified\n";
 		exit 1;
 	}
-	my $tmp_dir = '/tmp/install-port-'. $ENV{LOGNAME} || $ENV{USER} || getpwuid($<) . '/';
-	mkdir $tmp_dir, 0755;
 	my $port = $ARGV[0];
 	if ($ARGV[0] eq "upgrade") {
-		upgrdports($tmp_dir);
+		upgrdports();
 	}
 	elsif (-d "/usr/ports/" . $port) {
 		my $port_basename = `echo $ARGV[0] | awk -F '/' '{print \$2}'`;
@@ -124,7 +114,7 @@ sub main {
 			. " doesn't exist in "
 			. colored("/usr/ports/\n", 'bold');
 	}
-	cleanexit($tmp_dir);
+	exit;
 }
 
 main();
