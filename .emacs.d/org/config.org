@@ -170,7 +170,7 @@
 	  centaur-tabs-set-close-button		nil
 	  centaur-tabs-set-modified-marker	t
 	  centaur-tabs-modified-marker		"[+]"
-	  centaur-tabs-height				26
+	  centaur-tabs-height				24
 	  centaur-tabs-style				"bar"
 	  centaur-tabs-set-bar				'left)
 
@@ -370,6 +370,7 @@
 (setq w3m-home-page "https://start.duckduckgo.com/")
 (setq w3m-default-display-inline-images t)
 #+END_SRC
+
 *** Origami mode
 #+BEGIN_SRC emacs-lisp
 (require 'origami)
@@ -415,8 +416,7 @@
 	  helm-buffers-fuzzy-matching		t
 	  helm-make-executable				"/usr/local/bin/gmake"
 	  helm-make-nproc					5
-	  helm-split-window-in-side-p		t
-	  helm-move-to-line-cycle-in-source	t)
+	  helm-split-window-in-side-p		t)
 
 (defun helm-my-buffers ()
   (interactive)
@@ -497,40 +497,6 @@
 (ac-config-default)
 #+END_SRC
 
-*** Tabs and stuff
-#+BEGIN_SRC emacs-lisp
-(defun minibuffer-keyboard-quit ()
-  "Abort recursive edit.
-In Delete Selection mode, if the mark is active, just deactivate it;
-then it takes a second \\[keyboard-quit] to abort the minibuffer."
-  (interactive)
-  (if (and delete-selection-mode transient-mark-mode mark-active)
-	  (setq deactivate-mark  t)
-	(when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
-	(abort-recursive-edit)))
-(define-key evil-normal-state-map [escape] 'keyboard-quit)
-(define-key evil-visual-state-map [escape] 'keyboard-quit)
-(define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
-(global-set-key [escape] 'evil-exit-emacs-state)
-
-(defun my-insert-tab-char ()
-  "Insert a tab char. (ASCII 9, \t)"
-  (interactive)
-  (insert "\t"))
-
-(global-set-key (kbd "TAB") 'my-insert-tab-char) ; same as Ctrl+i
-(setq-default indent-tabs-mode t)
-(setq tab-always-indent 'complete)
-(setq-default tab-width 4)
-(setq tab-width 4)
-(defvaralias 'c-basic-offset 'tab-width)
-(defvaralias 'cperl-indent-level 'tab-width)
-#+END_SRC
-
 *** C default style
 #+BEGIN_SRC emacs-lisp
 (setq c-default-style "bsd")
@@ -549,7 +515,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   ad-do-it
   (if (null ad-return-value)
 	(autopair-mode 1)
-  (autopair-mode 0)
+  (autopair-mode -1)
 ))
 (ad-activate 'paredit-mode)
 #+END_SRC
@@ -604,11 +570,13 @@ buffer in current window."
 (require 'evil-nerd-commenter)
 (evilnc-default-hotkeys)
 #+END_SRC
+
 *** cargo
 #+BEGIN_SRC emacs-lisp
 (require 'cargo)
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
 #+END_SRC
+
 *** yasnippet
 #+BEGIN_SRC emacs-lisp
 (require 'yasnippet)
@@ -618,6 +586,41 @@ buffer in current window."
 (yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
 #+END_SRC
+
+*** Tabs and stuff
+#+BEGIN_SRC emacs-lisp
+(defun minibuffer-keyboard-quit ()
+  "Abort recursive edit.
+In Delete Selection mode, if the mark is active, just deactivate it;
+then it takes a second \\[keyboard-quit] to abort the minibuffer."
+  (interactive)
+  (if (and delete-selection-mode transient-mark-mode mark-active)
+	  (setq deactivate-mark  t)
+	(when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+	(abort-recursive-edit)))
+(define-key evil-normal-state-map [escape] 'keyboard-quit)
+(define-key evil-visual-state-map [escape] 'keyboard-quit)
+(define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+(global-set-key [escape] 'evil-exit-emacs-state)
+
+(defun my/insert-tab-char ()
+  "Insert a tab char. (ASCII 9, \t)"
+  (interactive)
+  (insert "\t"))
+
+(define-key evil-insert-state-map [tab] 'my/insert-tab-char)
+(setq-default indent-tabs-mode t)
+(setq tab-always-indent 'complete)
+(setq-default tab-width 4)
+(setq tab-width 4)
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
+#+END_SRC
+
 *** all the icons
 #+BEGIN_SRC emacs-lisp
 (require 'font-lock)
@@ -718,6 +721,7 @@ buffer in current window."
 (add-to-list 'evil-emacs-state-modes 'elfeed-search-mode)
 (add-to-list 'evil-emacs-state-modes 'elfeed-show-mode)
 #+END_SRC
+
 *** which-key
 #+BEGIN_SRC emacs-lisp
 (require 'which-key)
@@ -807,3 +811,4 @@ buffer in current window."
 
 (shell-pop--set-shell-type 'my/shell-pop-shell-type my/shell-pop-shell-type)
 #+END_SRC
+
