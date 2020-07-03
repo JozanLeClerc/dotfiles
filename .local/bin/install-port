@@ -1,70 +1,132 @@
-#!/usr/local/bin/dash
+#!/usr/local/bin/perl -w
 
-upgrdports() {
-	sudo pkg update
-	sudo portsnap fetch update
-	printf "\033[1;31m%s\033[0m\nPackages to be updated:\n" "-----------------------"
-	pkg version -l "<"
-	upnbr=$(pkg version -l "<" | wc -l | awk '{print $1}')
-	if [ "$2" != "-y" ]; then
-		printf "Upgrade these ports? [y/N]\n"
-		printf "~> "
-		read -r answer
-		if [ "$answer" != "y" ] && [ "$answer" != "Y" ]; then
-			exit 0
-		fi
-	fi
-	notify-send "Initiating upgrade" "Ports upgrade has started\nTotal: $upnbr to be updated"
-	if [ "$upnbr" -eq 1 ]; then
-		espeak "Initiating $upnbr port upgrade" &
-	else
-		espeak "Initiating $upnbr ports upgrade" &
-	fi
-	if sudo portupgrade -a; then
-		failednbr=$(pkg version -l "<" | wc -l | awk '{print $1}')
-		diffnbr=$((upnbr - failednbr))
-		notify-send "Upgrade complete!" "Ports upgrade installed successfully\nTotal: $diffnbr installed - $failednbr failed"
-		espeak "Success: $upnbr ports upgrade installed successfully" &
-	else
-		failednbr=$(pkg version -l "<" | wc -l | awk '{print $1}')
-		diffnbr=$((upnbr - failednbr))
-		notify-send -u critical -t 10000 "Upgrade failed!" "Some ports failed to compile\nTotal: $diffnbr installed - $failednbr failed"
-		espeak "Failure: not all ports were upgraded - $diffnbr installed - $failednbr failed" &
-	fi
-	exit 0
+use strict;
+use warnings;
+use Term::ANSIColor;
+
+sub cleanexit {
+	my $tmp_dir = $_[0];
+	rmdir $tmp_dir;
+	exit;
 }
 
-configport() {
-	if sudo make config-recursive \
-			&& sudo make config-recursive \
-			&& sudo make config-recursive; then
-		notify-send "Configuration success!" "Ports config - $1 - configured successfully"
-		espeak "Success: $prt_n configured successfully. Initiating compilation." &
-	else
-		notify-send -u critical -t 10000 "Configuration failure!" "Ports config - $1 - failed to configure"
-		espeak "Failure: failed to configure $prt_n" &
-	fi
+sub upgrdports {
+	my $tmp_dir = $_[0];
+	my $upgrd_list_file = $tmp_dir . 'upgrdlist';
+	my $upgrd_nbr_cmd = "pkg version -l '<' | tee " . $upgrd_list_file . " | wc -l | awk '{print \$1}'";
+	my $post_nbr_cmd = "pkg version -l '<' | wc -l | awk '{print \$1}'";
+	if (system('sudo pkg update') != 0) {
+		exit;
+	}
+	if (system('sudo portsnap fetch update') != 0) {
+		exit;
+	}
+	print colored("\nPorts to be updated: ", 'bold');
+	my $upgrd_nbr = `$upgrd_nbr_cmd`;
+	substr($upgrd_nbr, -1) = "";
+	print colored($upgrd_nbr, 'bold green') . "\n";
+	open(my $fh, '<:encoding(UTF-8)', $upgrd_list_file);
+	print <$fh>;
+	close($fh);
+	unlink $upgrd_list_file;
+	if ($upgrd_nbr == 0) {
+		print colored("No ports to be updated.\n", 'bold green');
+		cleanexit($tmp_dir);
+	}
+	print colored("\nUpgrade these ports? ", 'bold yellow')
+		. colored('[', 'bold green')
+		. colored('y', 'bold red')
+		. colored('/N', 'bold green')
+		. colored("]\n", 'bold green')
+		. colored("~> ", 'yellow');
+	my $answer = <STDIN>;
+	substr($answer, -1) = "";
+	if ($answer ne "y" && $answer ne "Y") {
+		print "Exiting...\n";
+		cleanexit($tmp_dir);
+	}
+	system('notify-send "Initiating upgrade" "Ports upgrade has started\nTotal: ' . $upgrd_nbr . ' to be updated" >/dev/null 2>&1');
+	if ($upgrd_nbr == 1) {
+		system('espeak "Initiating ' . $upgrd_nbr . ' port upgrade" & >/dev/null 2>&1');
+	}
+	else {
+		system('espeak "Initiating ' . $upgrd_nbr . ' ports upgrade" & >/dev/null 2>&1');
+	}
+	if (system("sudo portupgrade -a -B 'make config-recursive'") == 0) {
+		my $failed_nbr = `$post_nbr_cmd`;
+		substr($failed_nbr, -1) = "";
+		my $diff_nbr = $upgrd_nbr - $failed_nbr;
+		system('notify-send "Upgrade complete!" "Ports upgrade installed successfully\nTotal: ' . $diff_nbr . ' installed" >/dev/null 2>&1');
+		system('espeak "Success: $upnbr ports upgrade installed successfully" & >/dev/null 2>&1');
+	}
+	else {
+		my $failed_nbr = `$post_nbr_cmd`;
+		substr($failed_nbr, -1) = "";
+		my $diff_nbr = $upgrd_nbr - $failed_nbr;
+		system('notify-send -u critical -t 10000 "Upgrade failed!" "Some ports failed to compile\nTotal: ' . $diff_nbr . ' installed - ' . $failed_nbr . ' failed" >/dev/null 2>&1');
+		system('espeak "Failure: not all ports were upgraded - $diffnbr installed - $failednbr failed" & >/dev/null 2>&1');
+	}
+	cleanexit($tmp_dir);
 }
 
-installport() {
-	if sudo make install clean; then
-		notify-send "Compilation success!" "Ports - $1 - compiled successfully"
-		espeak "Success: $prt_n compiled successfully" &
-	else
-		notify-send -u critical -t 10000 "Compilation failure!" "Ports - $1 - failed to compile"
-		espeak "Failure: failed to compile $prt_n" &
-	fi
+sub configport {
+	my $port = $_[0];
+	my $port_basename = $_[1];
+	if (system("sudo make config-recursive && sudo make config-recursive && sudo make config-recursive ") == 0) {
+		system('notify-send "Configuration success!" "Ports config - ' . $port . ' - configured successfully" >/dev/null 2>&1');
+		system('espeak "Success: ' . $port_basename . ' configured successfully. Initiating compilation." & >/dev/null 2>&1');
+	}
+	else {
+		system('notify-send -u critical -t 10000 "Configuration failure!" "Ports config - ' . $port . ' - failed to configure" >/dev/null 2>&1');
+		system('espeak "Failure: failed to configure ' . $port_basename . '" & >/dev/null 2>&1');
+	}
 }
 
-[ $# -eq 0 ] && printf "Failed! No port or argument specified.\n" && exit 1
-[ "$1" = "upgrade" ] && upgrdports "$@"
-[ ! -d "/usr/ports/$1" ] && printf "Failed! Port /usr/ports/%s doesn't exist\n" "$1" && exit 2
+sub installport {
+	my $port = $_[0];
+	my $port_basename = $_[1];
+	if (system("sudo make install clean") == 0) {
+		system('notify-send "Compilation success!" "Ports - ' . $port . ' - installed successfully" >/dev/null 2>&1');
+		system('espeak "Success: ' . $port_basename . ' installed successfully" & >/dev/null 2>&1');
+	}
+	else {
+		system('notify-send -u critical -t 10000 "Compilation failure!" "Ports - ' . $port . ' - failed to install" >/dev/null 2>&1');
+		system('espeak "Failure: failed to install ' . $port_basename . '" & >/dev/null 2>&1');
+	}
+}
 
-prt_n=$(echo "$1" | awk -F '/' '{print $2}')
+sub main {
+	my $argc = $#ARGV + 1;
+	if ($argc == 0) {
+		print colored("Failed!\n", 'bold red')
+			. "No port or argument specified\n";
+		exit 1;
+	}
+	my $tmp_dir = '/tmp/install-port-'. $ENV{LOGNAME} || $ENV{USER} || getpwuid($<) . '/';
+	mkdir $tmp_dir, 0755;
+	my $port = $ARGV[0];
+	if ($ARGV[0] eq "upgrade") {
+		upgrdports($tmp_dir);
+	}
+	elsif (-d "/usr/ports/" . $port) {
+		my $port_basename = `echo $ARGV[0] | awk -F '/' '{print \$2}'`;
+		print colored("Port ", 'bold')
+			. colored($port, 'bold green')
+			. colored(" found\n", 'bold');
+		chdir "/usr/ports/" . $port;
+		configport($port, $port_basename);
+		installport($port, $port_basename);
+	}
+	else {
+		print colored("Failed!\n", 'bold red')
+			. "Port "
+			. colored($port, 'bold yellow')
+			. " doesn't exist in "
+			. colored("/usr/ports/\n", 'bold');
+	}
+	cleanexit($tmp_dir);
+}
 
-printf "Port %s found\n" "$1"
-cd "/usr/ports/$1" || exit 3
+main();
 
-configport "$@" && installport "$@"
-
-exit 0
+__END__
