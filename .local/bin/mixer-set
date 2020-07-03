@@ -1,30 +1,87 @@
-#!/usr/local/bin/dash
+#!/usr/local/bin/perl -w
 
-[ $# -eq 0 ] && printf "Argument needed\n" && exit 1
-[ $# -gt 1 ] && printf "Too many arguments\n" && exit 2
+use strict;
+use warnings;
+use Term::ANSIColor;
 
-if [ "$1" = "lower" ]; then
-	mixer vol -5 >/dev/null 2>&1
-	curr_vol=$(mixer vol | awk -F ':' '{print $2}')
-	notify-send -u low -t 350 "Volume lowered - $curr_vol%"
-elif [ "$1" = "raise" ]; then
-	mixer vol +5 >/dev/null 2>&1
-	curr_vol=$(mixer vol | awk -F ':' '{print $2}')
-	notify-send -u low -t 350 "Volume raised - $curr_vol%"
-elif [ "$1" = "toggle" ]; then
-	curr_vol=$(mixer vol | awk -F ':' '{print $2}')
-	if [ "$curr_vol" -gt 0 ]; then
-		echo "$curr_vol" > /tmp/mixervol
-		mixer vol 0 >/dev/null 2>&1
-		notify-send -u low -t 1750 "Volume muted"
-	else
-		rvol=$(cat /tmp/mixervol)
-		mixer vol "$rvol" >/dev/null 2>&1
-		notify-send -u low -t 1750 "Volume restored - $rvol%"
-	fi
-else
-	printf "Unrecognized argument: %s\n" "$1"
-	exit 3
-fi
+sub main {
+	my $argc = $#ARGV + 1;
+	if ($argc == 0) {
+		print "Argument needed - ["
+			. colored("lower", 'bold')
+			. " - "
+			. colored("raise", 'bold')
+			. " - "
+			. colored("toggle", 'bold')
+			. "]\n";
+		exit 1;
+	}
+	elsif ($argc > 1) {
+		print "Too many arguments, only one needed\n";
+		exit 2;
+	}
+	my $curr_vol = 0;
+	my $curr_vol_cmd = "/usr/sbin/mixer vol | /usr/bin/awk -F ':' '{print \$2}'";
+	if ($ARGV[0] eq "lower") {
+		system('/usr/sbin/mixer vol -5 >/dev/null 2>&1');
+		$curr_vol = `$curr_vol_cmd`;
+		chomp $curr_vol;
+		system('/usr/local/bin/notify-send',
+			   '-u',
+			   'low',
+			   '-t',
+			   '400',
+			   'Volume lowered - ' . $curr_vol . '%');
+		exit;
+	}
+	elsif ($ARGV[0] eq "raise") {
+		system('/usr/sbin/mixer vol +5 >/dev/null 2>&1');
+		$curr_vol = `$curr_vol_cmd`;
+		chomp $curr_vol;
+		system('/usr/local/bin/notify-send',
+			   '-u',
+			   'low',
+			   '-t',
+			   '400',
+			   'Volume raised - ' . $curr_vol . '%');
+		exit;
+	}
+	elsif ($ARGV[0] eq "toggle") {
+		my $tmp_file = '/tmp/mixervol';
+		$curr_vol = `$curr_vol_cmd`;
+		chomp $curr_vol;
+		if ($curr_vol > 0) {
+			open(my $fh, '>:encoding(UTF-8)', $tmp_file);
+			print $fh $curr_vol;
+			close($fh);
+			system('/usr/sbin/mixer vol 0 >/dev/null 2>&1');
+			system('/usr/local/bin/notify-send',
+				   '-u',
+				   'low',
+				   '-t',
+				   '1750',
+				   'Volume muted');
+		}
+		else {
+			open(my $fh, '<:encoding(UTF-8)', $tmp_file);
+			$curr_vol = <$fh>;
+			close($fh);
+			system("/usr/sbin/mixer vol " . $curr_vol . " >/dev/null 2>&1");
+			system('/usr/local/bin/notify-send',
+				   '-u',
+				   'low',
+				   '-t',
+				   '1750',
+				   'Volume restored - ' . $curr_vol . '%');
+		}
+		exit;
+	}
+	else {
+		print "Unrecognized argument: " . $ARGV[0] . "\n";
+	}
+	exit;
+}
 
-exit 0
+main();
+
+__END__
