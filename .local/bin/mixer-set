@@ -23,27 +23,25 @@ sub main {
 	my $curr_vol = 0;
 	my $curr_vol_cmd = "/usr/sbin/mixer vol | /usr/bin/awk -F ':' '{print \$2}'";
 	if ($ARGV[0] eq "lower") {
-		system('/usr/sbin/mixer vol -5 >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/sbin/mixer vol -5 >/dev/null 2>&1');
 		$curr_vol = `$curr_vol_cmd`;
 		chomp $curr_vol;
-		system('/usr/local/bin/notify-send',
-			   '-u',
-			   'low',
-			   '-t',
-			   '400',
-			   'Volume lowered - ' . $curr_vol . '%');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/notify-send -u low -t 400 "Volume lowered - ' . $curr_vol . '%"');
 		exit;
 	}
 	elsif ($ARGV[0] eq "raise") {
-		system('/usr/sbin/mixer vol +5 >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/sbin/mixer vol +5 >/dev/null 2>&1');
 		$curr_vol = `$curr_vol_cmd`;
 		chomp $curr_vol;
-		system('/usr/local/bin/notify-send',
-			   '-u',
-			   'low',
-			   '-t',
-			   '400',
-			   'Volume raised - ' . $curr_vol . '%');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/notify-send -u low -t 400 "Volume raised - ' . $curr_vol . '%"');
 		exit;
 	}
 	elsif ($ARGV[0] eq "toggle") {
@@ -54,25 +52,23 @@ sub main {
 			open(my $fh, '>:encoding(UTF-8)', $tmp_file);
 			print $fh $curr_vol;
 			close($fh);
-			system('/usr/sbin/mixer vol 0 >/dev/null 2>&1');
-			system('/usr/local/bin/notify-send',
-				   '-u',
-				   'low',
-				   '-t',
-				   '1750',
-				   'Volume muted');
+			system('/usr/local/bin/dash',
+				   '-c',
+				   '/usr/sbin/mixer vol 0 >/dev/null 2>&1');
+			system('/usr/local/bin/dash',
+				   '-c',
+				   '/usr/local/bin/notify-send -u low -t 1750 "Volume muted"');
 		}
 		else {
 			open(my $fh, '<:encoding(UTF-8)', $tmp_file);
 			$curr_vol = <$fh>;
 			close($fh);
-			system("/usr/sbin/mixer vol " . $curr_vol . " >/dev/null 2>&1");
-			system('/usr/local/bin/notify-send',
-				   '-u',
-				   'low',
-				   '-t',
-				   '1750',
-				   'Volume restored - ' . $curr_vol . '%');
+			system('/usr/local/bin/dash',
+				   '-c',
+				   '/usr/sbin/mixer vol ' . $curr_vol . ' >/dev/null 2>&1');
+			system('/usr/local/bin/dash',
+				   '-c',
+				   '/usr/local/bin/notify-send -u low -t 1750 "Volume restored - ' . $curr_vol . '%"');
 		}
 		exit;
 	}

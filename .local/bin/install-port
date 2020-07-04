@@ -6,10 +6,14 @@ use Term::ANSIColor;
 
 sub upgrdports {
 	my $upgrd_nbr_cmd = "/usr/sbin/pkg version -l '<' | /usr/bin/wc -l | /usr/bin/awk '{print \$1}'";
-	if (system('sudo pkg update') != 0) {
+	if (system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/sudo /usr/sbin/pkg update') != 0) {
 		exit;
 	}
-	if (system('/usr/local/bin/sudo /usr/sbin/portsnap fetch update') != 0) {
+	if (system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/sudo /usr/sbin/portsnap fetch update') != 0) {
 		exit;
 	}
 	print colored("\nPorts to be updated: ", 'bold');
@@ -37,26 +41,42 @@ sub upgrdports {
 		print "Exiting...\n";
 		exit;
 	}
-	system('notify-send "Initiating upgrade" "Ports upgrade has started\nTotal: ' . $upgrd_nbr . ' to be updated" >/dev/null 2>&1');
+	system('/usr/local/bin/dash',
+		   '-c',
+		   '/usr/local/bin/notify-send "Initiating upgrade" "Ports upgrade has started\nTotal: ' . $upgrd_nbr . ' to be updated" >/dev/null 2>&1');
 	if ($upgrd_nbr == 1) {
-		system('espeak "Initiating ' . $upgrd_nbr . ' port upgrade" & >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/espeak "Initiating ' . $upgrd_nbr . ' port upgrade" & >/dev/null 2>&1');
 	}
 	else {
-		system('espeak "Initiating ' . $upgrd_nbr . ' ports upgrade" & >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/espeak "Initiating ' . $upgrd_nbr . ' ports upgrade" & >/dev/null 2>&1');
 	}
-	if (system("sudo portupgrade -a -B 'make config-recursive'") == 0) {
+	if (system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/sudo /usr/local/sbin/portupgrade -a -c') == 0) {
 		my $failed_nbr = `$upgrd_nbr_cmd`;
 		chomp $failed_nbr;
 		my $diff_nbr = $upgrd_nbr - $failed_nbr;
-		system('notify-send "Upgrade complete!" "Ports upgrade installed successfully\nTotal: ' . $diff_nbr . ' installed" >/dev/null 2>&1');
-		system('espeak "Success: $upnbr ports upgrade installed successfully" & >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/notify-send "Upgrade complete!" "Ports upgrade installed successfully\nTotal: ' . $diff_nbr . ' installed" >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/espeak "Success: $upnbr ports upgrade installed successfully" & >/dev/null 2>&1');
 	}
 	else {
 		my $failed_nbr = `$upgrd_nbr_cmd`;
 		substr($failed_nbr, -1) = "";
 		my $diff_nbr = $upgrd_nbr - $failed_nbr;
-		system('notify-send -u critical -t 10000 "Upgrade failed!" "Some ports failed to compile\nTotal: ' . $diff_nbr . ' installed - ' . $failed_nbr . ' failed" >/dev/null 2>&1');
-		system('espeak "Failure: not all ports were upgraded - $diffnbr installed - $failednbr failed" & >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/notify-send -u critical -t 10000 "Upgrade failed!" "Some ports failed to compile\nTotal: ' . $diff_nbr . ' installed - ' . $failed_nbr . ' failed" >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/espeak "Failure: not all ports were upgraded - $diffnbr installed - $failednbr failed" & >/dev/null 2>&1');
 	}
 	exit;
 }
@@ -64,26 +84,46 @@ sub upgrdports {
 sub configport {
 	my $port = $_[0];
 	my $port_basename = $_[1];
-	if (system("sudo make config-recursive && sudo make config-recursive && sudo make config-recursive ") == 0) {
-		system('notify-send "Configuration success!" "Ports config - ' . $port . ' - configured successfully" >/dev/null 2>&1');
-		system('espeak "Success: ' . $port_basename . ' configured successfully. Initiating compilation." & >/dev/null 2>&1');
+	if (system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/sudo /usr/bin/make config-recursive && /usr/local/bin/sudo /usr/bin/make config-recursive && /usr/local/bin/sudo /usr/bin/make config-recursive') == 0) {
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/notify-send "Configuration success!" "Ports config - ' . $port . ' - configured successfully" >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/espeak "Success: ' . $port_basename . ' configured successfully. Initiating compilation." & >/dev/null 2>&1');
 	}
 	else {
-		system('notify-send -u critical -t 10000 "Configuration failure!" "Ports config - ' . $port . ' - failed to configure" >/dev/null 2>&1');
-		system('espeak "Failure: failed to configure ' . $port_basename . '" & >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/notify-send -u critical -t 10000 "Configuration failure!" "Ports config - ' . $port . ' - failed to configure" >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/espeak "Failure: failed to configure ' . $port_basename . '" & >/dev/null 2>&1');
 	}
 }
 
 sub installport {
 	my $port = $_[0];
 	my $port_basename = $_[1];
-	if (system("sudo make install clean") == 0) {
-		system('notify-send "Compilation success!" "Ports - ' . $port . ' - installed successfully" >/dev/null 2>&1');
-		system('espeak "Success: ' . $port_basename . ' installed successfully" & >/dev/null 2>&1');
+	if (system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/sudo /usr/bin/make install clean') == 0) {
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/notify-send "Compilation success!" "Ports - ' . $port . ' - installed successfully" >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/espeak "Success: ' . $port_basename . ' installed successfully" & >/dev/null 2>&1');
 	}
 	else {
-		system('notify-send -u critical -t 10000 "Compilation failure!" "Ports - ' . $port . ' - failed to install" >/dev/null 2>&1');
-		system('espeak "Failure: failed to install ' . $port_basename . '" & >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/notify-send -u critical -t 10000 "Compilation failure!" "Ports - ' . $port . ' - failed to install" >/dev/null 2>&1');
+		system('/usr/local/bin/dash',
+			   '-c',
+			   '/usr/local/bin/espeak "Failure: failed to install ' . $port_basename . '" & >/dev/null 2>&1');
 	}
 }
 
