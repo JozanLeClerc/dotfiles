@@ -25,16 +25,29 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -v "^?" backward-delete-char
-bindkey -v "C-k" history-beginning-search-backward
-bindkey -v "C-j" history-beginning-search-forward
 bindkey -v "^[[A" history-beginning-search-backward
 bindkey -v "^[[B" history-beginning-search-forward
+bindkey -v "^K" history-beginning-search-backward
+bindkey -v "^J" history-beginning-search-forward
 bindkey -M vicmd "k" history-beginning-search-backward
 bindkey -M vicmd "j" history-beginning-search-forward
 
 # edit command line
 autoload edit-command-line && zle -N edit-command-line
 bindkey "^e" edit-command-line
+
+# Shared history
+setopt inc_append_history
+setopt share_history
+
+# OBS
+# if [ -z "$XDG_RUNTIME_DIR" ]; then
+# 	export XDG_RUNTIME_DIR="/tmp/${USER}"
+# 	if [ ! -d "$XDG_RUNTIME_DIR" ]; then
+# 		mkdir "$XDG_RUNTIME_DIR"
+# 		chmod 0700 "$XDG_RUNTIME_DIR"
+# 	fi
+# fi
 
 # alias and plugins
 [ -f "$XDG_CONFIG_HOME/zsh/alias.zsh" ]		&& source $ZDOTDIR/alias.zsh
