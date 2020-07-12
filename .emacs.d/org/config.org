@@ -236,7 +236,7 @@
 
 (setq mu4e-maildir (expand-file-name "/home/jozan/Maildir"))
 
-(setq mu4e-get-mail-command "mbsync -c /home/jozan/.emacs.d/mu4e/.mbsyncrc -a")
+(setq mu4e-get-mail-command "/usr/local/bin/mbsync -c /home/jozan/.emacs.d/mu4e/.mbsyncrc -a")
 (setq mu4e-update-interval 300)
 (setq mu4e-index-update-in-background t)
 (setq mu4e-headers-auto-update t)
