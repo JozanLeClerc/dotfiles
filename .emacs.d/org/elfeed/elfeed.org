@@ -46,3 +46,5 @@
 ***** https://www.youtube.com/feeds/videos.xml?channel_id=UCsXVk37bltHxD1rDPwtNM8Q
 **** h3h3Productions
 ***** https://www.youtube.com/feeds/videos.xml?channel_id=UCDWIvJwLJsE4LG1Atne2blQ
+**** El Rayhan
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC1jpJQzugyhkf1HQQwWuUSA
